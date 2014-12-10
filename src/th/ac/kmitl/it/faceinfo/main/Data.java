@@ -10,12 +10,13 @@ import com.facepp.http.HttpRequests;
 
 public class Data {
 	private static Data data;
+	private FacePlusPlus facePP;
+
+	
+	
 	public String USER_KEY = "0000000000"; // / Stups UserKey;
 	public String TEMP_KEY;
 	public HttpRequests HTTPREQESTS;
-	private FacePlusPlus facePP;
-
-
 
 	private Data() {
 	}
@@ -25,7 +26,6 @@ public class Data {
 			data = new Data();
 		}
 		return data;
-
 	}
 
 	public FacePlusPlus getFacePP() {
@@ -35,7 +35,10 @@ public class Data {
 
 		return this.facePP;
 	}
-
+	
+	public String keyConcat(String name){
+		return USER_KEY.concat("_").concat(name);
+	}
 
 
 }

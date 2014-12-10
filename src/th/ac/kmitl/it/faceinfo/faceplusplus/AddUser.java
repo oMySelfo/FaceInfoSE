@@ -8,29 +8,29 @@ import com.facepp.error.FaceppParseException;
 import com.facepp.http.HttpRequests;
 import com.facepp.http.PostParameters;
 
-public class CreateUser extends Thread{
+public class AddUser extends Thread{
 	private Data data;
 	private FacePlusPlus facePP;
 	private HttpRequests httpRequests;
 
 
 
-	public CreateUser(){
+	public AddUser(){
 		data = Data.getData();
 		facePP = data.getFacePP();
 		httpRequests = data.HTTPREQESTS;
 	}
 	
 	public void run(){
+		Log.d("CreateUser", "StartThread");
 		try {
-			Log.d("CreateUser", "StartThread");
 			facePP.setWaitSync();
 			facePP.RESULT = httpRequests.groupCreate(new PostParameters()
 					.setGroupName(data.USER_KEY));
-			Log.d("CreateUser", "EndThread");
 		} catch (FaceppParseException e) {
 			e.printStackTrace();
 		} 
+		Log.d("CreateUser", "EndThread");
 	}
 
 }

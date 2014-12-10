@@ -20,15 +20,15 @@ public class DeleteUser extends Thread {
 	}
 
 	public void run() {
+		Log.d("DeleteUser", "StartThread");
 		try {
-			Log.d("DeleteUser", "StartThread");
 			facePP.setWaitSync();
 
 			facePP.RESULT = httpRequests.groupDelete(new PostParameters()
 					.setGroupName(data.USER_KEY));
-			Log.d("DeleteUser", "EndThread");
 		} catch (FaceppParseException e) {
 			e.printStackTrace();
 		}
+		Log.d("DeleteUser", "EndThread");
 	}
 }

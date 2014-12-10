@@ -33,17 +33,17 @@ public class FacePlusPlus{
 	}
 	
 	
-	public void createUser(){
-		new CreateUser().start();
+	public void addUser(){
+		new AddUser().start();
 	}
 	public void deleteUser(){
 		new DeleteUser().start();
 	}
-	public void createContact(){
-		
+	public void createContact(String name){
+		new AddContact(name).start();
 	}
-	public void deleteContact(){
-		
+	public void deleteContact(String id){
+		new DeleteContact(id).start();
 	}
 	
 	public void setWaitSync() {
