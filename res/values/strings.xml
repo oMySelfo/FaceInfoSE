@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">FaceInfo_SE</string>
+    <string name="app_id">219333394936042</string>
+    
+    
     <string name="hello_world">Hello world!</string>
 
 </resources>
