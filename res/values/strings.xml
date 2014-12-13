@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FaceInfo_SE</string>
+    <string name="app_name">FaceInfo</string>
     <string name="app_id">219333394936042</string>
     
     
     <string name="hello_world">Hello world!</string>
+    
+    <string-array name="nav_drawer_items">
+        <item >All Contacts</item>
+        <item >About us</item>
+        <item >Test</item>
+        <item >Group</item>
+    </string-array>
 
 </resources>
