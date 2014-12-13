@@ -2,7 +2,10 @@ package th.ac.kmitl.it.faceinfo.main;
 
 import org.json.JSONObject;
 
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.faceplusplus.FacePlusPlus;
+
+import android.content.Context;
 
 import com.facepp.http.HttpRequests;
 
@@ -11,6 +14,7 @@ import com.facepp.http.HttpRequests;
 public class Data {
 	private static Data data;
 	private FacePlusPlus facePP;
+	private DatabaseManager dbm;
 
 	
 	
@@ -26,6 +30,15 @@ public class Data {
 			data = new Data();
 		}
 		return data;
+	}
+	
+	public DatabaseManager getDmb(){
+		return dbm;
+	}
+	
+	public void setDatabaseManager(Context context){
+		dbm = new DatabaseManager(context);
+
 	}
 
 	public FacePlusPlus getFacePP() {

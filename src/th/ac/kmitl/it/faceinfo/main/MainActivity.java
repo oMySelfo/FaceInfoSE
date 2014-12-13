@@ -12,7 +12,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Data.getData().setDatabaseManager(this);
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        
+        
+        
+        
+        
         
     }
     
