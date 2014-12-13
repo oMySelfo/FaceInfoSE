@@ -24,6 +24,7 @@ public class Data {
 
 	private Data() {
 	}
+	//test
 
 	public static Data getData() {
 		if (data == null) {
