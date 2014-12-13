@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import th.ac.kmitl.it.faceinfo.allfragment.testFragment;
+
+
+
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -49,7 +55,22 @@ public class MainActivity extends Activity {
 	}
 	
 	public void displayView(int position) {
-		
+		Fragment fragment = null;
+		switch (position) {
+		case 4:
+			fragment = new testFragment();
+			break;
+		default:
+			break;
+		}
+		if (fragment != null) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().addToBackStack(null)
+					.replace(R.id.frame_container, fragment).commit();
+			mDrawerList.setItemChecked(position, true);
+			mDrawerList.setSelection(position);
+			mDrawerLayout.closeDrawer(mDrawerList);
+		}
 	}
 	
 	
@@ -98,7 +119,6 @@ public class MainActivity extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-
 		// Handle action bar actions click
 		switch (item.getItemId()) {
 //		 case R.id.action_settings:
