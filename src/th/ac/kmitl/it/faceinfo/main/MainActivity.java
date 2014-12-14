@@ -33,10 +33,12 @@ public class MainActivity extends Activity {
 	private ListView mDrawerList;
 	private CharSequence mTitle;
 	private List<Fragment> listFragment;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Model.setActivity(this);
 		listFragment = new ArrayList<Fragment>();
 		setContentView(R.layout.activity_main);
 		Data.getData().setDatabaseManager(this);
@@ -55,10 +57,11 @@ public class MainActivity extends Activity {
 	private void createfragment(){
 		listFragment.add(new AllContract());
 		listFragment.add(new AddContacts());
-		listFragment.add(new Group());
+		listFragment.add(new ListGroup());
 		listFragment.add(new Aboutus());
 		listFragment.add(new test1());
 		listFragment.add(new test2());
+		listFragment.add(new CreateGroup());
 		
 	}
 
