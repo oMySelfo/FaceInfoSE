@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
 	private CharSequence mTitle;
 	private List<Fragment> listFragment;
 	private SimpleFacebook sf;
+	private Data data;
 	
 
 	@Override
@@ -46,8 +47,8 @@ public class MainActivity extends Activity {
 		Model.setActivity(this);
 		listFragment = new ArrayList<Fragment>();
 		setContentView(R.layout.activity_main);
-		DatabaseManager dbm = new DatabaseManager(this);
-		Data.getData().setDatabaseManager(dbm);
+		Data.getData().setDatabaseManager(this);
+		Data.getData().setFacebookManager(this);
 		mTitle = getTitle();
 		createfragment();
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);

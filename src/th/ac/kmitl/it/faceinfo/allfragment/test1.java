@@ -3,13 +3,17 @@ package th.ac.kmitl.it.faceinfo.allfragment;
 
 import com.sromku.simple.fb.SimpleFacebook;
 import com.sromku.simple.fb.Permission.Type;
+import com.sromku.simple.fb.entities.Profile;
+import com.sromku.simple.fb.entities.Profile.Properties;
 import com.sromku.simple.fb.listeners.OnLoginListener;
 import com.sromku.simple.fb.listeners.OnLogoutListener;
+import com.sromku.simple.fb.listeners.OnProfileListener;
 
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
+import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,53 +27,25 @@ public class test1 extends Fragment{
 	
 	Button btn1;
 	Button btn2;
-	SimpleFacebook sf;
+	FacebookManager fm;
+	DatabaseManager dbm;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.activity_test, container,false);
 		
-		Data.getData().getDmb().checkUser();
+		dbm = Data.getData().getDmb();
+		dbm.checkUserKey();
+		fm = Data.getData().getFacebookManager();
 		
 		btn1 = (Button)rootView.findViewById(R.id.button1);
 		btn2 = (Button)rootView.findViewById(R.id.button2);
-		sf = SimpleFacebook.getInstance(this.getActivity());
 		
 		btn1.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				sf.login(new OnLoginListener() {					
-					
-					@Override
-					public void onLogin() {
-						Log.d("Facebook", "login");
-						
-					}
-
-					@Override
-					public void onThinking() {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onException(Throwable throwable) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onFail(String reason) {
-						
-					}
-
-					@Override
-					public void onNotAcceptingPermissions(Type type) {
-						
-						
-					}
-				});
+				fm.login();
 				
 			}
 		});
@@ -79,32 +55,7 @@ public class test1 extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				sf.logout(new OnLogoutListener() {
-					
-					@Override
-					public void onFail(String reason) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onException(Throwable throwable) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onThinking() {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onLogout() {
-						Log.d("Facebook", "logout");
-					}
-				});
-				
+				fm.logout();
 			}
 		});
 		

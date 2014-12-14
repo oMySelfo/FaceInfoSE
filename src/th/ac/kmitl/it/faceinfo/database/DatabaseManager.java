@@ -1,6 +1,7 @@
 package th.ac.kmitl.it.faceinfo.database;
 
 import th.ac.kmitl.it.faceinfo.main.Data;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,7 +35,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 	}
 	
-	public boolean checkUser(){
+	public boolean checkUserKey(){
 		Log.d("Database","Start Check User");
 		SQLiteDatabase db = this.getReadableDatabase();
 		sql = "Select user_key from user;";
@@ -47,41 +48,55 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		Log.d("Database","No User Key");
 		return false;
 	}
+	public void insertUserKey(String userKey){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("user_key", userKey);
+		db.insert("user", null, values);
+		data.USER_KEY = userKey;
+		Log.d("Database", "Create USER_KEY : " + userKey);
+	}
+
+	public void deleteUserKey(){
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("user", null, null);
+		data.USER_KEY = "";
+		Log.d("Database","Delete UserKey");
+	}
 	
 	
 	
-	
-	public void createContact(SQLiteDatabase db){
+	private void createContact(SQLiteDatabase db){
 		sql="";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create Contact");
 	}
-	public void createUser(SQLiteDatabase db){
+	private void createUser(SQLiteDatabase db){
 		sql="CREATE TABLE `user` (`user_key` VARCHAR(45) NOT NULL,PRIMARY KEY (`user_key`));";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create User");
 	}
-	public void createPhoto(SQLiteDatabase db){
+	private void createPhoto(SQLiteDatabase db){
 		sql="";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create Photo");
 	}
-	public void createGroup(SQLiteDatabase db){
+	private void createGroup(SQLiteDatabase db){
 		sql="";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create Group");
 	}
-	public void createContactPhoto(SQLiteDatabase db){
+	private void createContactPhoto(SQLiteDatabase db){
 		sql="";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create ContactPhoto");
 	}
-	public void createContactGroup(SQLiteDatabase db){
+	private void createContactGroup(SQLiteDatabase db){
 		sql="";
 		
 		db.execSQL(sql);

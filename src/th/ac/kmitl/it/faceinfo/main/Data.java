@@ -3,8 +3,10 @@ package th.ac.kmitl.it.faceinfo.main;
 import org.json.JSONObject;
 
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
+import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.faceplusplus.FacePlusPlus;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.facepp.http.HttpRequests;
@@ -15,7 +17,7 @@ public class Data {
 	private static Data data;
 	private FacePlusPlus facePP;
 	private DatabaseManager dbm;
-
+	private FacebookManager fm;
 	
 	
 	public String USER_KEY = "";
@@ -37,9 +39,17 @@ public class Data {
 		return dbm;
 	}
 	
-	public void setDatabaseManager(DatabaseManager dbm){
-		this.dbm = dbm;
+	public void setDatabaseManager(Context context){
+		dbm = new DatabaseManager(context);
 
+	}
+	
+	public void setFacebookManager(Activity activity){
+		fm = new FacebookManager(activity);
+	}
+	
+	public FacebookManager getFacebookManager(){
+		return fm;
 	}
 
 	public FacePlusPlus getFacePP() {
