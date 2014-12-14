@@ -3,8 +3,10 @@ package th.ac.kmitl.it.faceinfo.allfragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.ac.kmitl.it.faceinfo.adapter.ContactAdapter;
+import th.ac.kmitl.it.faceinfo.adapter.AllContactAdapter;
+
 import th.ac.kmitl.it.faceinfo.database.test_datacontract;
+import th.ac.kmitl.it.faceinfo.main.Model;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -26,7 +28,8 @@ public class AllContract extends Fragment {
 		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.list_allcontract, container,false);
 		ListView list = (ListView) rootView.findViewById(R.id.listView1);
-		list.setAdapter(new ContactAdapter(inflater, createlist()));
+		Model.setListperson(createlist());
+		list.setAdapter(new AllContactAdapter(inflater, Model.getListperson()));
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -34,6 +37,7 @@ public class AllContract extends Fragment {
 					long id) {
 				// TODO Auto-generated method stub
 				System.out.println(position);
+				Model.getActivity().displayView(7);
 				
 			}
 		});
