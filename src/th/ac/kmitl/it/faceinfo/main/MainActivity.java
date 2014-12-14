@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.allfragment.AllContract;
+import th.ac.kmitl.it.faceinfo.allfragment.test2;
 import th.ac.kmitl.it.faceinfo.allfragment.testFragment;
 
 
@@ -13,9 +14,12 @@ import th.ac.kmitl.it.faceinfo.allfragment.testFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -65,6 +69,9 @@ public class MainActivity extends Activity {
 		case 4:
 			fragment = new testFragment();
 			break;
+		case 5:
+			fragment = new test2();
+			break;
 		default:
 			break;
 		}
@@ -100,7 +107,8 @@ public class MainActivity extends Activity {
 				{ R.drawable.ic_aboutus + "", "About Us" },
 				{ R.drawable.bt_plus + "", "Add Contacts" },
 				{ R.drawable.ic_group + "", "Group" }, 
-				{R.drawable.bt_plus+"","Test"}};
+				{R.drawable.bt_plus+"","Test"},
+				{R.drawable.bt_plus+"","Test2"}};
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
