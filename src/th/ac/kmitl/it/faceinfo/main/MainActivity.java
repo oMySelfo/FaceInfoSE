@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.sromku.simple.fb.SimpleFacebook;
+
 import th.ac.kmitl.it.faceinfo.allfragment.*;
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.faceplusplus.AddContact;
@@ -14,6 +16,7 @@ import th.ac.kmitl.it.faceinfo.faceplusplus.AddContact;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ public class MainActivity extends Activity {
 	private ListView mDrawerList;
 	private CharSequence mTitle;
 	private List<Fragment> listFragment;
+	private SimpleFacebook sf;
 	
 
 	@Override
@@ -143,6 +147,20 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		sf = SimpleFacebook.getInstance(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		sf.onActivityResult(this, requestCode, resultCode, data);
+	}
+	
+	
 
 
 }

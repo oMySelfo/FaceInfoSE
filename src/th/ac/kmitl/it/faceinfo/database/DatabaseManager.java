@@ -39,13 +39,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		sql = "Select user_key from user;";
 		Cursor cursor =  db.rawQuery(sql, null);
-		if(cursor != null){
-			cursor.moveToNext();
+		if(cursor.moveToNext()){
 			data.USER_KEY = cursor.getString(0);
 			Log.d("Database","User Key = " + data.USER_KEY);
 			return true;
 		}
-		Log.d("Database","User Key = " + data.USER_KEY);
+		Log.d("Database","No User Key");
 		return false;
 	}
 	

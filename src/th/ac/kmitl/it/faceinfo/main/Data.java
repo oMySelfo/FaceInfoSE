@@ -18,7 +18,7 @@ public class Data {
 
 	
 	
-	public String USER_KEY = "0000000000"; // / Stups UserKey;
+	public String USER_KEY = "";
 	public String TEMP_KEY;
 	public HttpRequests HTTPREQESTS;
 
