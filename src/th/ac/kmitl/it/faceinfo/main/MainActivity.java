@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.allfragment.*;
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.faceplusplus.AddContact;
 
 
@@ -41,7 +42,8 @@ public class MainActivity extends Activity {
 		Model.setActivity(this);
 		listFragment = new ArrayList<Fragment>();
 		setContentView(R.layout.activity_main);
-		Data.getData().setDatabaseManager(this);
+		DatabaseManager dbm = new DatabaseManager(this);
+		Data.getData().setDatabaseManager(dbm);
 		mTitle = getTitle();
 		createfragment();
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);

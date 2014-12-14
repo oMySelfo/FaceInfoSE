@@ -37,8 +37,8 @@ public class Data {
 		return dbm;
 	}
 	
-	public void setDatabaseManager(Context context){
-		dbm = new DatabaseManager(context);
+	public void setDatabaseManager(DatabaseManager dbm){
+		this.dbm = dbm;
 
 	}
 
