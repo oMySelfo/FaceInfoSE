@@ -68,6 +68,8 @@ public class MainActivity extends Activity {
 		listFragment.add(new test1());
 		listFragment.add(new test2());
 		listFragment.add(new CreateGroup());
+		listFragment.add(new PersonToGroup());
+		
 		
 	}
 

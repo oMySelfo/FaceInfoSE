@@ -14,13 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ContactAdapter extends BaseAdapter {
+public class AllContactAdapter extends BaseAdapter {
 
 	private static List<testdata> listContact;
 
 	private LayoutInflater mInflater;
 	
-	public ContactAdapter(LayoutInflater Inflater,List<testdata> list) {
+	public AllContactAdapter(LayoutInflater Inflater,List<testdata> list) {
 		super();
 		listContact = list;
 		mInflater = Inflater;
