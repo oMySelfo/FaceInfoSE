@@ -41,4 +41,6 @@ public class DeleteContact extends Thread {
 		 Log.d("DeleteContact", "EndThread");
 		 
 	 }
+	 
+	
 }

@@ -16,10 +16,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		createUser(db);
 		createContact(db);
 		createPhoto(db);
 		createGroup(db);
-		createUser(db);
 		createContactGroup(db);
 		createContactPhoto(db);
 	}
@@ -31,14 +31,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	}
 	
 	
-	private void createContact(SQLiteDatabase db){
+	
+	
+	
+	
+	public void createContact(SQLiteDatabase db){
 		sql="";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create Contact");
 	}
 	public void createUser(SQLiteDatabase db){
-		sql="";
+		sql="CREATE TABLE `user` (`user_key` VARCHAR(45) NOT NULL,PRIMARY KEY (`user_key`));";
 		
 		db.execSQL(sql);
 		Log.d("Database", "Create User");
