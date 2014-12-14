@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import th.ac.kmitl.it.faceinfo.allfragment.AllContract;
 import th.ac.kmitl.it.faceinfo.allfragment.testFragment;
 
 
@@ -40,6 +41,7 @@ public class MainActivity extends Activity {
 		mDrawerList = (ListView) findViewById(R.id.slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		displayView(0);
 		getActionBar().setHomeButtonEnabled(true);
 		SetMenuSliding();
 
@@ -57,6 +59,9 @@ public class MainActivity extends Activity {
 	public void displayView(int position) {
 		Fragment fragment = null;
 		switch (position) {
+		case 0:
+			fragment = new AllContract();
+			break;
 		case 4:
 			fragment = new testFragment();
 			break;
