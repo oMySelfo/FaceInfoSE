@@ -1,8 +1,8 @@
-package th.ac.kmitl.it.faceinfo.allfragment;
+package th.ac.kmitl.it.faceinfo.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import th.ac.kmitl.it.faceinfo.allfragment.testdata;
 import th.ac.kmitl.it.faceinfo.main.R;
 
 import android.graphics.Bitmap;

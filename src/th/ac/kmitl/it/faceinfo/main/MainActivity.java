@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.allfragment.AllContract;
-import th.ac.kmitl.it.faceinfo.allfragment.test2;
 import th.ac.kmitl.it.faceinfo.allfragment.testFragment;
 
 
@@ -33,13 +32,16 @@ public class MainActivity extends Activity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mDrawerList;
 	private CharSequence mTitle;
+	private List<Fragment> listFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		listFragment = new ArrayList<Fragment>();
 		setContentView(R.layout.activity_main);
 		Data.getData().setDatabaseManager(this);
 		mTitle = getTitle();
+		createfragment();
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_frame);
 		mDrawerList = (ListView) findViewById(R.id.slidermenu);
@@ -49,6 +51,10 @@ public class MainActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		SetMenuSliding();
 
+	}
+	private void createfragment(){
+		listFragment.add(new AllContract());
+		listFragment.add(new testFragment());
 	}
 
 	private class SlideMenuClickListener implements
@@ -61,20 +67,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void displayView(int position) {
-		Fragment fragment = null;
-		switch (position) {
-		case 0:
-			fragment = new AllContract();
-			break;
-		case 4:
-			fragment = new testFragment();
-			break;
-		case 5:
-			fragment = new test2();
-			break;
-		default:
-			break;
-		}
+		Fragment fragment = listFragment.get(position);
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().addToBackStack(null)
