@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import th.ac.kmitl.it.faceinfo.allfragment.AllContract;
-import th.ac.kmitl.it.faceinfo.allfragment.testFragment;
+import th.ac.kmitl.it.faceinfo.allfragment.*;
+import th.ac.kmitl.it.faceinfo.faceplusplus.AddContact;
 
 
 
@@ -54,7 +54,12 @@ public class MainActivity extends Activity {
 	}
 	private void createfragment(){
 		listFragment.add(new AllContract());
-		listFragment.add(new testFragment());
+		listFragment.add(new AddContacts());
+		listFragment.add(new Group());
+		listFragment.add(new Aboutus());
+		listFragment.add(new test1());
+		listFragment.add(new test2());
+		
 	}
 
 	private class SlideMenuClickListener implements
@@ -97,9 +102,9 @@ public class MainActivity extends Activity {
 		
 		String[][] dataSliding = new String[][] {
 				{ R.drawable.ic_contacts + "", "All Contacts" },
-				{ R.drawable.ic_aboutus + "", "About Us" },
 				{ R.drawable.bt_plus + "", "Add Contacts" },
 				{ R.drawable.ic_group + "", "Group" }, 
+				{ R.drawable.ic_aboutus + "", "About Us" },
 				{R.drawable.bt_plus+"","Test"},
 				{R.drawable.bt_plus+"","Test2"}};
 		String[] from = { "icon", "title" };
