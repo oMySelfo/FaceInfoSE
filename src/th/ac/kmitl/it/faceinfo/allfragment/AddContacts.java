@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.adapter.CoverFlowAdapter;
-import th.ac.kmitl.it.faceinfo.main.Model;
+
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import at.technikum.mti.fancycoverflow.FancyCoverFlow;
 public class AddContacts extends Fragment {
 	public AddContacts() {}
 	private FancyCoverFlow fancyCoverFlow;
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,6 +33,7 @@ public class AddContacts extends Fragment {
 		View rootView = inflater.inflate(R.layout.addcontacts, container,false);
 		List<Integer> images = new ArrayList<Integer>();
 		images.add(R.drawable.add_image);
+		
 		CoverFlowAdapter adapter = new CoverFlowAdapter();
 		adapter.setImages(images);
 		
@@ -59,6 +63,11 @@ public class AddContacts extends Fragment {
 				return true;
 			}
 		});
+		
+	
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().addToBackStack(null)
+					.replace(R.id.addcontact_frame, new expandableList()).commit();
 		return rootView;
 	}
 	
@@ -67,7 +76,7 @@ public class AddContacts extends Fragment {
 
 
 	private void alertDiaLog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(Model.getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData().getMainActivity());
 		builder.setTitle("Delete")
 				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
 				.setMessage("Do you want to delete this picture?")
