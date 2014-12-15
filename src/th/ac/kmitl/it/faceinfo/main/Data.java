@@ -59,10 +59,7 @@ public class Data {
 
 		return this.facePP;
 	}
-	
-	public String keyConcat(String name){
-		return USER_KEY.concat("_").concat(name);
-	}
+
 
 
 }

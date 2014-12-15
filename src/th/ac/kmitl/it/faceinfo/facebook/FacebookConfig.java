@@ -11,8 +11,8 @@ import android.app.Application;
 
 public class FacebookConfig extends Application{
 	
-	private static final String APP_ID = "779665852089901";
-	private static final String APP_NAMESPACE = "itkmitl_faceinfo";
+	private static final String APP_ID = "219333394936042";
+	private static final String APP_NAMESPACE = "kakqwekak";
 
 	@Override
 	public void onCreate() {

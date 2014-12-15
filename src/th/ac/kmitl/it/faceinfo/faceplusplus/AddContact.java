@@ -14,13 +14,13 @@ public class AddContact extends Thread {
 	private Data data;
 	private FacePlusPlus facePP;
 	private HttpRequests httpRequests;
-	private String name;
+
 	
-	 public AddContact(String name) {
+	 public AddContact() {
 		data = Data.getData();
 		facePP = data.getFacePP();
 		httpRequests = data.HTTPREQESTS;
-		this.name = name;
+
 	}
 	 
 	 
@@ -31,7 +31,7 @@ public class AddContact extends Thread {
 				facePP.setWaitSync();
 
 				facePP.RESULT = httpRequests.personCreate(new PostParameters()
-						.setGroupName(data.USER_KEY).setPersonName(data.keyConcat(name)));
+						.setGroupName(data.USER_KEY));
 				
 				
 			} catch (FaceppParseException e) {

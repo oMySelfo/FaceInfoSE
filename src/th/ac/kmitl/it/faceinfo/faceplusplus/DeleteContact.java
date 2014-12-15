@@ -30,7 +30,7 @@ public class DeleteContact extends Thread {
 		 try {
 				facePP.setWaitSync();
 
-				facePP.RESULT = httpRequests.personCreate(new PostParameters()
+				facePP.RESULT = httpRequests.personDelete(new PostParameters()
 						.setPersonId(id));
 				
 				

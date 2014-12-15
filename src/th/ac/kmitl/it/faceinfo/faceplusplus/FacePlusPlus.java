@@ -1,7 +1,10 @@
 package th.ac.kmitl.it.faceinfo.faceplusplus;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
+import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.main.Data;
 
 import android.util.Log;
@@ -34,16 +37,41 @@ public class FacePlusPlus{
 	
 	
 	public void addUser(){
+		setWaitSync();
 		new AddUser().start();
+		while(checkWaitSync()){
+			System.out.print("");
+		}
 	}
 	public void deleteUser(){
+		setWaitSync();
 		new DeleteUser().start();
+		while(checkWaitSync()){
+			System.out.print("");
+		}
 	}
-	public void createContact(String name){
-		new AddContact(name).start();
+	public void createContact(){
+		setWaitSync();
+		new AddContact().start();
+		while(checkWaitSync()){
+			System.out.print("");
+		}
 	}
 	public void deleteContact(String id){
+		setWaitSync();
 		new DeleteContact(id).start();
+		while(checkWaitSync()){
+			System.out.print("");
+		}
+	}
+	public void deleteAllContact(List<Contact> listContact){
+		Log.d("Delete All Contact", "Start");
+		for(Contact contact : listContact){
+			String con_id = contact.getCon_id();
+			deleteContact(con_id);
+
+		}
+		Log.d("Delete All Contact", "End");
 	}
 	
 	public void setWaitSync() {
