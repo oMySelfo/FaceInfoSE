@@ -2,7 +2,8 @@ package th.ac.kmitl.it.faceinfo.adapter;
 
 import java.util.List;
 
-import th.ac.kmitl.it.faceinfo.allfragment.testdata;
+
+import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.main.R;
 
 import android.graphics.Bitmap;
@@ -16,13 +17,13 @@ import android.widget.TextView;
 
 public class AllContactAdapter extends BaseAdapter {
 
-	private static List<testdata> listContact;
+	private  List<Contact> listContact;
 
 	private LayoutInflater mInflater;
 	
-	public AllContactAdapter(LayoutInflater Inflater,List<testdata> list) {
+	public AllContactAdapter(LayoutInflater Inflater,List<Contact> listContact) {
 		super();
-		listContact = list;
+		this.listContact = listContact;
 		mInflater = Inflater;
 	}
 
@@ -50,9 +51,9 @@ public class AllContactAdapter extends BaseAdapter {
 		convertView = mInflater.inflate(R.layout.showperson, parent, false);
 		TextView txt = (TextView) convertView.findViewById(R.id.person_txt);
 		ImageView img = (ImageView) convertView.findViewById(R.id.person_img);
-		txt.setText(listContact.get(position).getName());
-		//Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPath());
-		//img.setImageBitmap(bmImg);	
+		txt.setText(listContact.get(position).getCon_name());
+//	Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPath());
+//		img.setImageBitmap(bmImg);	
 		return convertView;
 	}
 

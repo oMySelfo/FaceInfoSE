@@ -2,7 +2,8 @@ package th.ac.kmitl.it.faceinfo.adapter;
 
 import java.util.List;
 
-import th.ac.kmitl.it.faceinfo.allfragment.testdata;
+
+import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PersonToGroupAdapter extends BaseAdapter {
-	private static List<testdata> listContact;
+	private static List<Contact> listContact;
 	private boolean check;
 
 	private LayoutInflater mInflater;
 	
-	public PersonToGroupAdapter (LayoutInflater Inflater,List<testdata> list) {
+	public PersonToGroupAdapter (LayoutInflater Inflater,List<Contact> listContact) {
 		super();
-		listContact = list;
+		this.listContact = listContact;
 		mInflater = Inflater;
 	}
 
-	public static List<testdata> getListContact() {
-		return listContact;
-	}
+
 
 	@Override
 	public int getCount() {
@@ -58,13 +57,13 @@ public class PersonToGroupAdapter extends BaseAdapter {
 		//Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPath());
 		//img.setImageBitmap(bmImg);	
 		check=false;
-		txt.setText(listContact.get(position).getName());
+		txt.setText(listContact.get(position).getCon_name());
 		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
-				listContact.get(position).setGroup(isChecked);
+				//listContact.get(position).setGroup(isChecked);
 				
 			}
 		});

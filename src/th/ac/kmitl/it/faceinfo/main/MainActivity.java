@@ -44,9 +44,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Model.setActivity(this);
 		listFragment = new ArrayList<Fragment>();
 		setContentView(R.layout.activity_main);
+		Data.getData().setMainActivity(this);
 		Data.getData().setDatabaseManager(this);
 		Data.getData().setFacebookManager(this);
 		mTitle = getTitle();

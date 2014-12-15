@@ -18,6 +18,7 @@ public class Data {
 	private FacePlusPlus facePP;
 	private DatabaseManager dbm;
 	private FacebookManager fm;
+	private MainActivity ma;
 	
 	
 	public String USER_KEY = "";
@@ -58,6 +59,13 @@ public class Data {
 		}
 
 		return this.facePP;
+	}
+	
+	public void setMainActivity(MainActivity ma){
+		this.ma = ma;
+	}
+	public MainActivity getMainActivity(){
+		return ma;
 	}
 
 

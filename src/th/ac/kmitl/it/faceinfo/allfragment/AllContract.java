@@ -5,8 +5,10 @@ import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.adapter.AllContactAdapter;
 
+import th.ac.kmitl.it.faceinfo.database.Contact;
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.database.test_datacontract;
-import th.ac.kmitl.it.faceinfo.main.Model;
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -22,14 +24,22 @@ import android.widget.ListView;
 public class AllContract extends Fragment {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+	private List<Contact> listContact;
+	private Data data;
+	private DatabaseManager dbm;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.list_allcontract, container,false);
+		
+		data = Data.getData();
+		dbm = data.getDmb();
+		listContact = dbm.selectAllContact();
+		
+		
 		ListView list = (ListView) rootView.findViewById(R.id.listView1);
-		Model.setListperson(createlist());
-		list.setAdapter(new AllContactAdapter(inflater, Model.getListperson()));
+		list.setAdapter(new AllContactAdapter(inflater,listContact ));
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -37,23 +47,13 @@ public class AllContract extends Fragment {
 					long id) {
 				// TODO Auto-generated method stub
 				System.out.println(position);
-				Model.getActivity().displayView(7);
+				data.getMainActivity().displayView(7);
 				
 			}
 		});
 		return rootView;
 	}
-	private List<testdata> createlist(){
-		List<testdata> data = new ArrayList<testdata>();
-		String[] name= {"jays","222","111"};
-		for(int i=0;i<name.length;i++){
-			testdata test = new testdata("AAA",name[i]);
-			data.add(test);
-		}
-		return  data;
-		
-	}
-	
+
 
 	
 	

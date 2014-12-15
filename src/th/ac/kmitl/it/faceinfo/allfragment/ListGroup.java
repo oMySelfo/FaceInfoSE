@@ -6,8 +6,8 @@ import java.util.Date;
 
 
 
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
-import th.ac.kmitl.it.faceinfo.main.Model;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
 import android.content.Intent;
@@ -23,6 +23,8 @@ import android.widget.ImageButton;
 public class ListGroup extends Fragment {
 	public ListGroup() {}
 	
+	private Data data;
+	private MainActivity ma;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,11 +32,13 @@ public class ListGroup extends Fragment {
 		View rootView = inflater.inflate(R.layout.listgroup, container,false);
 		ImageButton creategroup = (ImageButton) rootView.findViewById(R.id.btn_addgruop);
 		
+		data = Data.getData();
+		ma = data.getMainActivity();
 		
 		creategroup.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Model.getActivity().displayView(6);
+				ma.displayView(6);
 			}
 		});
 		return rootView;

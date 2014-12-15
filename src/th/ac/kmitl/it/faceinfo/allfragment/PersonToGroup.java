@@ -1,9 +1,13 @@
 package th.ac.kmitl.it.faceinfo.allfragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.adapter.PersonToGroupAdapter;
-import th.ac.kmitl.it.faceinfo.main.Model;
+import th.ac.kmitl.it.faceinfo.database.Contact;
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
+import th.ac.kmitl.it.faceinfo.main.Data;
+import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -16,7 +20,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 public class PersonToGroup extends Fragment {
-	PersonToGroupAdapter adapter;
+	private PersonToGroupAdapter adapter;
+	private  Data data;
+	private DatabaseManager dbm;
+	private List<Contact> listContact;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,7 +31,11 @@ public class PersonToGroup extends Fragment {
 		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.list_persontogroup, container,false);
 		ListView list = (ListView) rootView.findViewById(R.id.persontogroup_list);
-		adapter = new PersonToGroupAdapter(inflater,Model.getListperson());
+		data = Data.getData();
+		dbm = data.getDmb();
+		listContact = dbm.selectAllContact();
+		
+		adapter = new PersonToGroupAdapter(inflater,listContact);
 		list.setAdapter(adapter);
 		Button btn = (Button) rootView.findViewById(R.id.persontogroup_button);
 		btn.setOnClickListener(new OnClickListener() {

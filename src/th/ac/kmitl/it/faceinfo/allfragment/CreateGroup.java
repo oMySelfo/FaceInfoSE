@@ -1,5 +1,6 @@
 package th.ac.kmitl.it.faceinfo.allfragment;
-import th.ac.kmitl.it.faceinfo.main.Model;
+import th.ac.kmitl.it.faceinfo.main.Data;
+import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
 import android.content.Context;
@@ -16,6 +17,9 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 public class CreateGroup extends Fragment{
+	private Data data;
+	private MainActivity ma;
+	
 public CreateGroup() {}
 	
 	String arr_images[] = { R.drawable.family_cl + "",
@@ -27,12 +31,14 @@ public CreateGroup() {}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		final View rootView = inflater.inflate(R.layout.creategroup, container,false);
-		
+		final View rootView = inflater.inflate(R.layout.creategroup, container,false);		
 		final Spinner spinnerPicGroup = (Spinner) rootView
 				.findViewById(R.id.spinner_picgroup);
 		
-		spinnerPicGroup.setAdapter(new MyAdapter(Model.getActivity(),
+		data = Data.getData();
+		ma = data.getMainActivity();
+		
+		spinnerPicGroup.setAdapter(new MyAdapter(Data.getData().getMainActivity(),
 				R.layout.row_creategroup, arr_images));
 		Button bt_addgroup = (Button)rootView.findViewById(R.id.btn_addgroup);
 		
@@ -41,7 +47,7 @@ public CreateGroup() {}
 			@Override
 			public void onClick(View v) {
 				EditText et = (EditText)rootView.findViewById(R.id.txt_namegroup);
-				Model.getActivity().displayView(2);
+				ma.displayView(2);
 			}			
 		});
 
@@ -69,7 +75,7 @@ public CreateGroup() {}
 		public View getCustomView(int position, View convertView,
 				ViewGroup parent) {
 
-			LayoutInflater inflater = Model.getActivity().getLayoutInflater();
+			LayoutInflater inflater = ma.getLayoutInflater();
 			View row = inflater.inflate(R.layout.row_creategroup, parent,
 					false);
 
