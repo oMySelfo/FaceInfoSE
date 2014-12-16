@@ -64,9 +64,6 @@ public class AddContacts extends Fragment {
 		});
 		
 	
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction().addToBackStack(null)
-					.replace(R.id.addcontact_frame, new expandableList()).commit();
 		return rootView;
 	}
 	
