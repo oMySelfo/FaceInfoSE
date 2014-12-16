@@ -22,7 +22,7 @@ public class Data {
 	private MainActivity ma;
 	private Contact contact;
 	
-	
+
 	public Contact getContact() {
 		return contact;
 	}
@@ -30,6 +30,7 @@ public class Data {
 	public void setContact() {
 		contact = new Contact();
 	}
+
 	public String USER_KEY = "";
 	public String TEMP_KEY;
 	public HttpRequests HTTPREQESTS;

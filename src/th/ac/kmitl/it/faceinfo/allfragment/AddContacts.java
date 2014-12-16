@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.adapter.CoverFlowAdapter;
-
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.AlertDialog;
