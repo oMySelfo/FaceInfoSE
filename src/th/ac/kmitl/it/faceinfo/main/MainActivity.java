@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 		mDrawerList = (ListView) findViewById(R.id.slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		displayView(8);
+		displayView(0);
 		getActionBar().setHomeButtonEnabled(true);
 		SetMenuSliding();
 
