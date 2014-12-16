@@ -56,20 +56,21 @@ public class MainActivity extends Activity {
 		mDrawerList = (ListView) findViewById(R.id.slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		displayView(0);
+		displayView(8);
 		getActionBar().setHomeButtonEnabled(true);
 		SetMenuSliding();
 
 	}
 	private void createfragment(){
 		listFragment.add(new AllContract());
-		listFragment.add(new AddContacts());
+		listFragment.add(new AddContacts(1));
 		listFragment.add(new ListGroup());
 		listFragment.add(new Aboutus());
 		listFragment.add(new test1());
 		listFragment.add(new test2());
 		listFragment.add(new CreateGroup());
 		listFragment.add(new PersonToGroup());
+		listFragment.add(new AddContacts(2));
 		
 		
 	}
