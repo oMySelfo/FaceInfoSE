@@ -1,5 +1,7 @@
 package th.ac.kmitl.it.faceinfo.database;
 
+import th.ac.kmitl.it.faceinfo.main.Data;
+
 public class Contact {
 	
 	private String con_id;
@@ -13,6 +15,7 @@ public class Contact {
 	private String con_detail;
 	private String con_date_add;
 	private String con_birthday;
+	private String photo_path;
 	public String getCon_id() {
 		return con_id;
 	}
@@ -79,6 +82,12 @@ public class Contact {
 	public void setCon_birthday(String con_birthday) {
 		this.con_birthday = con_birthday;
 	}
+	public String getPhoto_path(){
+		DatabaseManager dbm = Data.getData().getDmb();
+		photo_path = dbm.getPhotoPath(photo_id);
+		return photo_path;
+	}
+	
 	
 
 }

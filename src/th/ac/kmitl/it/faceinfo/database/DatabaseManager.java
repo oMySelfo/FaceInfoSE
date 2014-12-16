@@ -1,6 +1,5 @@
 package th.ac.kmitl.it.faceinfo.database;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +26,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		createUser(db);
 		createContact(db);
-		// createPhoto(db);
-		// createGroup(db);
-		// createContactGroup(db);
-		// createContactPhoto(db);
+		createPhoto(db);
+		createGroup(db);
+		createContactGroup(db);
+
 	}
 
 	@Override
@@ -46,8 +45,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		if (cursor.moveToNext()) {
 			data.USER_KEY = cursor.getString(0);
 			Log.d("Database", "User Key = " + data.USER_KEY);
+
 			return true;
 		}
+
 		Log.d("Database", "No User Key");
 		return false;
 	}
@@ -57,10 +58,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put("user_key", userKey);
 		db.insert("user", null, values);
+		db.close();
 		data.USER_KEY = userKey;
 		Log.d("Database", "Create USER_KEY : " + userKey);
 	}
 
+	public void insertPhoto(Photo photo){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("con_id", photo.getCon_id());
+		values.put("photo_id", photo.getPhoto_id());
+		values.put("photo_path", photo.getPhoto_path());
+		db.insert("photo", null, values);
+		db.close();
+	}
 
 	
 	public void insertContactFacebook(String con_id,String con_name,String con_facebook){
@@ -70,12 +81,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		values.put("con_name", con_name);
 		values.put("con_facebook", con_facebook);
 		db.insert("contact", null, values);
+		db.close();
 		
 	}
 	public List<Contact> selectAllContact(){
 		List<Contact> listContact = new ArrayList<Contact>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		sql = "Select con_id,con_name,con_fullname,con_facebook,con_email,con_phone,con_address,con_birthday,con_date_add,photo_id,con_detail from contact;";
+		sql = "Select con_id,con_name,con_fullname,con_facebook," +
+				"con_email,con_phone,con_address,con_birthday," +
+				"con_date_add,photo_id,con_detail from contact;";
 		Cursor cursor = db.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
 			Contact contact = new Contact();
@@ -92,6 +106,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			contact.setCon_detail(cursor.getString(10));
 			listContact.add(contact);
 		}
+		cursor.close();
+		db.close();
 		
 		return listContact;
 	}
@@ -105,6 +121,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 	}
 
+	public String getPhotoPath(String photo_id){
+		SQLiteDatabase db = this.getReadableDatabase();
+		sql = "Select photo_path from photo where photo_id = '"+ photo_id+"';";
+		Cursor cursor = db.rawQuery(sql, null);
+		if (cursor.moveToNext()) {
+
+			return cursor.getString(0);
+		}
+
+		return null;
+		
+	}
 	private void createContact(SQLiteDatabase db) {
 		sql = "CREATE TABLE `contact` " +
 				"(`con_id` VARCHAR(45) PRIMARY KEY NOT NULL," +
@@ -129,28 +157,37 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	}
 
 	private void createPhoto(SQLiteDatabase db) {
-		sql = "";
-
+		sql = "CREATE TABLE `photo` " +
+				"(`photo_id` VARCHAR(45) PRIMARY KEY NOT NULL," +
+				"`con_id` VARCHAR(45) NOT NULL," +
+				"`photo_detail` VARCHAR(50) NULL," +
+				" `photo_date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP," +
+				"`photo_path` VARCHAR(50) NULL);";
 		db.execSQL(sql);
 		Log.d("Database", "Create Photo");
 	}
 
 	private void createGroup(SQLiteDatabase db) {
-		sql = "";
+		sql = "CREATE TABLE `group` " +
+				"(`group_id` INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL," +
+				"`group_img` VARCHAR(45) NOT NULL," +
+				" `group_date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP," +
+				"`group_detail` VARCHAR(50) NULL);";
 
 		db.execSQL(sql);
 		Log.d("Database", "Create Group");
 	}
+	
+	
 
-	private void createContactPhoto(SQLiteDatabase db) {
-		sql = "";
 
-		db.execSQL(sql);
-		Log.d("Database", "Create ContactPhoto");
-	}
 
 	private void createContactGroup(SQLiteDatabase db) {
-		sql = "";
+		sql = "CREATE TABLE `con_group` " +
+				"(`con_group_id` INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL," +
+				"`group_id` INTEGER  NOT NULL," +
+				"`con_id` VARCHAR(50) NULL);";
+
 
 		db.execSQL(sql);
 		Log.d("Database", "Create ContactGroup");

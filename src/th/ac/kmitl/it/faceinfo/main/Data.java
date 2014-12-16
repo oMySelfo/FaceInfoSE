@@ -21,6 +21,7 @@ public class Data {
 	private MainActivity ma;
 	
 	
+	
 	public String USER_KEY = "";
 	public String TEMP_KEY;
 	public HttpRequests HTTPREQESTS;

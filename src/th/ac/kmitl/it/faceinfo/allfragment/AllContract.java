@@ -7,7 +7,6 @@ import th.ac.kmitl.it.faceinfo.adapter.AllContactAdapter;
 
 import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
-import th.ac.kmitl.it.faceinfo.database.test_datacontract;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;

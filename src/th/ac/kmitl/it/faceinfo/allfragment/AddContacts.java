@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.adapter.CoverFlowAdapter;
-import th.ac.kmitl.it.faceinfo.main.Model;
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -67,7 +67,7 @@ public class AddContacts extends Fragment {
 
 
 	private void alertDiaLog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(Model.getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData().getMainActivity());
 		builder.setTitle("Delete")
 				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
 				.setMessage("Do you want to delete this picture?")
