@@ -1,19 +1,30 @@
 package th.ac.kmitl.it.faceinfo.allfragment;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import th.ac.kmitl.it.faceinfo.adapter.CoverFlowAdapter;
 import th.ac.kmitl.it.faceinfo.main.Data;
+import th.ac.kmitl.it.faceinfo.main.MainActivity;
 
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,7 +32,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,8 +54,15 @@ public class AddContacts extends Fragment {
 	private List<Integer> EdittextId;
 	private EditText edittext;
 	private View rootView;
-	private List<Integer> images;
+	private List<Bitmap> images;
 	private boolean isOnClick;
+	private Uri uri;
+	private String path;
+	private int REQUEST_GALLERY = 1;
+	private int REQUEST_CAMERA = 2;
+	private MainActivity ma;
+	private Bitmap bitmap;
+	private CoverFlowAdapter adapter;
 
 	public AddContacts(int mode) {
 		super();
@@ -66,12 +83,14 @@ public class AddContacts extends Fragment {
 		EdittextId.add(R.id.addcontact_mail);
 		EdittextId.add(R.id.addcontact_birthday);
 		EdittextId.add(R.id.addcontact_detail);
-		images = new ArrayList<Integer>();
-		images.add(R.drawable.tae);
-		images.add(R.drawable.add_image);
+		images = new ArrayList<Bitmap>();
+		images.add(BitmapFactory.decodeResource(rootView.getResources(),
+				R.drawable.add_image));
+
 		data = Data.getData();
-		CoverFlowAdapter adapter = new CoverFlowAdapter();
 		isOnClick = false;
+		ma = Data.getData().getMainActivity();
+		adapter = new CoverFlowAdapter();
 		adapter.setImages(images);
 
 		fancyCoverFlow = (FancyCoverFlow) rootView
@@ -86,10 +105,10 @@ public class AddContacts extends Fragment {
 		fancyCoverFlow.setScaleDownGravity(0.2f);
 		fancyCoverFlow.setScaleX(1.6f);
 		fancyCoverFlow.setScaleY(1.6f);
+		fancyCoverFlow.setY(50);
 		fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
 		eventfancyCoverFlowClick();
-		
-		
+
 		deletebutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_deletebutton);
 		editbutton = (ImageButton) rootView
@@ -143,25 +162,27 @@ public class AddContacts extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> view, View container,
 					int position, long id) {
+				isOnClick = true;
 				if (position == images.size() - 1) {
-					view.showContextMenu();
-					
+					container.showContextMenu();
 					System.out.println("Okkkkkkkkkkk");
 				}
+				isOnClick = false;
 			}
 		});
-
 		// Long Click (Delete Picture)
 		fancyCoverFlow
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 					@Override
 					public boolean onItemLongClick(AdapterView<?> view,
 							View container, int position, long id) {
+						if (isOnClick)
+							return false;
 						if (position != images.size() - 1) {
 							alertDiaLog();
+							return true;
 						}
-						System.out.println("FlowCurPos " + position);
-						return true;
+						return false;
 					}
 				});
 
@@ -180,17 +201,31 @@ public class AddContacts extends Fragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getTitle() == "TakePicture") {
 			System.out.println("TakePicture");
-			alertDiaLog();
+			Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+					.format(new Date());
+			String imageFileName = "IMG_" + timeStamp + ".jpg";
+			File f = new File(Environment.getExternalStorageDirectory(),
+					"DCIM/Camera/" + imageFileName);
+			uri = Uri.fromFile(f);
+			path = uri.getPath();
+			it.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+			startActivityForResult(Intent.createChooser(it, "Take a picture"),
+					REQUEST_CAMERA);
+
 		} else if (item.getTitle() == "Gallery") {
 			System.out.println("Gallery");
+			Intent itGallery = new Intent(Intent.ACTION_GET_CONTENT);
+			itGallery.setType("image/*");
+			startActivityForResult(
+					Intent.createChooser(itGallery, "Select Picture"),
+					REQUEST_GALLERY);
 		} else {
 			return false;
 		}
 		return true;
 
 	}
-	
-	
 
 	private void alertDiaLog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
@@ -218,4 +253,56 @@ public class AddContacts extends Fragment {
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
+			ma.getContentResolver().notifyChange(uri, null);
+			ContentResolver cr = ma.getContentResolver();
+			try {
+				bitmap = Media.getBitmap(cr, uri);
+				images.add(images.size() - 1, bitmap);
+				adapter.setImages(images);
+				fancyCoverFlow.setAdapter(adapter);
+				path = uri.getPath();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (requestCode == REQUEST_GALLERY && resultCode == ma.RESULT_OK) {
+			Uri uri = data.getData();
+			try {
+				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
+				images.add(images.size() - 1, bitmap);
+				adapter.setImages(images);
+				fancyCoverFlow.setAdapter(adapter);
+				
+				String imgeUrl = MediaStore.Images.Media.insertImage(ma.getContentResolver(),bitmap,"kla","jay");
+				Uri uri2 = Uri.parse(imgeUrl);
+				File imageFile = new File(getRealPathFromURI(uri2));
+				path = imageFile.getPath();
+				System.out.println(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	private String getRealPathFromURI(Uri contentURI) {
+		String result;
+		Cursor cursor = ma.getContentResolver().query(contentURI, null, null,
+				null, null);
+		if (cursor == null) { 
+			result = contentURI.getPath();
+		} else {
+			cursor.moveToFirst();
+			int idx = cursor
+					.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+			result = cursor.getString(idx);
+			cursor.close();
+		}
+		return result;
+	}
+
 }
