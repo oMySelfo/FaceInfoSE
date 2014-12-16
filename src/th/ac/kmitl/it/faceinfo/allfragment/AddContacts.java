@@ -45,6 +45,7 @@ public class AddContacts extends Fragment {
 	private EditText edittext;
 	private View rootView;
 	private List<Integer> images;
+	private boolean isOnClick;
 
 	public AddContacts(int mode) {
 		super();
@@ -70,7 +71,7 @@ public class AddContacts extends Fragment {
 		images.add(R.drawable.add_image);
 		data = Data.getData();
 		CoverFlowAdapter adapter = new CoverFlowAdapter();
-		
+		isOnClick = false;
 		adapter.setImages(images);
 
 		fancyCoverFlow = (FancyCoverFlow) rootView
@@ -87,24 +88,8 @@ public class AddContacts extends Fragment {
 		fancyCoverFlow.setScaleY(1.6f);
 		fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
 		eventfancyCoverFlowClick();
-
-		return rootView;
-	}
-
-	private void eventfancyCoverFlowClick() {
-		// Short Click (Add Picture)
-		registerForContextMenu(fancyCoverFlow);
-		fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> view, View container,
-					int position, long id) {
-				if (position == images.size() - 1) {
-					view.showContextMenu();
-					System.out.println("Okkkkkkkkkkk");
-				}
-			}
-		});
-
+		
+		
 		deletebutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_deletebutton);
 		editbutton = (ImageButton) rootView
@@ -148,7 +133,23 @@ public class AddContacts extends Fragment {
 			}
 		});
 
-		
+		return rootView;
+	}
+
+	private void eventfancyCoverFlowClick() {
+		// Short Click (Add Picture)
+		registerForContextMenu(fancyCoverFlow);
+		fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> view, View container,
+					int position, long id) {
+				if (position == images.size() - 1) {
+					view.showContextMenu();
+					
+					System.out.println("Okkkkkkkkkkk");
+				}
+			}
+		});
 
 		// Long Click (Delete Picture)
 		fancyCoverFlow
@@ -188,6 +189,8 @@ public class AddContacts extends Fragment {
 		return true;
 
 	}
+	
+	
 
 	private void alertDiaLog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
