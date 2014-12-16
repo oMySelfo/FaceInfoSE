@@ -2,6 +2,7 @@ package th.ac.kmitl.it.faceinfo.main;
 
 import org.json.JSONObject;
 
+import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.faceplusplus.FacePlusPlus;
@@ -19,8 +20,16 @@ public class Data {
 	private DatabaseManager dbm;
 	private FacebookManager fm;
 	private MainActivity ma;
+	private Contact contact;
 	
 	
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact() {
+		contact = new Contact();
+	}
 	public String USER_KEY = "";
 	public String TEMP_KEY;
 	public HttpRequests HTTPREQESTS;
@@ -67,6 +76,8 @@ public class Data {
 	public MainActivity getMainActivity(){
 		return ma;
 	}
+	
+
 
 
 

@@ -48,8 +48,8 @@ public class AddContacts extends Fragment {
 		fancyCoverFlow.setSpacing(10);
 		fancyCoverFlow.setMaxRotation(0);
 		fancyCoverFlow.setScaleDownGravity(0.2f);
-		fancyCoverFlow.setScaleX(1.8f);
-		fancyCoverFlow.setScaleY(1.8f);
+		fancyCoverFlow.setScaleX(1.2f);
+		fancyCoverFlow.setScaleY(1.2f);
 		fancyCoverFlow
 				.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
 		

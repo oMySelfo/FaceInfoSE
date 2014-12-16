@@ -3,9 +3,11 @@ package th.ac.kmitl.it.faceinfo.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 
 import android.graphics.Typeface;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -78,17 +80,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		String childtext = (String) getChild(groupPosition, childPosition);
 		convertView = mInflater.inflate(R.layout.child_expandablelistview, null);
 		final EditText txt = (EditText) convertView.findViewById(R.id.edit_exp);
+		
 		txt.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if(!hasFocus){
-					for(int i=0;i<hint.length;i++){
-						if(hint[i].equals(txt.getHint())){
-							System.out.println(hint[i]);
-							inputData[i]=txt.getText().toString();
-						}
+					if("Nickname".equals(txt.getHint().toString())){
+						Data.getData().getContact().setCon_name(txt.getText().toString());
 					}
 					
 				}
@@ -96,6 +96,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			}
 		});
 		txt.setHint(childtext);
+		if(childtext.equals("BirthDay")){
+			txt.setInputType(android.text.InputType.TYPE_CLASS_DATETIME);
+		}
 		
 		
 			return convertView;

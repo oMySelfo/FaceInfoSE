@@ -1,6 +1,7 @@
 package th.ac.kmitl.it.faceinfo.allfragment;
 
 import th.ac.kmitl.it.faceinfo.adapter.ExpandableListAdapter;
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.app.Fragment;
 import android.database.DataSetObserver;
@@ -18,10 +19,12 @@ public class expandableList extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		Data.getData().setContact();
 		View rootView = inflater.inflate(R.layout.expandablelistview, container,false);
 		ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView1);
 		expListView.setAdapter(new ExpandableListAdapter(inflater));
 		expListView.expandGroup(NAME);
+		
 		
 			
 			
