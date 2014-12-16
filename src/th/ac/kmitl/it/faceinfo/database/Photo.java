@@ -1,11 +1,18 @@
 package th.ac.kmitl.it.faceinfo.database;
 
+import java.io.File;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public class Photo {
 	private String con_id;
 	private String photo_id;
 	private String photo_detail;
 	private String photo_time_add;
 	private String photo_path;
+	
+	
 	public String getPhoto_path() {
 		return photo_path;
 	}
@@ -35,6 +42,17 @@ public class Photo {
 	}
 	public void setPhoto_time_add(String photo_time_add) {
 		this.photo_time_add = photo_time_add;
+	}
+	
+	public Bitmap getBitmap(){
+		File imgFile = new  File(photo_path);
+
+		if(imgFile.exists()){
+		    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+		    return myBitmap;
+		}
+		return null;
+	
 	}
 	
 	

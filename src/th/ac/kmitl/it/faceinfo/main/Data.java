@@ -20,16 +20,9 @@ public class Data {
 	private DatabaseManager dbm;
 	private FacebookManager fm;
 	private MainActivity ma;
-	private Contact contact;
 	
 
-	public Contact getContact() {
-		return contact;
-	}
 
-	public void setContact() {
-		contact = new Contact();
-	}
 
 	public String USER_KEY = "";
 	public String TEMP_KEY;

@@ -37,28 +37,24 @@ public class FacePlusPlus{
 	
 	
 	public void addUser(){
-		setWaitSync();
 		new AddUser().start();
 		while(checkWaitSync()){
 			System.out.print("");
 		}
 	}
 	public void deleteUser(){
-		setWaitSync();
 		new DeleteUser().start();
 		while(checkWaitSync()){
 			System.out.print("");
 		}
 	}
 	public void createContact(){
-		setWaitSync();
 		new AddContact().start();
 		while(checkWaitSync()){
 			System.out.print("");
 		}
 	}
 	public void deleteContact(String id){
-		setWaitSync();
 		new DeleteContact(id).start();
 		while(checkWaitSync()){
 			System.out.print("");
