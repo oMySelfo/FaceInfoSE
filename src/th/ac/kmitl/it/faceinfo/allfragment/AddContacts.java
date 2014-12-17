@@ -30,6 +30,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -615,5 +617,37 @@ public class AddContacts extends Fragment {
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
+	private Bitmap rotatedBitmap(String photoPath,Bitmap b){
+		ExifInterface ei;
+		try {
+			ei = new ExifInterface(photoPath);
+			int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+			switch(orientation) {
+			    case ExifInterface.ORIENTATION_ROTATE_90:
+			        b=RotateImage(b, 90);
+			        break;
+			    case ExifInterface.ORIENTATION_ROTATE_180:
+			        b=RotateImage(b, 180);
+			        break;
+			    // etc.
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+		
+		
+	}
+	public static Bitmap RotateImage(Bitmap source, float angle)
+	{
+	      Matrix matrix = new Matrix();
+	      matrix.postRotate(angle);
+	      return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+	}
+
+
+	
 
 }
