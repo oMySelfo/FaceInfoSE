@@ -41,7 +41,7 @@ public class Splash extends Fragment {
 				@Override
 				public void onClick(View v) {
 					fm.login();
-					Data.getData().getMainActivity().displayView(9);
+					Data.getData().getMainActivity().displayView(0);
 				}
 			});
 		}else{
@@ -50,7 +50,7 @@ public class Splash extends Fragment {
 
 			     @Override
 			     public void run() {
-			    	 Data.getData().getMainActivity().displayView(9);
+			    	 Data.getData().getMainActivity().displayView(0);
 			    }
 			};      
 			handler.postDelayed(delayRunnable, 2000);
