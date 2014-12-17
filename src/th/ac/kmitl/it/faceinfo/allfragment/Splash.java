@@ -5,7 +5,6 @@ import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
-import th.ac.kmitl.it.faceinfo.main.SplashActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;

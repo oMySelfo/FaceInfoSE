@@ -13,7 +13,7 @@ import th.ac.kmitl.it.faceinfo.database.Photo;
 import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
-import th.ac.kmitl.it.faceinfo.main.SplashActivity;
+
 
 public class LogOut extends Fragment {
 	public LogOut() {}
@@ -54,8 +54,7 @@ public class LogOut extends Fragment {
 									int which) {
 								System.out.println("---------Logout---------");
 								fm.logout();
-								startActivity(new Intent(getActivity(), SplashActivity.class));
-								getActivity().finish();
+								Data.getData().getMainActivity().displayView(9);
 							
 							}
 						});

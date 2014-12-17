@@ -14,7 +14,6 @@ import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
-import th.ac.kmitl.it.faceinfo.main.SplashActivity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
