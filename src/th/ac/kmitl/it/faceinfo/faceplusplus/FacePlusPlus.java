@@ -91,6 +91,12 @@ public class FacePlusPlus{
 			System.out.print("");
 		}
 	}
+	public void faceIndentify(Bitmap bitmap){
+		new FaceIndentify(bitmap).start();
+		while(checkWaitSync()){
+			System.out.print("");
+		}
+	}
 
 	
 	public void setWaitSync() {

@@ -15,6 +15,7 @@ import th.ac.kmitl.it.faceinfo.adapter.AllContactAdapter;
 import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.database.Photo;
+import th.ac.kmitl.it.faceinfo.faceplusplus.FacePlusPlus;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
@@ -53,6 +54,7 @@ public class AllContract extends Fragment {
 	private int REQUEST_GALLERY = 1;
 	private int REQUEST_CAMERA = 2;
 	private MainActivity ma;
+	private FacePlusPlus fpp;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +64,7 @@ public class AllContract extends Fragment {
 		ma = Data.getData().getMainActivity();
 		
 		data = Data.getData();
+		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
 		
@@ -145,8 +148,15 @@ public class AllContract extends Fragment {
 					&& resultCode == ma.RESULT_OK) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
-
 			}
+			
+			fpp.faceIndentify(bitmap);
+			this.data.getMainActivity().displayView(5);
+			
+			
+			
+			
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}catch (IOException e) {
