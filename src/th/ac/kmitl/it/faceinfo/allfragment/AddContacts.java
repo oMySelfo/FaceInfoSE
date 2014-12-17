@@ -427,6 +427,7 @@ public class AddContacts extends Fragment {
 		System.out.println(data);
 		bitmap = null;
 
+
 		try {		
 			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK && data==null) {
 				ma.getContentResolver().notifyChange(uri, null);
@@ -469,9 +470,6 @@ public class AddContacts extends Fragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		
-
 	}
 
 	private String getRealPathFromURI(Uri contentURI) {
