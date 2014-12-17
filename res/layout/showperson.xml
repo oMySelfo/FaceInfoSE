@@ -7,15 +7,15 @@
 
     <com.meg7.widget.CustomShapeImageView
         android:id="@+id/person_img"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
         android:src="@drawable/bt_plus" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="108dp"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
         <TextView
@@ -23,14 +23,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Large Text"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp" 
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/person_txt2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+<!--         <TextView -->
+<!--             android:id="@+id/person_txt2" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:text="Large Text" -->
+<!--             android:layout_marginLeft="50dp" -->
+<!--             android:layout_marginTop="20dp" -->
+<!--             android:textSize="20dp"  -->
+<!--             android:textAppearance="?android:attr/textAppearanceLarge" /> -->
     </LinearLayout>
 
 </LinearLayout>

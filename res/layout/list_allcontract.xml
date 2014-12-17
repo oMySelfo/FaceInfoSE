@@ -16,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" 
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="15dp">
     </ListView>
     <ImageButton
             android:id="@+id/findbtt"

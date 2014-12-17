@@ -516,7 +516,6 @@ public class AddContacts extends Fragment {
 				.setIcon(getResources().getDrawable(R.drawable.logo))
 				.setMessage("Please Select New Picture")
 				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
