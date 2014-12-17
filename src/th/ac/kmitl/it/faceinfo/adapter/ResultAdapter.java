@@ -20,6 +20,7 @@ public class ResultAdapter extends ArrayAdapter<ObjectResult>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
+		System.out.println(position);
 		ObjectResult user = getItem(position);    
 	    if (convertView == null) {
 	    	convertView = LayoutInflater.from(getContext()).inflate(R.layout.showresult_row, parent, false);
