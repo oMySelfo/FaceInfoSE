@@ -519,13 +519,22 @@ public class AddContacts extends Fragment {
 		int crop_height = (int) (2 * height);
 		int top_lefty = (int) (center_y - height);
 		// System.out.println(top_leftx)
-		System.out.println("w:" + width + " h:" + height);
+		top_leftx= top_leftx-5*top_leftx/100;
+		top_lefty =top_lefty - 5 * top_lefty / 100;
+		crop_width = crop_width + 10 * crop_width / 100;
+		crop_height = crop_height + 10* crop_height / 100;
+		if(top_leftx<0){top_leftx=0;}
+		if(top_lefty<0){top_lefty=0;}
+		if(crop_width+top_leftx > bitmap.getWidth()){
+			crop_width = bitmap.getWidth()-top_leftx;
+		}
+		if(crop_height+top_lefty > bitmap.getHeight()){
+			crop_height = bitmap.getHeight()-top_lefty;
+		}
+		System.out.println("Bitmap : "+bitmap.getWidth()+" "+bitmap.getHeight());
+		System.out.println("Crop :"+top_leftx+" "+top_lefty+" "+crop_width+top_leftx+" "+crop_height+top_lefty);
 
-		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,
-				(int) ((top_leftx - 5 * top_leftx / 100)),
-				(int) (top_lefty - 5 * top_leftx / 100),
-				(int) (crop_width + 10 * crop_width / 100), crop_height + 10
-						* crop_height / 100);
+		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,top_leftx,top_lefty,crop_width, crop_height );
 
 		// Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x ,
 		// (int)center_y , (int)width, (int)height);
