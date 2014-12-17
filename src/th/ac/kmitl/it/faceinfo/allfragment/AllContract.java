@@ -49,6 +49,7 @@ public class AllContract extends Fragment {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private List<Contact> listContact;
+	private List<Contact> searchContact;
 	private Data data;
 	private DatabaseManager dbm;
 	private View rootView;
@@ -71,6 +72,7 @@ public class AllContract extends Fragment {
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
+		searchContact = new ArrayList<Contact>();
 		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
 		sv.setOnQueryTextListener(new OnQueryTextListener() {
 			
@@ -83,8 +85,9 @@ public class AllContract extends Fragment {
 			
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				// TODO Auto-generated method stub
 				
+				
+				// TODO Auto-generated method stub
 				System.out.println(newText);
 				return false;
 			}

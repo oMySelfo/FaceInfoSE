@@ -287,5 +287,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.execSQL(sql);
 		Log.d("Database", "Create ContactGroup");
 	}
+	
+	
+	public List<Contact> searchContact(){
+		List<Contact> searchList = new ArrayList<Contact>();
+		
+		
+		
+		return searchList;
+	}
 
 }
