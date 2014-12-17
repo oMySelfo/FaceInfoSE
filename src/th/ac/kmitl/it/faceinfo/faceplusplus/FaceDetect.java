@@ -38,6 +38,7 @@ public class FaceDetect extends Thread{
 				byte[] byteArray = stream.toByteArray();
 				facePP.RESULT = httpRequests.detectionDetect(new PostParameters()
 						.setMode("oneface").setImg(byteArray));
+				System.out.println(facePP.RESULT);
 				
 				
 			} catch (FaceppParseException e) {
