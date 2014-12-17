@@ -12,8 +12,11 @@ import com.sromku.simple.fb.listeners.OnProfileListener;
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import th.ac.kmitl.it.faceinfo.main.Data;
+import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
+import th.ac.kmitl.it.faceinfo.main.SplashActivity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,7 +49,6 @@ public class test1 extends Fragment{
 			@Override
 			public void onClick(View v) {
 				fm.login();
-				
 			}
 		});
 		

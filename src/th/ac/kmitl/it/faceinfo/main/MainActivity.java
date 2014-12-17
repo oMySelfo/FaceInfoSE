@@ -102,8 +102,7 @@ public class MainActivity extends Activity {
 
 			break;
 		case 4:
-			fragment = new test1();
-
+			fragment = new LogOut();
 			break;
 		case 5:
 			fragment = new ShowResult();
@@ -138,7 +137,7 @@ public class MainActivity extends Activity {
 
 	private void SetMenuSliding() {
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, R.string.app_name, R.string.app_name) {
+				R.drawable.logo, R.string.app_name, R.string.app_name) {
 			public void onDrawerClosed(View view) {
 				getActionBar().setTitle(mTitle);
 				invalidateOptionsMenu();
@@ -156,8 +155,7 @@ public class MainActivity extends Activity {
 				{ R.drawable.bt_plus + "", "Add Contacts" },
 				{ R.drawable.ic_group + "", "Group" },
 				{ R.drawable.ic_aboutus + "", "About Us" },
-				{ R.drawable.bt_plus + "", "Test" },
-				{ R.drawable.bt_plus + "", "ShowResult" } };
+				{ R.drawable.logout + "", "Logout" }};
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();

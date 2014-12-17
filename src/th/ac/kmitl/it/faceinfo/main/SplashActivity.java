@@ -44,26 +44,25 @@ public class SplashActivity extends Activity{
 				}
 			});
 		}else{
-			
-			
+			Handler handler = new Handler();
+			Runnable delayRunnable = new Runnable() {
+
+			     @Override
+			     public void run() {
+			    // TODO Auto-generated method stub  
+
+			    	 startActivity(new Intent(SplashActivity.this, MainActivity.class));
+			 		 SplashActivity.this.finish();
+			    }
+			};      
+			handler.postDelayed(delayRunnable, 2000);
 		}
 	}
 
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
-		Handler handler = new Handler();
-		Runnable delayRunnable = new Runnable() {
-
-		     @Override
-		     public void run() {
-		    // TODO Auto-generated method stub  
-
-		    	 startActivity(new Intent(SplashActivity.this, MainActivity.class));
-		 		 SplashActivity.this.finish();
-		    }
-		};      
-		handler.postDelayed(delayRunnable, 2000);
+		
 	
 
 		
