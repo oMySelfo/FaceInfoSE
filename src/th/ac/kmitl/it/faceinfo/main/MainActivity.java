@@ -67,11 +67,10 @@ public class MainActivity extends Activity {
 		listFragment.add(new ListGroup());
 		listFragment.add(new Aboutus());
 		listFragment.add(new test1());
-		listFragment.add(new test2());
+		listFragment.add(new ShowResult());
 		listFragment.add(new CreateGroup());
 		listFragment.add(new PersonToGroup());
 		listFragment.add(new AddContacts(2));
-		
 		
 	}
 
@@ -85,6 +84,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void displayView(int position) {
+		
 		Fragment fragment = listFragment.get(position);
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
@@ -93,6 +93,7 @@ public class MainActivity extends Activity {
 			mDrawerList.setItemChecked(position, true);
 			mDrawerList.setSelection(position);
 			mDrawerLayout.closeDrawer(mDrawerList);
+			
 		}
 	}
 	
@@ -119,7 +120,7 @@ public class MainActivity extends Activity {
 				{ R.drawable.ic_group + "", "Group" }, 
 				{ R.drawable.ic_aboutus + "", "About Us" },
 				{R.drawable.bt_plus+"","Test"},
-				{R.drawable.bt_plus+"","Test2"}};
+				{R.drawable.bt_plus+"","ShowResult"}};
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
@@ -134,10 +135,6 @@ public class MainActivity extends Activity {
 
 		mDrawerList.setAdapter(adapterSliding);
 	}
-	
-	
-	
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -151,7 +148,6 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
 	@Override
 	protected void onResume() {
 		super.onResume();

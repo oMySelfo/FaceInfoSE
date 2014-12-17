@@ -37,7 +37,7 @@ public class AllContract extends Fragment {
 		listContact = dbm.getAllContact();
 		
 		
-		ListView list = (ListView) rootView.findViewById(R.id.listView1);
+		ListView list = (ListView) rootView.findViewById(R.id.listViewResult);
 		list.setAdapter(new AllContactAdapter(inflater,listContact ));
 		list.setOnItemClickListener(new OnItemClickListener() {
 
@@ -48,6 +48,7 @@ public class AllContract extends Fragment {
 				data.setTempKey(listContact.get(position).getCon_id());
 				data.getMainActivity().displayView(8);
 				
+
 				
 			}
 		});

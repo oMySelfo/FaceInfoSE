@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,10 +42,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
 import at.technikum.mti.fancycoverflow.FancyCoverFlow;
 
 public class AddContacts extends Fragment {
@@ -78,6 +81,9 @@ public class AddContacts extends Fragment {
 	private int REQUEST_CAMERA = 2;
 	private MainActivity ma;
 	private boolean isOnClick;
+	private LayoutInflater layout;
+	private int TEXT_BIRTHDAY=6;
+	private EditText birth;
 
 	public AddContacts(int mode) {
 		super();
@@ -89,6 +95,9 @@ public class AddContacts extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.addcontacts, container, false);
+		layout= inflater;
+		
+		
 
 		deletebutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_deletebutton);
@@ -107,7 +116,10 @@ public class AddContacts extends Fragment {
 		adapter.setImages(showBitmapList);
 		setEditTextId();
 		setFancyCoverFlow();
+		
 		eventfancyCoverFlowClick();
+		birth = (EditText) rootView.findViewById(EdittextId.get(TEXT_BIRTHDAY));
+
 
 		data = Data.getData();
 		dbm = data.getDmb();
@@ -126,6 +138,7 @@ public class AddContacts extends Fragment {
 			for (int i = 0; i < EdittextId.size(); i++) {
 				edittext = (EditText) rootView.findViewById(EdittextId.get(i));
 				edittext.setEnabled(isEditEnable);
+				birth.setEnabled(isEditEnable);
 				edittext.setText(contact.getContactProfile(i));
 			}
 
@@ -164,9 +177,14 @@ public class AddContacts extends Fragment {
 					isEditEnable = !isEditEnable;
 					eventfancyCoverFlowClick();
 					for (int i = 0; i < EdittextId.size(); i++) {
-						edittext = (EditText) rootView.findViewById(EdittextId
-								.get(i));
+
+						edittext = (EditText) rootView.findViewById(EdittextId.get(i));
+						if(i!=TEXT_BIRTHDAY){
+
 						edittext.setEnabled(isEditEnable);
+						}
+						ImageButton calendar_button =(ImageButton) rootView.findViewById(R.id.addcontact_birthday_button);
+						calendar_button.setEnabled(isEditEnable);
 						if (isEditEnable == false) {
 							contact.serContactProfile(i, edittext.getText()
 									.toString());
@@ -187,6 +205,17 @@ public class AddContacts extends Fragment {
 				}
 			}
 		});
+		ImageButton calendarbutton =(ImageButton) rootView.findViewById(R.id.addcontact_birthday_button);
+		calendarbutton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				calendarDiaLog(layout);
+				
+			}
+		});
+		
 
 		return rootView;
 	}
@@ -205,6 +234,7 @@ public class AddContacts extends Fragment {
 						container.showContextMenu();
 					}
 					isOnClick = false;
+
 				}
 			});
 			// Long Click (Delete Picture)
@@ -264,6 +294,45 @@ public class AddContacts extends Fragment {
 		return true;
 
 	}
+	
+	
+
+	private void calendarDiaLog(LayoutInflater inflater) {
+		String birthday;
+		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
+				.getMainActivity());
+		View v = inflater.inflate(R.layout.calendar_fragment,null,false);
+		
+		final DatePicker date = (DatePicker) v.findViewById(R.id.datePicker1);
+		if (mode != PAGE_ADDCONTACT){
+			date.updateDate(1994, 1, 11);
+		}
+		
+		builder.setTitle("BirthDay")
+				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.setView(v)
+				.setPositiveButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						})
+				.setNegativeButton("OK",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								birth = (EditText) rootView.findViewById(EdittextId.get(TEXT_BIRTHDAY));
+								birth.setText(date.getYear()+"-"+date.getMonth()+"-"+date.getDayOfMonth());
+							}
+						});
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
 
 	private void alertDiaLog(final int position) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
@@ -324,6 +393,7 @@ public class AddContacts extends Fragment {
 		fancyCoverFlow.setScaleDownGravity(0.2f);
 		fancyCoverFlow.setScaleX(1.6f);
 		fancyCoverFlow.setScaleY(1.6f);
+		fancyCoverFlow.setBackgroundResource(R.drawable.tab_show);
 		fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
 	}
 
