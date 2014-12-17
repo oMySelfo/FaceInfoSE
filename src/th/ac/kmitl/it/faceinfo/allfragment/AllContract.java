@@ -44,6 +44,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
 
 public class AllContract extends Fragment {
 	private DrawerLayout mDrawerLayout;
@@ -59,6 +60,7 @@ public class AllContract extends Fragment {
 	private int REQUEST_CAMERA = 2;
 	private MainActivity ma;
 	private FacePlusPlus fpp;
+	private TextView amountfriends;
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -67,7 +69,7 @@ public class AllContract extends Fragment {
 		rootView = inflater
 				.inflate(R.layout.list_allcontract, container, false);
 		ma = Data.getData().getMainActivity();
-
+		amountfriends = (TextView) rootView.findViewById(R.id.amountfriends);
 		data = Data.getData();
 		fpp = data.getFacePP();
 		dbm = data.getDmb();

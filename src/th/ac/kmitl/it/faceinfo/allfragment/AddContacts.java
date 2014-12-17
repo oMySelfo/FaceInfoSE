@@ -354,7 +354,7 @@ public class AddContacts extends Fragment {
 		}
 
 		builder.setTitle("BirthDay")
-				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.setIcon(getResources().getDrawable(R.drawable.calendar_icon))
 				.setView(v)
 				.setPositiveButton("Cancel",
 						new DialogInterface.OnClickListener() {
@@ -381,7 +381,7 @@ public class AddContacts extends Fragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
 				.getMainActivity());
 		builder.setTitle("Delete")
-				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.setIcon(getResources().getDrawable(R.drawable.logo))
 				.setMessage("Do you want to delete this picture?")
 				.setPositiveButton("Not Now",
 						new DialogInterface.OnClickListener() {
@@ -554,6 +554,7 @@ public class AddContacts extends Fragment {
 		System.out.println("Crop :"+top_leftx+" "+top_lefty+" "+crop_width+top_leftx+" "+crop_height+top_lefty);
 
 		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,top_leftx,top_lefty,crop_width, crop_height );
+		cropBitmap = Bitmap.createScaledBitmap(cropBitmap , 256, 256, true);
 
 		// Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x ,
 		// (int)center_y , (int)width, (int)height);
