@@ -276,7 +276,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	private void createGroup(SQLiteDatabase db) {
 		sql = "CREATE TABLE `group` "
 				+ "(`group_id` INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,"
-				+ "`group_img` VARCHAR(45) NOT NULL,"
+				+ "`group_img` VARCHAR(45) NOT NULL," +
+				"`group_name` VARCHAR(45) NULL,"
 				+ " `group_date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"
 				+ "`group_detail` VARCHAR(50) NULL);";
 
@@ -368,14 +369,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put("group_name", group.getGroup_name());
 		values.put("group_img", group.getGroup_img());
-		db.insert("group", null, values);
+		db.insert("'group'", null, values);
 		db.close();
 	}
 	public List<Group> getAllGroup(){
 		List<Group> listGroup = new ArrayList<Group>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		sql = "Select group_id,group_name,group_img,group_detail,"
-				+ "group_date_add from group;";
+		sql = "Select group_id,group_name,group_img,group_detail,group_date_add from 'group'";
 		Cursor cursor = db.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
 			Group group = new Group();
@@ -389,6 +389,35 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		cursor.close();
 		db.close();
 		return listGroup;
+	}
+	public void deleteGroup(String group_id){
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("'group'", "group_id='"+group_id+"'", null);
+		db.close();
+	}
+	
+	public List<Contact> getContactGroup(){
+		List<Contact> listContact = new ArrayList<Contact>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		sql = "Select con_id form con_group";
+		Cursor cursor = db.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
+			Contact contact = new Contact();
+			contact.setCon_id(cursor.getString(0));
+			listContact.add(contact);
+		}
+		cursor.close();
+		
+		for(Contact contact:listContact){
+			sql="Select con_name,photo_id from contact where con_id='"+contact.getCon_id()+"'";
+			cursor = db.rawQuery(sql, null);
+			contact.setCon_name(cursor.getString(0));
+			contact.setPhoto_id(cursor.getString(1));
+			cursor.close();
+		}
+		
+		
+		return listContact;
 	}
 
 }

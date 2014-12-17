@@ -11,6 +11,7 @@ import java.util.List;
 
 
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
+import th.ac.kmitl.it.faceinfo.database.Group;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
@@ -41,6 +42,7 @@ public class ListGroup extends Fragment {
 	private MainActivity ma;
 	private DatabaseManager dbm;
 	private TextView amountgroups;
+	private List<Group> listGroup;
 	String[][] dataGroup = new String[][] { { "Friends", R.drawable.friend_cl + "" },
 			{ "Family", R.drawable.family_cl + "" },{"Work", R.drawable.work_cl + "" }};
 
@@ -54,13 +56,14 @@ public class ListGroup extends Fragment {
 		dbm = data.getDmb();
 		ma = data.getMainActivity();
 		amountgroups = (TextView) rootView.findViewById(R.id.amountgroup);
+		listGroup = dbm.getAllGroup();
 		
+		
+		amountgroups.setText("friend: " + listGroup.size());
 		
 		creategroup.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-	
-				
 				ma.displayView(6);
 			}
 		});
@@ -68,10 +71,10 @@ public class ListGroup extends Fragment {
 		String[] from = { "picGroup", "nameGroup"};
 		int[] to = { R.id.picGroup, R.id.txtNameGroup};
 		List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
-		for(int i=0;i<2;i++){
+		for(Group group :listGroup){
 			HashMap<String, String> hm = new HashMap<String, String>();
-			hm.put("nameGroup", "IT KMITL");
-			hm.put("picGroup", R.drawable.family_cl + "" );
+			hm.put("nameGroup", group.getGroup_name());
+			hm.put("picGroup", group.getGroup_img() );
 			aList.add(hm);
 		}
 		SimpleAdapter adapter = new SimpleAdapter(ma,aList,
@@ -82,7 +85,10 @@ public class ListGroup extends Fragment {
 		listViewGroup.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
-                System.out.println(position);
+            	
+            	data.TEMP_KEY = listGroup.get(position).getGroup_id();
+            	ma.displayView(7);
+            	
             }
         });
 		
@@ -90,7 +96,7 @@ public class ListGroup extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> view, View container,
 					int position, long id) {
-				alertDiaLog();
+				alertDiaLog(position);
 				return true;
 			}
 			
@@ -98,7 +104,7 @@ public class ListGroup extends Fragment {
 		return rootView;
 	}
 	
-	private void alertDiaLog(){
+	private void alertDiaLog(final int position){
 		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
     	builder.setTitle("Delete").setIcon(getResources().getDrawable(R.drawable.bin))
     	.setMessage("Are you sure you want to delete ?")
@@ -112,6 +118,9 @@ public class ListGroup extends Fragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				//delete group
+				String group_id = listGroup.get(position).getGroup_id();
+				dbm.deleteGroup(group_id);
+				ma.displayView(2);
 				
 			}
 		});
