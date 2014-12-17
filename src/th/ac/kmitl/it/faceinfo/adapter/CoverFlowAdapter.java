@@ -42,7 +42,7 @@ public class CoverFlowAdapter extends FancyCoverFlowAdapter{
 			imageView = new ImageView(viewGroup.getContext());
 			imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			imageView
-					.setLayoutParams(new FancyCoverFlow.LayoutParams(300, 300));
+					.setLayoutParams(new FancyCoverFlow.LayoutParams(400, 300));
 		}		
 		imageView.setImageBitmap((Bitmap) this.getItem(i));
 		//imageView.setImageResource((Integer) this.getItem(i));

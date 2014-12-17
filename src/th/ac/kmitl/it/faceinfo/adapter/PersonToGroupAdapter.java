@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import th.ac.kmitl.it.faceinfo.database.Contact;
+import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,8 @@ public class PersonToGroupAdapter extends BaseAdapter {
 		this.listContact = listContact;
 		inGroup = new ArrayList<Boolean>();
 		mInflater = Inflater;
-		for(int i=0;i<listContact.size();i++){
-			inGroup.add(false);//listContact.get(i).getGroup
+		for(Contact contact:listContact){
+			inGroup.add(contact.isInGroup(Data.getData().getTempGroupKey()));
 		}
 	}
 	@Override

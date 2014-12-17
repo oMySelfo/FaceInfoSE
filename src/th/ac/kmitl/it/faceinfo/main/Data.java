@@ -20,13 +20,13 @@ public class Data {
 	private DatabaseManager dbm;
 	private FacebookManager fm;
 	private MainActivity ma;
-	private String tempKey;
+	private String tempGroupKey;
+	private String tempContactKey;
 	
 
 
 
 	public String USER_KEY = "";
-	public String TEMP_KEY;
 	public HttpRequests HTTPREQESTS;
 
 	private Data() {
@@ -72,13 +72,23 @@ public class Data {
 		return ma;
 	}
 
-	public String getTempKey() {
-		return tempKey;
+	public String getTempGroupKey() {
+		return tempGroupKey;
 	}
 
-	public void setTempKey(String tempKey) {
-		this.tempKey = tempKey;
+	public void setTempGroupKey(String tempGroupKey) {
+		this.tempGroupKey = tempGroupKey;
 	}
+
+	public String getTempContactKey() {
+		return tempContactKey;
+	}
+
+	public void setTempContactKey(String tempContactKey) {
+		this.tempContactKey = tempContactKey;
+	}
+
+
 	
 
 

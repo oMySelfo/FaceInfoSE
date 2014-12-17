@@ -17,6 +17,7 @@ public class Contact {
 	private String con_birthday;
 	private String photo_path;
 
+
 	public String getCon_id() {
 		return con_id;
 	}
@@ -142,6 +143,11 @@ public class Contact {
 		case 6:setCon_birthday(value);
 		case 7: setCon_detail(value);
 		}
+	}
+	public boolean isInGroup(String group_id){
+		DatabaseManager dbm = Data.getData().getDmb();
+		return dbm.isInGroup(con_id);
+		
 	}
 
 }

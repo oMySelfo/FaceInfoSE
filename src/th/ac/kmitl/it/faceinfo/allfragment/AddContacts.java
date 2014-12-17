@@ -136,7 +136,8 @@ public class AddContacts extends Fragment {
 			editbutton.setImageResource(R.drawable.save);
 		} else if (mode == PAGE_PROFILE) {
 			isEditEnable = false;
-			contact = dbm.getContact(data.getTempKey()); // //// dummy no data
+			System.out.println(data.getTempContactKey());
+			contact = dbm.getContact(data.getTempContactKey()); // //// dummy no data
 															// now
 			for (int i = 0; i < EdittextId.size(); i++) {
 				edittext = (EditText) rootView.findViewById(EdittextId.get(i));

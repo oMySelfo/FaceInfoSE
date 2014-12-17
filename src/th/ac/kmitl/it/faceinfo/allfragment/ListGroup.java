@@ -85,10 +85,11 @@ public class ListGroup extends Fragment {
 		listViewGroup.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
+
             	
-            	data.TEMP_KEY = listGroup.get(position).getGroup_id();
-            	ma.displayView(7);
-            	
+            	data.setTempGroupKey(listGroup.get(position).getGroup_id());
+                ma.displayView(10);
+
             }
         });
 		

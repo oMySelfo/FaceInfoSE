@@ -98,7 +98,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		values.put("con_detail", contact.getCon_detail());
 		values.put("con_phone", contact.getCon_phone());
 		values.put("con_address", contact.getCon_address());
-		values.put("photo_id",contact.getPhoto_id());
+		values.put("photo_id", contact.getPhoto_id());
 		db.insert("contact", null, values);
 		db.close();
 
@@ -191,7 +191,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		values.put("con_facebook", contact.getCon_facebook());
 		values.put("con_address", contact.getCon_address());
 		values.put("con_detail", contact.getCon_detail());
-		values.put("photo_id",contact.getPhoto_id());
+		values.put("photo_id", contact.getPhoto_id());
 
 		db.update("contact", values, "con_id = '" + contact.getCon_id() + "'",
 				null);
@@ -203,9 +203,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.delete("photo", "con_id='" + con_id + "'", null);
 		db.close();
 	}
+
 	public void deleteContact(String con_id) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete("contact", "con_id='" + con_id + "'", null);
+		db.delete("con_group", "con_id = '" +con_id+"';", null);
 		db.close();
 	}
 
@@ -276,8 +278,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	private void createGroup(SQLiteDatabase db) {
 		sql = "CREATE TABLE `group` "
 				+ "(`group_id` INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,"
-				+ "`group_img` VARCHAR(45) NOT NULL," +
-				"`group_name` VARCHAR(45) NULL,"
+				+ "`group_img` VARCHAR(45) NOT NULL,"
+				+ "`group_name` VARCHAR(45) NULL,"
 				+ " `group_date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"
 				+ "`group_detail` VARCHAR(50) NULL);";
 
@@ -294,14 +296,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.execSQL(sql);
 		Log.d("Database", "Create ContactGroup");
 	}
-	
-	
-	public List<Contact> searchContact(String keyWord){
+
+	public List<Contact> searchContact(String keyWord) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		List<Contact> searchList = new ArrayList<Contact>();
 		sql = unionContact(keyWord);
-		
-		
+
 		Cursor cursor = db.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
 			Contact contact = new Contact();
@@ -320,51 +320,61 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		cursor.close();
 		db.close();
-		
+
 		return searchList;
 	}
-	
-	private String unionContact(String keyword){
+
+	private String unionContact(String keyword) {
 		String[] arrayKeyword = keyword.split(" ");
 		sql = "Select con_id,con_name,con_fullname,con_facebook,"
 				+ "con_email,con_phone,con_address,con_birthday,"
-				+ "con_date_add,photo_id,con_detail from contact where con_name Like '%"+keyword+"%'";;
-		for(String key:arrayKeyword){
+				+ "con_date_add,photo_id,con_detail from contact where con_name Like '%"
+				+ keyword + "%'";
+		;
+		for (String key : arrayKeyword) {
 			String sql1 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_name Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_name Like '%"
+					+ key + "%'";
 			String sql2 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_fullname Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_fullname Like '%"
+					+ key + "%'";
 			String sql3 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_phone Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_phone Like '%"
+					+ key + "%'";
 			String sql4 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_birthday Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_birthday Like '%"
+					+ key + "%'";
 			String sql5 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_facebook Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_facebook Like '%"
+					+ key + "%'";
 			String sql6 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_address Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_address Like '%"
+					+ key + "%'";
 			String sql7 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_detail Like '%"+key+"%'";
+					+ "con_date_add,photo_id,con_detail from contact where con_detail Like '%"
+					+ key + "%'";
 			String sql8 = "Select con_id,con_name,con_fullname,con_facebook,"
 					+ "con_email,con_phone,con_address,con_birthday,"
-					+ "con_date_add,photo_id,con_detail from contact where con_email Like '%"+key+"%'";
-			
-			sql = sql +" UNION " + sql1  +" UNION " + sql2  +" UNION " + sql3  +" UNION " 
-			+ sql4  +" UNION " + sql5  +" UNION " + sql6  
-			+" UNION " + sql7  +" UNION " + sql8;
+					+ "con_date_add,photo_id,con_detail from contact where con_email Like '%"
+					+ key + "%'";
+
+			sql = sql + " UNION " + sql1 + " UNION " + sql2 + " UNION " + sql3
+					+ " UNION " + sql4 + " UNION " + sql5 + " UNION " + sql6
+					+ " UNION " + sql7 + " UNION " + sql8;
 		}
-		
+
 		return sql;
-		
+
 	}
-	
-	public void insertGroup(Group group){
+
+	public void insertGroup(Group group) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("group_name", group.getGroup_name());
@@ -372,7 +382,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.insert("'group'", null, values);
 		db.close();
 	}
-	public List<Group> getAllGroup(){
+
+	public List<Group> getAllGroup() {
 		List<Group> listGroup = new ArrayList<Group>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		sql = "Select group_id,group_name,group_img,group_detail,group_date_add from 'group'";
@@ -390,16 +401,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.close();
 		return listGroup;
 	}
-	public void deleteGroup(String group_id){
+
+	public void deleteGroup(String group_id) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete("'group'", "group_id='"+group_id+"'", null);
+		db.delete("'group'", "group_id='" + group_id + "'", null);
+		db.delete("con_group", "group_id='" + group_id + "'", null);
 		db.close();
 	}
-	
-	public List<Contact> getContactGroup(){
+
+	public List<Contact> getContactGroup(String group_id) {
 		List<Contact> listContact = new ArrayList<Contact>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		sql = "Select con_id form con_group";
+		sql = "Select con_id from con_group where group_id ='" + group_id + "'";
 		Cursor cursor = db.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
 			Contact contact = new Contact();
@@ -407,17 +420,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			listContact.add(contact);
 		}
 		cursor.close();
-		
-		for(Contact contact:listContact){
-			sql="Select con_name,photo_id from contact where con_id='"+contact.getCon_id()+"'";
+
+		for (Contact contact : listContact) {
+			sql = "Select con_name,photo_id from contact where con_id='"
+					+ contact.getCon_id() + "'";
 			cursor = db.rawQuery(sql, null);
-			contact.setCon_name(cursor.getString(0));
-			contact.setPhoto_id(cursor.getString(1));
+			if (cursor.moveToNext()) {
+				contact.setCon_name(cursor.getString(0));
+				contact.setPhoto_id(cursor.getString(1));
+				
+			}
 			cursor.close();
 		}
-		
-		
+
 		return listContact;
+	}
+
+	public boolean isInGroup(String con_id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		sql = "Select * from con_group where con_id='" + con_id + "'";
+		Cursor cursor = db.rawQuery(sql, null);
+		if (cursor.moveToFirst()) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public void insertContactToGroup(String group_id, String con_id) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("group_id", group_id);
+		values.put("con_id", con_id);
+		db.insert("con_group", "con_id='" + con_id + "'", values);
+		db.close();
+
+	}
+
+	public void deleteGroupConGroup(String group_id) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("con_group", "group_id='" + group_id + "'", null);
 	}
 
 }

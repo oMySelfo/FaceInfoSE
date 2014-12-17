@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		displayView(9);
 		getActionBar().setHomeButtonEnabled(true);
+		
 		SetMenuSliding();
 
 	}
@@ -120,6 +121,9 @@ public class MainActivity extends Activity {
 			break;
 		case 9:
 			fragment = new Splash();
+			break;
+		case 10:
+			fragment = new PeopleOfGroup();
 			break;
 		default:
 			fragment = null;

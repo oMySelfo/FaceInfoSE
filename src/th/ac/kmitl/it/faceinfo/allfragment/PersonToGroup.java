@@ -44,10 +44,15 @@ public class PersonToGroup extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//update to DB
+				dbm.deleteGroupConGroup(data.getTempGroupKey());
 				List<Boolean> inGroup = adapter.getInGroup();
 				for(int i=0;i<inGroup.size();i++ ){
-					System.out.println(i +" : "+inGroup.get(i));
+					if(inGroup.get(i)){
+						dbm.insertContactToGroup(data.getTempGroupKey(), listContact.get(i).getCon_id());
+					}
 				}
+				data.getMainActivity().displayView(10);
+
 				
 				
 			}

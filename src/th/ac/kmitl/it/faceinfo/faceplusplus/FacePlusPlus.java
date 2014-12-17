@@ -132,7 +132,7 @@ public class FacePlusPlus {
 	private Bitmap resizeBitmap(Bitmap bitmap) {
 		int x = bitmap.getWidth();
 		int y = bitmap.getHeight();
-		while (x > 800 && y > 600) {
+		while (x > 512 && y > 328) {
 			x = x / 2;
 			y = y / 2;
 		}

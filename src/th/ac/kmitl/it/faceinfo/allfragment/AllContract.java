@@ -105,7 +105,7 @@ public class AllContract extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				data.setTempKey(listContact.get(position).getCon_id());
+				data.setTempContactKey(listContact.get(position).getCon_id());
 				data.getMainActivity().displayView(8);
 			}
 		});
