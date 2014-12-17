@@ -1,6 +1,5 @@
 package th.ac.kmitl.it.faceinfo.main;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +9,6 @@ import com.sromku.simple.fb.SimpleFacebook;
 import th.ac.kmitl.it.faceinfo.allfragment.*;
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.faceplusplus.AddContact;
-
-
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -39,7 +36,6 @@ public class MainActivity extends Activity {
 	private List<Fragment> listFragment;
 	private SimpleFacebook sf;
 	private Data data;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +46,7 @@ public class MainActivity extends Activity {
 		Data.getData().setDatabaseManager(this);
 		Data.getData().setFacebookManager(this);
 		mTitle = getTitle();
-		createfragment();
+		//createfragment();
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_frame);
 		mDrawerList = (ListView) findViewById(R.id.slidermenu);
@@ -61,7 +57,9 @@ public class MainActivity extends Activity {
 		SetMenuSliding();
 
 	}
-	private void createfragment(){
+
+	/*private Fragment createfragment(int position) {
+
 		listFragment.add(new AllContract());
 		listFragment.add(new AddContacts(1));
 		listFragment.add(new ListGroup());
@@ -71,8 +69,8 @@ public class MainActivity extends Activity {
 		listFragment.add(new CreateGroup());
 		listFragment.add(new PersonToGroup());
 		listFragment.add(new AddContacts(2));
-		
-	}
+
+	}*/
 
 	private class SlideMenuClickListener implements
 			ListView.OnItemClickListener {
@@ -82,10 +80,53 @@ public class MainActivity extends Activity {
 			displayView(position);
 		}
 	}
-	
+
 	public void displayView(int position) {
+		Fragment fragment ;
+
+		switch (position) {
+		case 0:
+			fragment = new AllContract();
+
+			break;
+		case 1:
+			fragment = new AddContacts(1);
+
+			break;
+		case 2:
+			fragment = new ListGroup();
+
+			break;
+		case 3:
+			fragment = new Aboutus();
+
+			break;
+		case 4:
+			fragment = new test1();
+
+			break;
+		case 5:
+			fragment = new ShowResult();
+
+			break;
+		case 6:
+			fragment = new CreateGroup();
+
+			break;
+		case 7:
+			fragment = new PersonToGroup();
+
+			break;
+		case 8:
+			fragment = new AddContacts(2);
+
+			break;
+
+
+		default:
+			fragment = null;
+		}
 		
-		Fragment fragment = listFragment.get(position);
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().addToBackStack(null)
@@ -93,11 +134,10 @@ public class MainActivity extends Activity {
 			mDrawerList.setItemChecked(position, true);
 			mDrawerList.setSelection(position);
 			mDrawerLayout.closeDrawer(mDrawerList);
-			
+
 		}
 	}
-	
-	
+
 	private void SetMenuSliding() {
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, R.string.app_name, R.string.app_name) {
@@ -113,14 +153,13 @@ public class MainActivity extends Activity {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		
 		String[][] dataSliding = new String[][] {
 				{ R.drawable.ic_contacts + "", "All Contacts" },
 				{ R.drawable.bt_plus + "", "Add Contacts" },
-				{ R.drawable.ic_group + "", "Group" }, 
+				{ R.drawable.ic_group + "", "Group" },
 				{ R.drawable.ic_aboutus + "", "About Us" },
-				{R.drawable.bt_plus+"","Test"},
-				{R.drawable.bt_plus+"","ShowResult"}};
+				{ R.drawable.bt_plus + "", "Test" },
+				{ R.drawable.bt_plus + "", "ShowResult" } };
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
@@ -135,6 +174,7 @@ public class MainActivity extends Activity {
 
 		mDrawerList.setAdapter(adapterSliding);
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -142,12 +182,13 @@ public class MainActivity extends Activity {
 		}
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-//		 case R.id.action_settings:
-//			 return true
+		// case R.id.action_settings:
+		// return true
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -159,8 +200,5 @@ public class MainActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		sf.onActivityResult(this, requestCode, resultCode, data);
 	}
-	
-	
-
 
 }

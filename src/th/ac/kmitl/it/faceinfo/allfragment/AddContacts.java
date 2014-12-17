@@ -119,6 +119,7 @@ public class AddContacts extends Fragment {
 		
 		eventfancyCoverFlowClick();
 		birth = (EditText) rootView.findViewById(EdittextId.get(TEXT_BIRTHDAY));
+		birth.setEnabled(false);
 
 
 		data = Data.getData();
