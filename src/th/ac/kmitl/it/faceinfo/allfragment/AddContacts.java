@@ -241,15 +241,9 @@ public class AddContacts extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
+				System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+				alertDiaLog2();
 				
-				if(mode == PAGE_ADDCONTACT){
-					data.getMainActivity().displayView(0);
-				}else if(mode == PAGE_PROFILE){
-					fpp.deleteContact(contact.getCon_id());
-					dbm.deleteContactPhoto(contact.getCon_id());
-					dbm.deleteContact(contact.getCon_id());
-					data.getMainActivity().displayView(0);
-				}
 				
 				
 				
@@ -374,6 +368,40 @@ public class AddContacts extends Fragment {
 								+ date.getMonth() + "-" + date.getDayOfMonth());
 					}
 				});
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	private void alertDiaLog2() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
+				.getMainActivity());
+		builder.setTitle("Delete")
+				.setIcon(getResources().getDrawable(R.drawable.bin))
+				.setMessage("Do you want to delete contact?")
+				.setPositiveButton("No",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						})
+				.setNegativeButton("Yes",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if(mode == PAGE_ADDCONTACT){
+									data.getMainActivity().displayView(0);
+								}else if(mode == PAGE_PROFILE){
+									fpp.deleteContact(contact.getCon_id());
+									dbm.deleteContactPhoto(contact.getCon_id());
+									dbm.deleteContact(contact.getCon_id());
+									data.getMainActivity().displayView(0);
+								}
+
+							}
+						});
 
 		AlertDialog alert = builder.create();
 		alert.show();
