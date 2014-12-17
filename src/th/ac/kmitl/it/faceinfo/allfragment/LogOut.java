@@ -37,7 +37,7 @@ public class LogOut extends Fragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
 				.getMainActivity());
 		builder.setTitle("Logout")
-				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.setIcon(getResources().getDrawable(R.drawable.logout))
 				.setMessage("Do you want to logout ?")
 				.setPositiveButton("Not Now",
 						new DialogInterface.OnClickListener() {
@@ -45,6 +45,7 @@ public class LogOut extends Fragment {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.dismiss();
+								Data.getData().getMainActivity().displayView(0);
 							}
 						})
 				.setNegativeButton("Yes",

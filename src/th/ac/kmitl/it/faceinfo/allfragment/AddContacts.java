@@ -345,7 +345,7 @@ public class AddContacts extends Fragment {
 		}
 
 		builder.setTitle("BirthDay")
-				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.setIcon(getResources().getDrawable(R.drawable.calendar_icon))
 				.setView(v)
 				.setPositiveButton("Cancel",
 						new DialogInterface.OnClickListener() {
@@ -372,7 +372,7 @@ public class AddContacts extends Fragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
 				.getMainActivity());
 		builder.setTitle("Delete")
-				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.setIcon(getResources().getDrawable(R.drawable.logo))
 				.setMessage("Do you want to delete this picture?")
 				.setPositiveButton("Not Now",
 						new DialogInterface.OnClickListener() {
