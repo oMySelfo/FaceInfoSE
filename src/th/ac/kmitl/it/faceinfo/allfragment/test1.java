@@ -59,10 +59,6 @@ public class test1 extends Fragment{
 			}
 		});
 		
-		
-		
-		
-		
 		return rootView;
 	}
 	

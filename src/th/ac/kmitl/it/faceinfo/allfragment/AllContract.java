@@ -31,15 +31,18 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 public class AllContract extends Fragment {
 	private DrawerLayout mDrawerLayout;
@@ -67,6 +70,14 @@ public class AllContract extends Fragment {
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
+		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
+		sv.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				System.out.println(event.getCharacters());
+				return true;
+			}
+		});
 		
 		
 		ListView list = (ListView) rootView.findViewById(R.id.listViewResult);
