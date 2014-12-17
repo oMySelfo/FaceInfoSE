@@ -3,6 +3,7 @@ package th.ac.kmitl.it.faceinfo.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import th.ac.kmitl.it.faceinfo.allfragment.ListGroup;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import android.content.ContentValues;
 import android.content.Context;
@@ -202,6 +203,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.delete("photo", "con_id='" + con_id + "'", null);
 		db.close();
 	}
+	public void deleteContact(String con_id) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("contact", "con_id='" + con_id + "'", null);
+		db.close();
+	}
 
 	public void deletePhoto(String photo_id) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -355,6 +361,34 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 		return sql;
 		
+	}
+	
+	public void insertGroup(Group group){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("group_name", group.getGroup_name());
+		values.put("group_img", group.getGroup_img());
+		db.insert("group", null, values);
+		db.close();
+	}
+	public List<Group> getAllGroup(){
+		List<Group> listGroup = new ArrayList<Group>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		sql = "Select group_id,group_name,group_img,group_detail,"
+				+ "group_date_add from group;";
+		Cursor cursor = db.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
+			Group group = new Group();
+			group.setGroup_id(cursor.getString(0));
+			group.setGroup_name(cursor.getString(1));
+			group.setGroup_img(cursor.getString(2));
+			group.setGroup_detail(cursor.getString(3));
+			group.setGroup_date_add(cursor.getString(4));
+			listGroup.add(group);
+		}
+		cursor.close();
+		db.close();
+		return listGroup;
 	}
 
 }

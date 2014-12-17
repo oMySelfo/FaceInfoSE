@@ -1,4 +1,6 @@
 package th.ac.kmitl.it.faceinfo.allfragment;
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
+import th.ac.kmitl.it.faceinfo.database.Group;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
@@ -19,6 +21,9 @@ import android.widget.SpinnerAdapter;
 public class CreateGroup extends Fragment{
 	private Data data;
 	private MainActivity ma;
+	private DatabaseManager dbm;
+	private Group group;
+	
 	
 public CreateGroup() {}
 	
@@ -36,7 +41,9 @@ public CreateGroup() {}
 				.findViewById(R.id.spinner_picgroup);
 		
 		data = Data.getData();
+		dbm = data.getDmb();
 		ma = data.getMainActivity();
+		group = new Group();
 		
 		spinnerPicGroup.setAdapter(new MyAdapter(Data.getData().getMainActivity(),
 				R.layout.row_creategroup, arr_images));
@@ -47,6 +54,9 @@ public CreateGroup() {}
 			@Override
 			public void onClick(View v) {
 				EditText et = (EditText)rootView.findViewById(R.id.txt_namegroup);
+				group.setGroup_name(et.getText().toString());
+				group.setGroup_img(arr_images[spinnerPicGroup.getSelectedItemPosition()]);
+				dbm.insertGroup(group);
 				ma.displayView(2);
 			}			
 		});

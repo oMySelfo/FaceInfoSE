@@ -6,6 +6,7 @@ import java.util.Date;
 
 
 
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.MainActivity;
 import th.ac.kmitl.it.faceinfo.main.R;
@@ -25,6 +26,7 @@ public class ListGroup extends Fragment {
 	
 	private Data data;
 	private MainActivity ma;
+	private DatabaseManager dbm;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,11 +35,15 @@ public class ListGroup extends Fragment {
 		ImageButton creategroup = (ImageButton) rootView.findViewById(R.id.btn_addgruop);
 		
 		data = Data.getData();
+		dbm = data.getDmb();
 		ma = data.getMainActivity();
+		
 		
 		creategroup.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+	
+				
 				ma.displayView(6);
 			}
 		});
