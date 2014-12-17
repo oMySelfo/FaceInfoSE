@@ -49,7 +49,6 @@ public class AllContract extends Fragment {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private List<Contact> listContact;
-	private List<Contact> searchContact;
 	private Data data;
 	private DatabaseManager dbm;
 	private View rootView;
@@ -62,7 +61,7 @@ public class AllContract extends Fragment {
 	private FacePlusPlus fpp;
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		rootView = inflater.inflate(R.layout.list_allcontract, container,false);
@@ -72,7 +71,6 @@ public class AllContract extends Fragment {
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
-		searchContact = new ArrayList<Contact>();
 		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
 		sv.setOnQueryTextListener(new OnQueryTextListener() {
 			
@@ -85,10 +83,9 @@ public class AllContract extends Fragment {
 			
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				
-				
-				// TODO Auto-generated method stub
-				System.out.println(newText);
+				listContact = dbm.searchContact(newText);
+				ListView list = (ListView) rootView.findViewById(R.id.listViewResult);
+				list.setAdapter(new AllContactAdapter(inflater,listContact));
 				return false;
 			}
 		} );

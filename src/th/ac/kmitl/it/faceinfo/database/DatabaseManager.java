@@ -183,8 +183,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("con_name", contact.getCon_name());
-		values.put("con_phone", contact.getCon_name());
-		values.put("con_fullname", contact.getCon_name());
+		values.put("con_phone", contact.getCon_phone());
+		values.put("con_fullname", contact.getCon_fullname());
 		values.put("con_birthday", contact.getCon_birthday());
 		values.put("con_email", contact.getCon_email());
 		values.put("con_facebook", contact.getCon_facebook());
@@ -289,12 +289,72 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	}
 	
 	
-	public List<Contact> searchContact(){
+	public List<Contact> searchContact(String keyWord){
+		SQLiteDatabase db = this.getReadableDatabase();
 		List<Contact> searchList = new ArrayList<Contact>();
+		sql = unionContact(keyWord);
 		
 		
+		Cursor cursor = db.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
+			Contact contact = new Contact();
+			contact.setCon_id(cursor.getString(0));
+			contact.setCon_name(cursor.getString(1));
+			contact.setCon_fullname(cursor.getString(2));
+			contact.setCon_facebook(cursor.getString(3));
+			contact.setCon_email(cursor.getString(4));
+			contact.setCon_phone(cursor.getString(5));
+			contact.setCon_address(cursor.getString(6));
+			contact.setCon_birthday(cursor.getString(7));
+			contact.setCon_date_add(cursor.getString(8));
+			contact.setPhoto_id(cursor.getString(9));
+			contact.setCon_detail(cursor.getString(10));
+			searchList.add(contact);
+		}
+		cursor.close();
+		db.close();
 		
 		return searchList;
+	}
+	
+	private String unionContact(String keyword){
+		String[] arrayKeyword = keyword.split(" ");
+		sql = "Select con_id,con_name,con_fullname,con_facebook,"
+				+ "con_email,con_phone,con_address,con_birthday,"
+				+ "con_date_add,photo_id,con_detail from contact where con_name Like '%"+keyword+"%'";;
+		for(String key:arrayKeyword){
+			String sql1 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_name Like '%"+key+"%'";
+			String sql2 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_fullname Like '%"+key+"%'";
+			String sql3 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_phone Like '%"+key+"%'";
+			String sql4 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_birthday Like '%"+key+"%'";
+			String sql5 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_facebook Like '%"+key+"%'";
+			String sql6 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_address Like '%"+key+"%'";
+			String sql7 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_detail Like '%"+key+"%'";
+			String sql8 = "Select con_id,con_name,con_fullname,con_facebook,"
+					+ "con_email,con_phone,con_address,con_birthday,"
+					+ "con_date_add,photo_id,con_detail from contact where con_email Like '%"+key+"%'";
+			
+			sql = sql +" UNION " + sql1  +" UNION " + sql2  +" UNION " + sql3  +" UNION " 
+			+ sql4  +" UNION " + sql5  +" UNION " + sql6  
+			+" UNION " + sql7  +" UNION " + sql8;
+		}
+		
+		return sql;
+		
 	}
 
 }
