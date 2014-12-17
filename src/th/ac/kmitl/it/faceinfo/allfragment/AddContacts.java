@@ -402,13 +402,12 @@ public class AddContacts extends Fragment {
 			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
-
 				bitmap = Media.getBitmap(cr, uri);
 				path = uri.getPath();
 
 			} else if (requestCode == REQUEST_GALLERY
 					&& resultCode == ma.RESULT_OK) {
-
+				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
 			}
