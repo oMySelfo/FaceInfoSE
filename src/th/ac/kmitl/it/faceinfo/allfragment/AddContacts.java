@@ -82,8 +82,9 @@ public class AddContacts extends Fragment {
 	private MainActivity ma;
 	private boolean isOnClick;
 	private LayoutInflater layout;
-	private int TEXT_BIRTHDAY=6;
-	private EditText birth;
+	private int TEXT_BIRTHDAY = 6;
+	private ImageButton calendar_button ;
+	private EditText calendar_edittext;
 
 	public AddContacts(int mode) {
 		super();
@@ -95,14 +96,15 @@ public class AddContacts extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.addcontacts, container, false);
-		layout= inflater;
-		
-		
+		layout = inflater;
 
 		deletebutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_deletebutton);
 		editbutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_editbutton);
+		calendar_button = (ImageButton) rootView
+				.findViewById(R.id.addcontact_birthday_button);
+		calendar_edittext = (EditText)rootView.findViewById(R.id.addcontact_birthday);
 
 		showBitmapList = new ArrayList<Bitmap>();
 		showBitmapList.add(BitmapFactory.decodeResource(
@@ -116,11 +118,9 @@ public class AddContacts extends Fragment {
 		adapter.setImages(showBitmapList);
 		setEditTextId();
 		setFancyCoverFlow();
-		
-		eventfancyCoverFlowClick();
-		birth = (EditText) rootView.findViewById(EdittextId.get(TEXT_BIRTHDAY));
-		birth.setEnabled(false);
 
+		eventfancyCoverFlowClick();
+		
 
 		data = Data.getData();
 		dbm = data.getDmb();
@@ -139,8 +139,11 @@ public class AddContacts extends Fragment {
 			for (int i = 0; i < EdittextId.size(); i++) {
 				edittext = (EditText) rootView.findViewById(EdittextId.get(i));
 				edittext.setEnabled(isEditEnable);
-				birth.setEnabled(isEditEnable);
 				edittext.setText(contact.getContactProfile(i));
+				if(i == TEXT_BIRTHDAY){
+					edittext.setEnabled(false);
+					calendar_button.setEnabled(isEditEnable);
+				}
 			}
 
 			listPhoto = dbm.getPhotoList(contact.getCon_id());
@@ -176,16 +179,17 @@ public class AddContacts extends Fragment {
 					data.getMainActivity().displayView(0);
 				} else if (mode == PAGE_PROFILE) {
 					isEditEnable = !isEditEnable;
-					eventfancyCoverFlowClick();
 					for (int i = 0; i < EdittextId.size(); i++) {
 
-						edittext = (EditText) rootView.findViewById(EdittextId.get(i));
-						if(i!=TEXT_BIRTHDAY){
-
+						edittext = (EditText) rootView.findViewById(EdittextId
+								.get(i));
 						edittext.setEnabled(isEditEnable);
+						if (i == TEXT_BIRTHDAY) {
+							edittext.setEnabled(false);
+							calendar_button.setEnabled(isEditEnable);
 						}
-						ImageButton calendar_button =(ImageButton) rootView.findViewById(R.id.addcontact_birthday_button);
-						calendar_button.setEnabled(isEditEnable);
+
+
 						if (isEditEnable == false) {
 							contact.serContactProfile(i, edittext.getText()
 									.toString());
@@ -206,54 +210,53 @@ public class AddContacts extends Fragment {
 				}
 			}
 		});
-		ImageButton calendarbutton =(ImageButton) rootView.findViewById(R.id.addcontact_birthday_button);
-		calendarbutton.setOnClickListener(new OnClickListener() {
-			
+
+		calendar_button.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				calendarDiaLog(layout);
-				
+
 			}
 		});
-		
 
 		return rootView;
 	}
 
 	private void eventfancyCoverFlowClick() {
-		if (isEditEnable) {
-			// Short Click (Add Picture)
-			registerForContextMenu(fancyCoverFlow);
-			fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> view, View container,
-						int position, long id) {
+		// Short Click (Add Picture)
+		registerForContextMenu(fancyCoverFlow);
+		fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> view, View container,
+					int position, long id) {
+				if (isEditEnable) {
 					isOnClick = true;
 					if (position == showBitmapList.size() - 1) {
 
 						container.showContextMenu();
 					}
 					isOnClick = false;
-
 				}
-			});
-			// Long Click (Delete Picture)
-			fancyCoverFlow
-					.setOnItemLongClickListener(new OnItemLongClickListener() {
-						@Override
-						public boolean onItemLongClick(AdapterView<?> view,
-								View container, int position, long id) {
+			}
+		});
+		// Long Click (Delete Picture)
+		fancyCoverFlow
+				.setOnItemLongClickListener(new OnItemLongClickListener() {
+					@Override
+					public boolean onItemLongClick(AdapterView<?> view,
+							View container, int position, long id) {
+						if (isEditEnable) {
 							if (isOnClick)
 								return false;
 							if (position != showBitmapList.size() - 1) {
 								alertDiaLog(position);
 								return true;
 							}
-							return false;
 						}
-					});
-		}
+						return false;
+					}
+				});
 
 	}
 
@@ -295,20 +298,17 @@ public class AddContacts extends Fragment {
 		return true;
 
 	}
-	
-	
 
 	private void calendarDiaLog(LayoutInflater inflater) {
-		String birthday;
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
 				.getMainActivity());
-		View v = inflater.inflate(R.layout.calendar_fragment,null,false);
-		
+		View v = inflater.inflate(R.layout.calendar_fragment, null, false);
+
 		final DatePicker date = (DatePicker) v.findViewById(R.id.datePicker1);
-		if (mode != PAGE_ADDCONTACT){
+		if (mode != PAGE_ADDCONTACT) {
 			date.updateDate(1994, 1, 11);
 		}
-		
+
 		builder.setTitle("BirthDay")
 				.setIcon(getResources().getDrawable(R.drawable.ic_launcher))
 				.setView(v)
@@ -320,20 +320,18 @@ public class AddContacts extends Fragment {
 								dialog.dismiss();
 							}
 						})
-				.setNegativeButton("OK",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								birth = (EditText) rootView.findViewById(EdittextId.get(TEXT_BIRTHDAY));
-								birth.setText(date.getYear()+"-"+date.getMonth()+"-"+date.getDayOfMonth());
-							}
-						});
+				.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						calendar_edittext.setText(date.getYear() + "-" + date.getMonth()
+								+ "-" + date.getDayOfMonth());
+					}
+				});
 
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
-
 
 	private void alertDiaLog(final int position) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
