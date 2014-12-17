@@ -411,17 +411,24 @@ public class AddContacts extends Fragment {
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
 			}
+			
+			fpp.faceDetect(bitmap);
+			if(fpp.RESULT.getJSONArray("face").length() == 0){
+				
+			}else{
 
-			bitmap = getCropImage(bitmap);
-			path = getCropPath(bitmap); // <----- croped image
-			String photo_id = fpp.RESULT.getJSONArray("face").getJSONObject(0)
-					.getString("face_id");
-			Photo photo = new Photo();
-			photo.setPhoto_path(path);
-			photo.setPhoto_id(photo_id);
-			photo.setNewPhoto(true);
-			listPhoto.add(photo);
-			addBitmapToShowList(photo.getBitmap());
+				bitmap = getCropImage(bitmap);
+				path = getCropPath(bitmap); // <----- croped image
+				String photo_id = fpp.RESULT.getJSONArray("face").getJSONObject(0)
+						.getString("face_id");
+				Photo photo = new Photo();
+				photo.setPhoto_path(path);
+				photo.setPhoto_id(photo_id);
+				photo.setNewPhoto(true);
+				listPhoto.add(photo);
+				addBitmapToShowList(photo.getBitmap());
+			}
+			
 
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.main.Data;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 
@@ -83,6 +84,14 @@ public class FacePlusPlus{
 		}
 		Log.d("Delete All Contact", "End");
 	}
+	
+	public void faceDetect(Bitmap bitmap){
+		new FaceDetect(bitmap);
+		while(checkWaitSync()){
+			System.out.print("");
+		}
+	}
+
 	
 	public void setWaitSync() {
 		WAITSTATUS = true;
