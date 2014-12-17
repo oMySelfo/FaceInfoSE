@@ -43,6 +43,7 @@ import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 public class AllContract extends Fragment {
 	private DrawerLayout mDrawerLayout;
@@ -71,13 +72,24 @@ public class AllContract extends Fragment {
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
 		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
-		sv.setOnKeyListener(new OnKeyListener() {
+		sv.setOnQueryTextListener(new OnQueryTextListener() {
+			
 			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				System.out.println(event.getCharacters());
-				return true;
+			public boolean onQueryTextSubmit(String query) {
+				// TODO Auto-generated method stub
+				System.out.println("send :"+query );
+				return false;
 			}
-		});
+			
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// TODO Auto-generated method stub
+				
+				System.out.println(newText);
+				return false;
+			}
+		} );
+		
 		
 		
 		ListView list = (ListView) rootView.findViewById(R.id.listViewResult);

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/com_facebook_likebutton_compound_drawable_padding"
     android:orientation="horizontal" >
 
     <com.meg7.widget.CustomShapeImageView
