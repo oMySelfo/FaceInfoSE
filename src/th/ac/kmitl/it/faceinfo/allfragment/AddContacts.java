@@ -235,6 +235,16 @@ public class AddContacts extends Fragment {
 
 			}
 		});
+		deletebutton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				//delete DB
+				data.getData().getMainActivity().displayView(0);
+				
+			}
+		});
 
 		return rootView;
 	}
