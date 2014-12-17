@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -103,6 +104,7 @@ public class AddContacts extends Fragment {
 		adapter.setImages(images);
 		setEditTextId();
 		setFancyCoverFlow();
+		
 		eventfancyCoverFlowClick();
 
 		data = Data.getData();
@@ -166,6 +168,7 @@ public class AddContacts extends Fragment {
 	}
 
 	private void eventfancyCoverFlowClick() {
+		
 		// Short Click (Add Picture)
 		registerForContextMenu(fancyCoverFlow);
 		fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
@@ -290,6 +293,7 @@ public class AddContacts extends Fragment {
 		fancyCoverFlow.setScaleDownGravity(0.2f);
 		fancyCoverFlow.setScaleX(1.6f);
 		fancyCoverFlow.setScaleY(1.6f);
+		fancyCoverFlow.setBackgroundResource(R.drawable.tab_show);
 		fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
 	}
 
