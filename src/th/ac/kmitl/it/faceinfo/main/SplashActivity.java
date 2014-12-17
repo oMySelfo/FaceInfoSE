@@ -4,6 +4,8 @@ import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,6 +32,7 @@ public class SplashActivity extends Activity{
 		dbm = data.getDmb();
 		fm = data.getFacebookManager();
 		System.out.println(dbm.checkUserKey()+"--------------------");
+		
 		if(!dbm.checkUserKey()){
 			btn_loginfacebook.setVisibility(View.VISIBLE);
 			btn_loginfacebook.setOnClickListener(new OnClickListener() {
@@ -41,11 +44,33 @@ public class SplashActivity extends Activity{
 				}
 			});
 		}else{
-			startActivity(new Intent(SplashActivity.this, MainActivity.class));
-			SplashActivity.this.finish();
+			
+			
 		}
-		
-		
-		
 	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		Handler handler = new Handler();
+		Runnable delayRunnable = new Runnable() {
+
+		     @Override
+		     public void run() {
+		    // TODO Auto-generated method stub  
+
+		    	 startActivity(new Intent(SplashActivity.this, MainActivity.class));
+		 		 SplashActivity.this.finish();
+		    }
+		};      
+		handler.postDelayed(delayRunnable, 2000);
+	
+
+		
+		super.onStart();
+	}
+
+
+
+	
 }
