@@ -414,7 +414,7 @@ public class AddContacts extends Fragment {
 			
 			fpp.faceDetect(bitmap);
 			if(fpp.RESULT.getJSONArray("face").length() == 0){
-				
+				alertDiaLog_ChangePicture();
 			}else{
 
 				bitmap = getCropImage(bitmap);
@@ -508,6 +508,22 @@ public class AddContacts extends Fragment {
 		adapter.setImages(showBitmapList);
 		fancyCoverFlow.setAdapter(adapter);
 
+	}
+	
+	private void alertDiaLog_ChangePicture() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+		builder.setTitle("Change New Picture")
+				.setIcon(getResources().getDrawable(R.drawable.logo))
+				.setMessage("Please Select New Picture")
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 }
