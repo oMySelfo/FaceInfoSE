@@ -1,5 +1,6 @@
 package th.ac.kmitl.it.faceinfo.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,18 +18,20 @@ import android.widget.TextView;
 
 public class PersonToGroupAdapter extends BaseAdapter {
 	private static List<Contact> listContact;
-	private boolean check;
+
 
 	private LayoutInflater mInflater;
+	private List<Boolean> inGroup;
 	
 	public PersonToGroupAdapter (LayoutInflater Inflater,List<Contact> listContact) {
 		super();
 		this.listContact = listContact;
+		inGroup = new ArrayList<Boolean>();
 		mInflater = Inflater;
+		for(int i=0;i<listContact.size();i++){
+			inGroup.add(false);//listContact.get(i).getGroup
+		}
 	}
-
-
-
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -47,6 +50,7 @@ public class PersonToGroupAdapter extends BaseAdapter {
 		return 0;
 	}
 
+
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
@@ -56,18 +60,25 @@ public class PersonToGroupAdapter extends BaseAdapter {
 		CheckBox cb = (CheckBox) convertView.findViewById(R.id.addpersontogroup_cb);
 		//Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPath());
 		//img.setImageBitmap(bmImg);	
-		check=false;
-		txt.setText(listContact.get(position).getCon_name());
+		cb.setChecked(inGroup.get(position));
+		//if(listContact.get(position).get)
+		//cb.
 		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
-				//listContact.get(position).setGroup(isChecked);
+				inGroup.set(position, isChecked);
 				
 			}
 		});
+		txt.setText(listContact.get(position).getCon_name());
+		
 		return convertView;
 	}
+	public List<Boolean> getInGroup() {
+		return inGroup;
+	}
+
 
 }

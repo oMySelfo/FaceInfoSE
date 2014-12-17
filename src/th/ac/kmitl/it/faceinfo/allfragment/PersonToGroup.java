@@ -44,13 +44,11 @@ public class PersonToGroup extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//update to DB
-				/*for(int i=0;i<Model.getListperson().size();i++){
-					System.out.println("Model :"+Model.getListperson().get(i).isGroup());
+				List<Boolean> inGroup = adapter.getInGroup();
+				for(int i=0;i<inGroup.size();i++ ){
+					System.out.println(i +" : "+inGroup.get(i));
 				}
-				Model.setListperson(adapter.getListContact());
-				for(int i=0;i<Model.getListperson().size();i++){
-					System.out.println("aaa :"+Model.getListperson().get(i).isGroup());
-				}*/
+				
 				
 			}
 		});
