@@ -416,13 +416,9 @@ public class AddContacts extends Fragment {
 			fpp.faceDetect(bitmap);
 			System.out.println(fpp.RESULT);
 			if(fpp.RESULT.getJSONArray("face").length() == 0){
-				/*
-				 * 
-				 * 
-				 * 
-				 * 
-				 * 
-				 */
+
+				alertDiaLog_ChangePicture();
+
 			}else{
 
 				bitmap = getCropImage(bitmap);
@@ -465,10 +461,10 @@ public class AddContacts extends Fragment {
 	}
 
 	private Bitmap getCropImage(Bitmap bitmap) {
-		double center_x;
-		double center_y;
-		double height;
-		double width;
+		double center_x = 0;
+		double center_y = 0;
+		double height = 0;
+		double width = 0;
 		try {
 			JSONObject result = fpp.RESULT;
 
@@ -482,12 +478,18 @@ public class AddContacts extends Fragment {
 					.getJSONObject("position").getDouble("height");
 			width = result.getJSONArray("face").getJSONObject(0)
 					.getJSONObject("position").getDouble("width");
+			center_x = center_x / 100 * bitmap.getWidth();
+			width = width / 100 * bitmap.getWidth() * 0.7f;
+			center_y = center_y / 100 * bitmap.getHeight();
+			height = height / 100 * bitmap.getHeight() * 0.7f;
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
 
 		Bitmap cropBitmap = bitmap;
+		//Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x , (int)center_y , (int)width, (int)height);
 
 		return cropBitmap;
 	}
@@ -510,6 +512,22 @@ public class AddContacts extends Fragment {
 		adapter.setImages(showBitmapList);
 		fancyCoverFlow.setAdapter(adapter);
 
+	}
+	
+	private void alertDiaLog_ChangePicture() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+		builder.setTitle("Change New Picture")
+				.setIcon(getResources().getDrawable(R.drawable.logo))
+				.setMessage("Please Select New Picture")
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 }
