@@ -169,14 +169,16 @@ public class AddContacts extends Fragment {
 					try {
 						String con_id = fpp.RESULT.getString("person_id");
 						contact.setCon_id(con_id);
-						if(listPhoto.size()>0){
-							contact.setPhoto_id(listPhoto.get(position).getPhoto_id());
-						}else{
+						if (listPhoto.size() > 0) {
+							contact.setPhoto_id(listPhoto.get(position)
+									.getPhoto_id());
+						} else {
 							contact.setPhoto_id(null);
 						}
 						dbm.insertContact(contact);
 						for (Photo photo : listPhoto) {
-							fpp.addFace(contact.getCon_id(),photo.getPhoto_id());
+							fpp.addFace(contact.getCon_id(),
+									photo.getPhoto_id());
 							photo.setCon_id(con_id);
 							dbm.insertPhoto(photo);
 						}
@@ -214,9 +216,10 @@ public class AddContacts extends Fragment {
 						fpp.deleteFace(contact.getCon_id(), photo.getPhoto_id());
 						dbm.deletePhoto(photo.getPhoto_id());
 					}
-					if(listPhoto.size()>0){
-						contact.setPhoto_id(listPhoto.get(position).getPhoto_id());
-					}else{
+					if (listPhoto.size() > 0) {
+						contact.setPhoto_id(listPhoto.get(position)
+								.getPhoto_id());
+					} else {
 						contact.setPhoto_id(null);
 					}
 					dbm.updateContact(contact);
@@ -238,7 +241,7 @@ public class AddContacts extends Fragment {
 
 	private void eventfancyCoverFlowClick() {
 		// Short Click (Add Picture)
-		
+
 		fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> view, View container,
@@ -247,8 +250,8 @@ public class AddContacts extends Fragment {
 					registerForContextMenu(fancyCoverFlow);
 					isOnClick = true;
 					AddContacts.this.position = position;
-					System.out.println("position shot click" +  position);
-					
+					System.out.println("position shot click" + position);
+
 					if (position == showBitmapList.size() - 1) {
 						container.showContextMenu();
 					}
@@ -257,7 +260,7 @@ public class AddContacts extends Fragment {
 			}
 		});
 		// Long Click (Delete Picture)
-		
+
 		fancyCoverFlow
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 					@Override
@@ -266,8 +269,9 @@ public class AddContacts extends Fragment {
 						if (isEditEnable) {
 							registerForContextMenu(fancyCoverFlow);
 							AddContacts.this.position = position;
-							System.out.println("position long click" +  position);
-							if (isOnClick){
+							System.out
+									.println("position long click" + position);
+							if (isOnClick) {
 								return false;
 							}
 							if (position != showBitmapList.size() - 1) {
@@ -419,15 +423,18 @@ public class AddContacts extends Fragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		try {
-			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
+		if(data != null ){
+			if(data.getExtras() != null){
+
+		try {		
+			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK ) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 				path = uri.getPath();
 
 			} else if (requestCode == REQUEST_GALLERY
-					&& resultCode == ma.RESULT_OK) {
+					&& resultCode == ma.RESULT_OK ) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
@@ -459,6 +466,9 @@ public class AddContacts extends Fragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		}
+		}
+		
 
 	}
 
@@ -520,22 +530,21 @@ public class AddContacts extends Fragment {
 		// Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x ,
 		// (int)center_y , (int)width, (int)height);
 
-
 		return cropBitmap;
 	}
 
 	private String getCropPath(Bitmap cropImage) {
-		
+
 		String file_path = Environment.getExternalStorageDirectory()
 				.getAbsolutePath() + "/FaceINFO";
-		
+
 		File dir = new File(file_path);
 		if (!dir.exists())
 			dir.mkdirs();
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-		.format(new Date());
-		
-		File file = new File(dir,  timeStamp + ".png");
+				.format(new Date());
+
+		File file = new File(dir, timeStamp + ".png");
 		FileOutputStream fOut;
 		try {
 			fOut = new FileOutputStream(file);
@@ -545,13 +554,12 @@ public class AddContacts extends Fragment {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String cropPath = file_path+"/"+timeStamp+".png";
+		String cropPath = file_path + "/" + timeStamp + ".png";
 		System.out.println(cropPath);
-		
 
 		return cropPath;
 
