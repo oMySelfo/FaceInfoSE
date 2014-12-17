@@ -423,22 +423,24 @@ public class AddContacts extends Fragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(data != null ){
-			if(data.getExtras() != null){
+		System.out.println("----------------------jays------------------");
+		System.out.println(data);
+		bitmap = null;
 
 		try {		
-			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK ) {
+			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK && data==null) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 				path = uri.getPath();
 
 			} else if (requestCode == REQUEST_GALLERY
-					&& resultCode == ma.RESULT_OK ) {
+					&& resultCode == ma.RESULT_OK && data.getData() !=null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
 			}
+			if (bitmap != null){
 			fpp.faceDetect(bitmap);
 			System.out.println(fpp.RESULT);
 			if (fpp.RESULT.getJSONArray("face").length() == 0) {
@@ -458,6 +460,7 @@ public class AddContacts extends Fragment {
 				listPhoto.add(photo);
 				addBitmapToShowList(bitmap);
 			}
+			}
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -466,8 +469,7 @@ public class AddContacts extends Fragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		}
-		}
+
 		
 
 	}

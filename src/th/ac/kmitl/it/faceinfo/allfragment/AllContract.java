@@ -164,20 +164,23 @@ public class AllContract extends Fragment {
 	
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		bitmap = null;
 		try {
-			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
+			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK && data==null) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 
 			} else if (requestCode == REQUEST_GALLERY
-					&& resultCode == ma.RESULT_OK) {
+					&& resultCode == ma.RESULT_OK && data.getData() !=null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 			}
+			if(bitmap !=null){
 			
 			fpp.faceIndentify(bitmap);
 			this.data.getMainActivity().displayView(5);
+			}
 			
 			
 			
@@ -189,6 +192,8 @@ public class AllContract extends Fragment {
 			e.printStackTrace();
 		}
 		System.out.println(bitmap);
+			}
+		}
 
 	}
 	
