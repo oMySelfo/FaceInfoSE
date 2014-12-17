@@ -1,45 +1,47 @@
-package th.ac.kmitl.it.faceinfo.main;
+package th.ac.kmitl.it.faceinfo.allfragment;
+
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
-import android.app.Activity;
-import android.content.Intent;
+import th.ac.kmitl.it.faceinfo.main.Data;
+import th.ac.kmitl.it.faceinfo.main.MainActivity;
+import th.ac.kmitl.it.faceinfo.main.R;
+import th.ac.kmitl.it.faceinfo.main.SplashActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
+import android.app.Fragment;
+import android.content.Intent;
 
-public class SplashActivity extends Activity{
+public class Splash extends Fragment {
+	public Splash() {}
 	
 	private ImageButton btn_loginfacebook;
 	FacebookManager fm;
 	DatabaseManager dbm;
 	Data data;
-	
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash);
-		btn_loginfacebook = (ImageButton) findViewById(R.id.btn_loginfacebook);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.splash, container, false);
+		btn_loginfacebook = (ImageButton) rootView.findViewById(R.id.btn_loginfacebook);
 		btn_loginfacebook.setVisibility(View.INVISIBLE);
-		Data.getData().setDatabaseManager(this);
-		Data.getData().setFacebookManager(this);
+		
 		data = Data.getData();
 		dbm = data.getDmb();
 		fm = data.getFacebookManager();
 		System.out.println(dbm.checkUserKey()+"--------------------");
-		
 		if(!dbm.checkUserKey()){
 			btn_loginfacebook.setVisibility(View.VISIBLE);
 			btn_loginfacebook.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					fm.login();
-					startActivity(new Intent(SplashActivity.this, MainActivity.class));
-					SplashActivity.this.finish();
+					Data.getData().getMainActivity().displayView(9);
 				}
 			});
 		}else{
@@ -48,23 +50,11 @@ public class SplashActivity extends Activity{
 
 			     @Override
 			     public void run() {
-			    // TODO Auto-generated method stub  
-
-			    	 startActivity(new Intent(SplashActivity.this, MainActivity.class));
-			 		 SplashActivity.this.finish();
+			    	 Data.getData().getMainActivity().displayView(9);
 			    }
 			};      
 			handler.postDelayed(delayRunnable, 2000);
 		}
+		return rootView;
 	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
-
-
-
-	
 }

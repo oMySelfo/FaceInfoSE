@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 		mDrawerList = (ListView) findViewById(R.id.slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		displayView(0);
+		displayView(9);
 		getActionBar().setHomeButtonEnabled(true);
 		SetMenuSliding();
 
@@ -118,8 +118,9 @@ public class MainActivity extends Activity {
 		case 8:
 			fragment = new AddContacts(2);
 			break;
-
-
+		case 9:
+			fragment = new Splash();
+			break;
 		default:
 			fragment = null;
 		}
