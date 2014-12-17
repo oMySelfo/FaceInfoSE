@@ -108,7 +108,7 @@ public class ShowResult extends Fragment {
 		adapter = new CoverFlowAdapter();
 		adapter.setImages(images);
 		tv = (TextView) rootView.findViewById(R.id.nameResultFirst);
-		tv.setText(contact.getCon_name() + "\n accuracy : " + confidect + "%" );
+		tv.setText(contact.getCon_name() + "\naccuracy : " + confidect + "%" );
 		
 	}
 
@@ -118,13 +118,13 @@ public class ShowResult extends Fragment {
 		confidect = (int)candidateResult.getJSONObject(1).getDouble("confidence");
 		contact = dbm.getContact(con_id);
 		bitmap = BitmapFactory.decodeFile(contact.getPhoto_path());
-		or.add(new ObjectResult(contact.getCon_name() + "\n accuracy : " + confidect + "%" ,bitmap));
+		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" ,bitmap));
 		
 		con_id = candidateResult.getJSONObject(2).getString("person_id");
 		confidect = (int)candidateResult.getJSONObject(2).getDouble("confidence");
 		contact = dbm.getContact(con_id);
 		bitmap = BitmapFactory.decodeFile(contact.getPhoto_path());
-		or.add(new ObjectResult(contact.getCon_name() + "\n accuracy : " + confidect + "%" , bitmap));
+		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" , bitmap));
 
 		ArrayAdapter<ObjectResult> modeAdapter = new ResultAdapter(ma, or);
 		ListView listViewResult = (ListView) rootView

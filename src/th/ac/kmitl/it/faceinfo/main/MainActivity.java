@@ -121,6 +121,9 @@ public class MainActivity extends Activity {
 		case 9:
 			fragment = new Splash();
 			break;
+		case 10:
+			fragment = new PeopleOfGroup();
+			break;
 		default:
 			fragment = null;
 		}

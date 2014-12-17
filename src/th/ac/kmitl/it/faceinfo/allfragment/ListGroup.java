@@ -83,6 +83,7 @@ public class ListGroup extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
                 System.out.println(position);
+                ma.displayView(10);
             }
         });
 		
