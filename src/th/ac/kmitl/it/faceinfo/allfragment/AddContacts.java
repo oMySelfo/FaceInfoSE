@@ -423,22 +423,25 @@ public class AddContacts extends Fragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(data != null ){
-			if(data.getExtras() != null){
+		System.out.println("----------------------jays------------------");
+		System.out.println(data);
+		bitmap = null;
+
 
 		try {		
-			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK ) {
+			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK && data==null) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 				path = uri.getPath();
 
 			} else if (requestCode == REQUEST_GALLERY
-					&& resultCode == ma.RESULT_OK ) {
+					&& resultCode == ma.RESULT_OK && data.getData() !=null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
 			}
+			if (bitmap != null){
 			fpp.faceDetect(bitmap);
 			System.out.println(fpp.RESULT);
 			if (fpp.RESULT.getJSONArray("face").length() == 0) {
@@ -458,6 +461,7 @@ public class AddContacts extends Fragment {
 				listPhoto.add(photo);
 				addBitmapToShowList(bitmap);
 			}
+			}
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -466,10 +470,6 @@ public class AddContacts extends Fragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		}
-		}
-		
-
 	}
 
 	private String getRealPathFromURI(Uri contentURI) {
@@ -519,13 +519,22 @@ public class AddContacts extends Fragment {
 		int crop_height = (int) (2 * height);
 		int top_lefty = (int) (center_y - height);
 		// System.out.println(top_leftx)
-		System.out.println("w:" + width + " h:" + height);
+		top_leftx= top_leftx-5*top_leftx/100;
+		top_lefty =top_lefty - 5 * top_lefty / 100;
+		crop_width = crop_width + 10 * crop_width / 100;
+		crop_height = crop_height + 10* crop_height / 100;
+		if(top_leftx<0){top_leftx=0;}
+		if(top_lefty<0){top_lefty=0;}
+		if(crop_width+top_leftx > bitmap.getWidth()){
+			crop_width = bitmap.getWidth()-top_leftx;
+		}
+		if(crop_height+top_lefty > bitmap.getHeight()){
+			crop_height = bitmap.getHeight()-top_lefty;
+		}
+		System.out.println("Bitmap : "+bitmap.getWidth()+" "+bitmap.getHeight());
+		System.out.println("Crop :"+top_leftx+" "+top_lefty+" "+crop_width+top_leftx+" "+crop_height+top_lefty);
 
-		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,
-				(int) ((top_leftx - 5 * top_leftx / 100)),
-				(int) (top_lefty - 5 * top_leftx / 100),
-				(int) (crop_width + 10 * crop_width / 100), crop_height + 10
-						* crop_height / 100);
+		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,top_leftx,top_lefty,crop_width, crop_height );
 
 		// Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x ,
 		// (int)center_y , (int)width, (int)height);

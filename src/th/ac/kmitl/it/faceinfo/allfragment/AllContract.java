@@ -59,68 +59,70 @@ public class AllContract extends Fragment {
 	private int REQUEST_CAMERA = 2;
 	private MainActivity ma;
 	private FacePlusPlus fpp;
-	
+
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		rootView = inflater.inflate(R.layout.list_allcontract, container,false);
+		rootView = inflater
+				.inflate(R.layout.list_allcontract, container, false);
 		ma = Data.getData().getMainActivity();
-		
+
 		data = Data.getData();
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
 		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
 		sv.setOnQueryTextListener(new OnQueryTextListener() {
-			
+
 			@Override
 			public boolean onQueryTextSubmit(String query) {
 				// TODO Auto-generated method stub
-				System.out.println("send :"+query );
+				System.out.println("send :" + query);
 				return false;
 			}
-			
+
 			@Override
 			public boolean onQueryTextChange(String newText) {
+
 				listContact = dbm.searchContact(newText);
 				ListView list = (ListView) rootView.findViewById(R.id.listViewResult);
 				list.setAdapter(new AllContactAdapter(inflater,listContact));
+				// TODO Auto-generated method stub
+				System.out.println(newText);
+
 				return false;
 			}
-		} );
-		
-		
-		
+		});
+
 		ListView list = (ListView) rootView.findViewById(R.id.listViewResult);
-		list.setAdapter(new AllContactAdapter(inflater,listContact ));
+		list.setAdapter(new AllContactAdapter(inflater, listContact));
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				// TODO Auto-generated method stub
 				data.setTempKey(listContact.get(position).getCon_id());
 				data.getMainActivity().displayView(8);
 			}
 		});
 		showConTextMenu();
-		
-		
+
 		return rootView;
 	}
-	
-	private void showConTextMenu(){
+
+	private void showConTextMenu() {
 		ImageButton findbtt = (ImageButton) rootView.findViewById(R.id.findbtt);
 		registerForContextMenu(findbtt);
 		findbtt.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				 ((ImageButton)v).showContextMenu();
+				((ImageButton) v).showContextMenu();
 			}
 		});
-		
+
 	}
-	
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -128,7 +130,7 @@ public class AllContract extends Fragment {
 		menu.add(0, v.getId(), 0, "TakePicture");
 		menu.add(0, v.getId(), 0, "Gallery");
 	}
-	
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getTitle() == "TakePicture") {
@@ -158,41 +160,33 @@ public class AllContract extends Fragment {
 		return true;
 
 	}
-	
-	
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		bitmap = null;
 		try {
-			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
+			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK
+					&& data == null) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 
 			} else if (requestCode == REQUEST_GALLERY
-					&& resultCode == ma.RESULT_OK) {
+					&& resultCode == ma.RESULT_OK && data.getData() != null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 			}
-			
-			fpp.faceIndentify(bitmap);
-			this.data.getMainActivity().displayView(5);
-			
-			
-			
-			
-			
+			if (bitmap != null) {
+
+				fpp.faceIndentify(bitmap);
+				this.data.getMainActivity().displayView(5);
+			}
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		System.out.println(bitmap);
-
 	}
-	
-	
-
-
-	
-	
 
 }
