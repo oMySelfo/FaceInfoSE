@@ -46,7 +46,7 @@ public class AllContract extends Fragment {
 					long id) {
 				// TODO Auto-generated method stub
 				System.out.println(position);
-				data.getMainActivity().displayView(7);
+				data.getMainActivity().displayView(8);
 				
 			}
 		});

@@ -84,6 +84,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void displayView(int position) {
+		
 		Fragment fragment = listFragment.get(position);
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
@@ -134,10 +135,6 @@ public class MainActivity extends Activity {
 
 		mDrawerList.setAdapter(adapterSliding);
 	}
-	
-	
-	
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -151,7 +148,6 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
