@@ -86,6 +86,7 @@ public class AddContacts extends Fragment {
 	private int TEXT_BIRTHDAY = 6;
 	private ImageButton calendar_button;
 	private EditText calendar_edittext;
+	private int position = 0;
 
 	public AddContacts(int mode) {
 		super();
@@ -135,7 +136,6 @@ public class AddContacts extends Fragment {
 			editbutton.setImageResource(R.drawable.save);
 		} else if (mode == PAGE_PROFILE) {
 			isEditEnable = false;
-			eventfancyCoverFlowClick();
 			contact = dbm.getContact(data.getTempKey()); // //// dummy no data
 															// now
 			for (int i = 0; i < EdittextId.size(); i++) {
@@ -169,10 +169,16 @@ public class AddContacts extends Fragment {
 					try {
 						String con_id = fpp.RESULT.getString("person_id");
 						contact.setCon_id(con_id);
+						if(listPhoto.size()>0){
+							contact.setPhoto_id(listPhoto.get(position).getPhoto_id());
+						}else{
+							contact.setPhoto_id(null);
+						}
 						dbm.insertContact(contact);
 						for (Photo photo : listPhoto) {
-							fpp.addFace(contact.getCon_id(),
-									photo.getPhoto_id());
+							fpp.addFace(contact.getCon_id(),photo.getPhoto_id());
+							photo.setCon_id(con_id);
+							dbm.insertPhoto(photo);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -200,12 +206,18 @@ public class AddContacts extends Fragment {
 						if (photo.isNewPhoto()) {
 							fpp.addFace(contact.getCon_id(),
 									photo.getPhoto_id());
+							photo.setCon_id(contact.getCon_id());
 							dbm.insertPhoto(photo);
 						}
 					}
 					for (Photo photo : listPhotosDeleted) {
 						fpp.deleteFace(contact.getCon_id(), photo.getPhoto_id());
 						dbm.deletePhoto(photo.getPhoto_id());
+					}
+					if(listPhoto.size()>0){
+						contact.setPhoto_id(listPhoto.get(position).getPhoto_id());
+					}else{
+						contact.setPhoto_id(null);
 					}
 					dbm.updateContact(contact);
 				}
@@ -226,15 +238,18 @@ public class AddContacts extends Fragment {
 
 	private void eventfancyCoverFlowClick() {
 		// Short Click (Add Picture)
-		registerForContextMenu(fancyCoverFlow);
+		
 		fancyCoverFlow.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> view, View container,
 					int position, long id) {
 				if (isEditEnable) {
+					registerForContextMenu(fancyCoverFlow);
 					isOnClick = true;
+					AddContacts.this.position = position;
+					System.out.println("position shot click" +  position);
+					
 					if (position == showBitmapList.size() - 1) {
-
 						container.showContextMenu();
 					}
 					isOnClick = false;
@@ -242,14 +257,19 @@ public class AddContacts extends Fragment {
 			}
 		});
 		// Long Click (Delete Picture)
+		
 		fancyCoverFlow
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 					@Override
 					public boolean onItemLongClick(AdapterView<?> view,
 							View container, int position, long id) {
 						if (isEditEnable) {
-							if (isOnClick)
+							registerForContextMenu(fancyCoverFlow);
+							AddContacts.this.position = position;
+							System.out.println("position long click" +  position);
+							if (isOnClick){
 								return false;
+							}
 							if (position != showBitmapList.size() - 1) {
 								alertDiaLog(position);
 								return true;
@@ -412,7 +432,6 @@ public class AddContacts extends Fragment {
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
 			}
-			System.out.println(fpp.RESULT);
 			fpp.faceDetect(bitmap);
 			System.out.println(fpp.RESULT);
 			if (fpp.RESULT.getJSONArray("face").length() == 0) {
@@ -533,13 +552,6 @@ public class AddContacts extends Fragment {
 		String cropPath = file_path+"/"+timeStamp+".png";
 		System.out.println(cropPath);
 		
-		
-
-		// String imgeUrl = MediaStore.Images.Media.insertImage(
-		// ma.getContentResolver(), bitmap, "kla", "jay");
-		// Uri uri = Uri.parse(imgeUrl);
-		// File imageFile = new File(getRealPathFromURI(uri));
-		// path = imageFile.getPath();
 
 		return cropPath;
 

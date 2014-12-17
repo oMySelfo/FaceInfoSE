@@ -52,8 +52,12 @@ public class AllContactAdapter extends BaseAdapter {
 		TextView txt = (TextView) convertView.findViewById(R.id.person_txt);
 		ImageView img = (ImageView) convertView.findViewById(R.id.person_img);
 		txt.setText(listContact.get(position).getCon_name());
-//	Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPath());
-//		img.setImageBitmap(bmImg);	
+		String path = listContact.get(position).getPhoto_path();
+		if(path != null){
+			Bitmap bmImg = BitmapFactory.decodeFile(path);
+			img.setImageBitmap(bmImg);	
+		}
+
 		return convertView;
 	}
 

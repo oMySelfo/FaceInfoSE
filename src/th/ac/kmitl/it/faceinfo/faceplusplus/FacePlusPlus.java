@@ -22,7 +22,7 @@ public class FacePlusPlus{
 	
 	
 	//// Wait Sync
-	private long TIME_COUNT = 10000;
+	private long TIME_COUNT = 20000;
 	private long COUNT;
 	private long SLEEP = 300;
 
@@ -62,7 +62,7 @@ public class FacePlusPlus{
 		}
 	}
 	public void addFace(String con_id,String photo_id){
-		new AddFace(con_id, photo_id);
+		new AddFace(con_id, photo_id).start();
 		while(checkWaitSync()){
 			System.out.print("");
 		}

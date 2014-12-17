@@ -23,6 +23,8 @@ public class FaceIndentify extends Thread {
 		data = Data.getData();
 		facePP = data.getFacePP();
 		httpRequests = data.HTTPREQESTS;
+		this.bmp = bmp;
+		
 	}
 	 
 	 
@@ -30,7 +32,6 @@ public class FaceIndentify extends Thread {
 		 Log.d("FaceIdentify", "StartThread");
 		 
 		 try {
-			 	
 				facePP.setWaitSync();
 				httpRequests.trainIdentify(new PostParameters().setGroupName(data.USER_KEY));
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -38,7 +39,7 @@ public class FaceIndentify extends Thread {
 						100, stream);
 				byte[] byteArray = stream.toByteArray();
 				facePP.RESULT = httpRequests.recognitionIdentify(new PostParameters()
-						.setGroupId(data.USER_KEY).setImg(byteArray));
+						.setGroupName(data.USER_KEY).setImg(byteArray));
 				
 
 			} catch (FaceppParseException e) {

@@ -97,6 +97,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		values.put("con_detail", contact.getCon_detail());
 		values.put("con_phone", contact.getCon_phone());
 		values.put("con_address", contact.getCon_address());
+		values.put("photo_id",contact.getPhoto_id());
 		db.insert("contact", null, values);
 		db.close();
 
@@ -189,6 +190,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		values.put("con_facebook", contact.getCon_facebook());
 		values.put("con_address", contact.getCon_address());
 		values.put("con_detail", contact.getCon_detail());
+		values.put("photo_id",contact.getPhoto_id());
 
 		db.update("contact", values, "con_id = '" + contact.getCon_id() + "'",
 				null);
