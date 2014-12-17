@@ -20,6 +20,7 @@ public class Data {
 	private DatabaseManager dbm;
 	private FacebookManager fm;
 	private MainActivity ma;
+	private String tempKey;
 	
 
 
@@ -69,6 +70,14 @@ public class Data {
 	}
 	public MainActivity getMainActivity(){
 		return ma;
+	}
+
+	public String getTempKey() {
+		return tempKey;
+	}
+
+	public void setTempKey(String tempKey) {
+		this.tempKey = tempKey;
 	}
 	
 

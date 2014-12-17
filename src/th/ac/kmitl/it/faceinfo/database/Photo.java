@@ -9,10 +9,16 @@ public class Photo {
 	private String con_id;
 	private String photo_id;
 	private String photo_detail;
-	private String photo_time_add;
+	private String photo_date_add;
 	private String photo_path;
+	private boolean isNewPhoto;	
 	
-	
+	public boolean isNewPhoto() {
+		return isNewPhoto;
+	}
+	public void setNewPhoto(boolean isNewPhoto) {
+		this.isNewPhoto = isNewPhoto;
+	}
 	public String getPhoto_path() {
 		return photo_path;
 	}
@@ -37,11 +43,11 @@ public class Photo {
 	public void setPhoto_detail(String photo_detail) {
 		this.photo_detail = photo_detail;
 	}
-	public String getPhoto_time_add() {
-		return photo_time_add;
+	public String getPhoto_date_add() {
+		return photo_date_add;
 	}
-	public void setPhoto_time_add(String photo_time_add) {
-		this.photo_time_add = photo_time_add;
+	public void setPhoto_date_add(String photo_date_add) {
+		this.photo_date_add = photo_date_add;
 	}
 	
 	public Bitmap getBitmap(){

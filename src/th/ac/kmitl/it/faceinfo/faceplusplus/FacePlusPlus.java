@@ -60,6 +60,20 @@ public class FacePlusPlus{
 			System.out.print("");
 		}
 	}
+	public void addFace(String con_id,String photo_id){
+		new AddFace(con_id, photo_id);
+		while(checkWaitSync()){
+			System.out.print("");
+		}
+	}
+	
+	public void deleteFace(String con_id,String photo_id){
+		new DeleteFace(con_id, photo_id);
+		while(checkWaitSync()){
+			System.out.print("");
+		}
+	}
+	
 	public void deleteAllContact(List<Contact> listContact){
 		Log.d("Delete All Contact", "Start");
 		for(Contact contact : listContact){

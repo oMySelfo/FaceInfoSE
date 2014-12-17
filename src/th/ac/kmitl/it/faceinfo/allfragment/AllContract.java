@@ -45,8 +45,9 @@ public class AllContract extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
 				// TODO Auto-generated method stub
-				System.out.println(position);
-				data.getMainActivity().displayView(7);
+				data.setTempKey(listContact.get(position).getCon_id());
+				data.getMainActivity().displayView(8);
+				
 				
 			}
 		});

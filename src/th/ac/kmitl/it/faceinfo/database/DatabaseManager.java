@@ -152,6 +152,27 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		return contact;
 	}
 	
+	public List<Photo> getPhotoList(String con_id){
+		List<Photo> listPhoto = new ArrayList<Photo>();
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		sql = "Select con_id,photo_id,photo_path,photo_date_add from photo where con_id = '"+con_id+"';";
+		Cursor cursor = db.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
+			Photo photo = new Photo();
+			photo.setCon_id(cursor.getString(0));
+			photo.setPhoto_id(cursor.getString(1));
+			photo.setPhoto_path(cursor.getString(2));
+			photo.setPhoto_date_add(cursor.getString(3));
+			photo.setNewPhoto(false);
+			listPhoto.add(photo);
+		}
+		cursor.close();
+		db.close();
+		
+		return listPhoto;
+	}
+	
 	public void updateContact(Contact contact){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -165,9 +186,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		values.put("con_detail", contact.getCon_detail());
 		
 		db.update("contact", values, "con_id = '"+contact.getCon_id() + "'", null);
+		db.close();
 	}
 	
 	
+	public void deleteContactPhoto(String con_id){
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("photo", "con_id='" + con_id + "'", null);
+		db.close();
+	}
+	public void deletePhoto(String photo_id){
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("photo", "photo_id='" + photo_id + "'", null);
+		db.close();
+	}
 	
 	
 	
@@ -199,7 +231,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	private void createContact(SQLiteDatabase db) {
 		sql = "CREATE TABLE `contact` " +
 				"(`con_id` VARCHAR(45) PRIMARY KEY NOT NULL," +
-				"`con_name` VARCHAR(45) NOT NULL," +
+				"`con_name` VARCHAR(45) NOT NULL DEFAULT 'Unknown name'," +
 				"`con_fullname` VARCHAR(45) NULL," +
 				"`con_birthday` DATE NULL," +
 				"`photo_id` VARCHAR(45) NULL," +
