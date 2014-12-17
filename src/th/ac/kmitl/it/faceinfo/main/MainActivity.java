@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		displayView(9);
 		getActionBar().setHomeButtonEnabled(true);
+		
 		SetMenuSliding();
 
 	}
