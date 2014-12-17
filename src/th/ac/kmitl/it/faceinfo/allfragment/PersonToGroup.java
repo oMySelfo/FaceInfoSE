@@ -33,7 +33,7 @@ public class PersonToGroup extends Fragment {
 		ListView list = (ListView) rootView.findViewById(R.id.persontogroup_list);
 		data = Data.getData();
 		dbm = data.getDmb();
-		listContact = dbm.selectAllContact();
+		listContact = dbm.getAllContact();
 		
 		adapter = new PersonToGroupAdapter(inflater,listContact);
 		list.setAdapter(adapter);

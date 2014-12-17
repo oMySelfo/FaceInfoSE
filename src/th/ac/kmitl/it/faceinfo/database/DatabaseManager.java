@@ -84,7 +84,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.close();
 		
 	}
-	public List<Contact> selectAllContact(){
+	public void insertContact(Contact contact){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("con_id", contact.getCon_id());
+		values.put("con_name", contact.getCon_name());
+		values.put("con_facebook", contact.getCon_facebook());
+		values.put("con_fullname", contact.getCon_fullname());
+		values.put("con_email", contact.getCon_email());
+		values.put("con_birthday", contact.getCon_birthday());
+		values.put("con_detail", contact.getCon_detail());
+		values.put("con_phone", contact.getCon_phone());
+		values.put("con_address", contact.getCon_address());
+		db.insert("contact", null, values);
+		db.close();
+		
+	}
+	public List<Contact> getAllContact(){
 		List<Contact> listContact = new ArrayList<Contact>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		sql = "Select con_id,con_name,con_fullname,con_facebook," +
@@ -111,6 +127,50 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 		return listContact;
 	}
+	public Contact getContact(String con_id){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Contact contact = new Contact();
+		sql = "Select con_id,con_name,con_fullname,con_facebook," +
+				"con_email,con_phone,con_address,con_birthday," +
+				"con_date_add,photo_id,con_detail from contact where con_id = '"+con_id+"';";
+		Cursor cursor = db.rawQuery(sql, null);
+		if (cursor.moveToNext()) {
+			contact.setCon_id(cursor.getString(0));
+			contact.setCon_name(cursor.getString(1));
+			contact.setCon_fullname(cursor.getString(2));
+			contact.setCon_facebook(cursor.getString(3));
+			contact.setCon_email(cursor.getString(4));
+			contact.setCon_phone(cursor.getString(5));
+			contact.setCon_address(cursor.getString(6));
+			contact.setCon_birthday(cursor.getString(7));
+			contact.setCon_date_add(cursor.getString(8));
+			contact.setPhoto_id(cursor.getString(9));
+			contact.setCon_detail(cursor.getString(10));
+		}
+		cursor.close();
+		db.close();
+		return contact;
+	}
+	
+	public void updateContact(Contact contact){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("con_name", contact.getCon_name());
+		values.put("con_phone", contact.getCon_name());
+		values.put("con_fullname", contact.getCon_name());
+		values.put("con_birthday", contact.getCon_birthday());
+		values.put("con_email", contact.getCon_email());
+		values.put("con_facebook", contact.getCon_facebook());
+		values.put("con_address", contact.getCon_address());
+		values.put("con_detail", contact.getCon_detail());
+		
+		db.update("contact", values, "con_id = '"+contact.getCon_id() + "'", null);
+	}
+	
+	
+	
+	
+	
 	public void deleteDatabase(){
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete("contact", null, null);
@@ -133,6 +193,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		return null;
 		
 	}
+	
+	
+
 	private void createContact(SQLiteDatabase db) {
 		sql = "CREATE TABLE `contact` " +
 				"(`con_id` VARCHAR(45) PRIMARY KEY NOT NULL," +
@@ -192,5 +255,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.execSQL(sql);
 		Log.d("Database", "Create ContactGroup");
 	}
+	
 
 }

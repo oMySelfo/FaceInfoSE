@@ -3,7 +3,12 @@ package th.ac.kmitl.it.faceinfo.allfragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
 import th.ac.kmitl.it.faceinfo.adapter.CoverFlowAdapter;
+import th.ac.kmitl.it.faceinfo.database.Contact;
+import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
+import th.ac.kmitl.it.faceinfo.faceplusplus.FacePlusPlus;
 import th.ac.kmitl.it.faceinfo.main.Data;
 
 import th.ac.kmitl.it.faceinfo.main.R;
@@ -40,12 +45,16 @@ public class AddContacts extends Fragment {
 	private int PAGE_PROFILE = 2;
 	private int PAGE_ADDCONTACT = 1;
 	private Data data;
-	private boolean onsettext;
+	private DatabaseManager dbm;
+	private FacePlusPlus fpp;
+
 	private List<Integer> EdittextId;
 	private EditText edittext;
 	private View rootView;
 	private List<Integer> images;
-	private boolean isOnClick;
+	private boolean isEditEnable;
+	private CoverFlowAdapter adapter;
+	private Contact contact;
 
 	public AddContacts(int mode) {
 		super();
@@ -57,79 +66,70 @@ public class AddContacts extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.addcontacts, container, false);
-		EdittextId = new ArrayList<Integer>();
-		EdittextId.add(R.id.addcontact_name);
-		EdittextId.add(R.id.addcontact_phone);
-		EdittextId.add(R.id.addcontact_fullname);
-		EdittextId.add(R.id.addcontact_facebook);
-		EdittextId.add(R.id.addcontact_address);
-		EdittextId.add(R.id.addcontact_mail);
-		EdittextId.add(R.id.addcontact_birthday);
-		EdittextId.add(R.id.addcontact_detail);
-		images = new ArrayList<Integer>();
-		images.add(R.drawable.tae);
-		images.add(R.drawable.add_image);
-		data = Data.getData();
-		CoverFlowAdapter adapter = new CoverFlowAdapter();
-		isOnClick = false;
-		adapter.setImages(images);
-
-		fancyCoverFlow = (FancyCoverFlow) rootView
-				.findViewById(R.id.fancyCoverFlow);
-
-		fancyCoverFlow.setAdapter(adapter);
-		fancyCoverFlow.setUnselectedAlpha(1.0f);
-		fancyCoverFlow.setUnselectedSaturation(-1.0f);
-		fancyCoverFlow.setUnselectedScale(0.5f);
-		fancyCoverFlow.setSpacing(10);
-		fancyCoverFlow.setMaxRotation(0);
-		fancyCoverFlow.setScaleDownGravity(0.2f);
-		fancyCoverFlow.setScaleX(1.6f);
-		fancyCoverFlow.setScaleY(1.6f);
-		fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
-		eventfancyCoverFlowClick();
-		
-		
 		deletebutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_deletebutton);
 		editbutton = (ImageButton) rootView
 				.findViewById(R.id.addcontact_editbutton);
+
+		images = new ArrayList<Integer>();
+		images.add(R.drawable.tae);
+		images.add(R.drawable.add_image);
+		adapter = new CoverFlowAdapter();
+		adapter.setImages(images);
+		setEditTextId();
+		setFancyCoverFlow();
+		eventfancyCoverFlowClick();
+
+		data = Data.getData();
+		dbm = data.getDmb();
+		fpp = data.getFacePP();
+		contact = new Contact();
+
 		if (mode == PAGE_ADDCONTACT) {
-			onsettext = true;
 			editbutton.setImageResource(R.drawable.save);
-		} else {
-			onsettext = false;
+		} else if (mode == PAGE_PROFILE) {
+			isEditEnable = false;
+			contact = dbm.getContact("0000000000"); // //// dummy no data now
 			for (int i = 0; i < EdittextId.size(); i++) {
 				edittext = (EditText) rootView.findViewById(EdittextId.get(i));
-				edittext.setEnabled(onsettext);
+				edittext.setEnabled(isEditEnable);
+				edittext.setText(contact.getContactProfile(i));
 			}
 		}
-		editbutton.setOnClickListener(new OnClickListener() {
 
+		editbutton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (mode == PAGE_ADDCONTACT) {
-					// insert to DB
+					for (int i = 0; i < EdittextId.size(); i++) {
+						edittext = (EditText) rootView.findViewById(EdittextId
+								.get(i));
+						contact.serContactProfile(i, edittext.getText()
+								.toString());
+					}
+
+					fpp.createContact();
+					try {
+						String con_id = fpp.RESULT.getString("person_id");
+						contact.setCon_id(con_id);
+						dbm.insertContact(contact);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
 					data.getMainActivity().displayView(0);
+				} else if (mode == PAGE_PROFILE) {
+					isEditEnable = !isEditEnable;
 
-				} else if (onsettext) {
-					onsettext = false;
 					for (int i = 0; i < EdittextId.size(); i++) {
-						edittext = (EditText) rootView.findViewById(EdittextId
-								.get(i));
-						edittext.setEnabled(onsettext);
+						edittext = (EditText) rootView.findViewById(EdittextId.get(i));
+						edittext.setEnabled(isEditEnable);
+						if (isEditEnable == false) {
+							contact.serContactProfile(i, edittext.getText().toString());
+						}
 					}
-					// update to database;
-				} else {
-					onsettext = true;
-					for (int i = 0; i < EdittextId.size(); i++) {
-						edittext = (EditText) rootView.findViewById(EdittextId
-								.get(i));
-						edittext.setEnabled(onsettext);
-					}
+					dbm.updateContact(contact);
 				}
-
 			}
 		});
 
@@ -145,7 +145,7 @@ public class AddContacts extends Fragment {
 					int position, long id) {
 				if (position == images.size() - 1) {
 					view.showContextMenu();
-					
+
 					System.out.println("Okkkkkkkkkkk");
 				}
 			}
@@ -189,8 +189,6 @@ public class AddContacts extends Fragment {
 		return true;
 
 	}
-	
-	
 
 	private void alertDiaLog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(Data.getData()
@@ -217,5 +215,32 @@ public class AddContacts extends Fragment {
 
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+
+	private void setEditTextId() {
+		EdittextId = new ArrayList<Integer>();
+		EdittextId.add(R.id.addcontact_name);
+		EdittextId.add(R.id.addcontact_phone);
+		EdittextId.add(R.id.addcontact_fullname);
+		EdittextId.add(R.id.addcontact_facebook);
+		EdittextId.add(R.id.addcontact_address);
+		EdittextId.add(R.id.addcontact_mail);
+		EdittextId.add(R.id.addcontact_birthday);
+		EdittextId.add(R.id.addcontact_detail);
+	}
+
+	private void setFancyCoverFlow() {
+		fancyCoverFlow = (FancyCoverFlow) rootView
+				.findViewById(R.id.fancyCoverFlow);
+		fancyCoverFlow.setAdapter(adapter);
+		fancyCoverFlow.setUnselectedAlpha(1.0f);
+		fancyCoverFlow.setUnselectedSaturation(-1.0f);
+		fancyCoverFlow.setUnselectedScale(0.5f);
+		fancyCoverFlow.setSpacing(10);
+		fancyCoverFlow.setMaxRotation(0);
+		fancyCoverFlow.setScaleDownGravity(0.2f);
+		fancyCoverFlow.setScaleX(1.6f);
+		fancyCoverFlow.setScaleY(1.6f);
+		fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
 	}
 }

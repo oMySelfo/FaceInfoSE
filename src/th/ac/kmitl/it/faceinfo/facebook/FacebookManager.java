@@ -129,7 +129,7 @@ public class FacebookManager {
 			@Override
 			public void onLogout() {
 				Log.d("Facebook", "logout");		
-				fpp.deleteAllContact(dbm.selectAllContact());		
+				fpp.deleteAllContact(dbm.getAllContact());		
 				fpp.deleteUser();
 				
 				dbm.deleteDatabase();

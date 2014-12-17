@@ -34,7 +34,7 @@ public class AllContract extends Fragment {
 		
 		data = Data.getData();
 		dbm = data.getDmb();
-		listContact = dbm.selectAllContact();
+		listContact = dbm.getAllContact();
 		
 		
 		ListView list = (ListView) rootView.findViewById(R.id.listView1);
