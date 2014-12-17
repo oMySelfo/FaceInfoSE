@@ -22,7 +22,7 @@ public class FacePlusPlus{
 	
 	
 	//// Wait Sync
-	private long TIME_COUNT = 3000;
+	private long TIME_COUNT = 10000;
 	private long COUNT;
 	private long SLEEP = 300;
 
@@ -69,7 +69,7 @@ public class FacePlusPlus{
 	}
 	
 	public void deleteFace(String con_id,String photo_id){
-		new DeleteFace(con_id, photo_id);
+		new DeleteFace(con_id, photo_id).start();
 		while(checkWaitSync()){
 			System.out.print("");
 		}
@@ -86,7 +86,7 @@ public class FacePlusPlus{
 	}
 	
 	public void faceDetect(Bitmap bitmap){
-		new FaceDetect(bitmap);
+		new FaceDetect(bitmap).start();
 		while(checkWaitSync()){
 			System.out.print("");
 		}

@@ -126,6 +126,7 @@ public class AddContacts extends Fragment {
 		dbm = data.getDmb();
 		fpp = data.getFacePP();
 		contact = new Contact();
+
 		listPhoto = new ArrayList<Photo>();
 		listPhotosDeleted = new ArrayList<Photo>();
 
@@ -411,10 +412,17 @@ public class AddContacts extends Fragment {
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 
 			}
-			
+			System.out.println(fpp.RESULT);
 			fpp.faceDetect(bitmap);
+			System.out.println(fpp.RESULT);
 			if(fpp.RESULT.getJSONArray("face").length() == 0){
-				
+				/*
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				 */
 			}else{
 
 				bitmap = getCropImage(bitmap);
@@ -426,7 +434,7 @@ public class AddContacts extends Fragment {
 				photo.setPhoto_id(photo_id);
 				photo.setNewPhoto(true);
 				listPhoto.add(photo);
-				addBitmapToShowList(photo.getBitmap());
+				addBitmapToShowList(bitmap);
 			}
 			
 

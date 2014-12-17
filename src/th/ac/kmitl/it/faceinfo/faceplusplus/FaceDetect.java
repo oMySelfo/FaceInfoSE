@@ -32,15 +32,13 @@ public class FaceDetect extends Thread{
 		 Log.d("FaceDetect", "StartThread");
 		 
 		 try {
-			 	
+			 	facePP.setWaitSync();
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				bmp.compress(Bitmap.CompressFormat.PNG,
-						100, stream);
+				bmp.compress(Bitmap.CompressFormat.PNG,100, stream);
 				byte[] byteArray = stream.toByteArray();
-			 
-				facePP.setWaitSync();
 				facePP.RESULT = httpRequests.detectionDetect(new PostParameters()
 						.setMode("oneface").setImg(byteArray));
+				
 				
 			} catch (FaceppParseException e) {
 				e.printStackTrace();
