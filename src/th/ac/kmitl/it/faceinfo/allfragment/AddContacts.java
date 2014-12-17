@@ -545,6 +545,7 @@ public class AddContacts extends Fragment {
 		System.out.println("Crop :"+top_leftx+" "+top_lefty+" "+crop_width+top_leftx+" "+crop_height+top_lefty);
 
 		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,top_leftx,top_lefty,crop_width, crop_height );
+		cropBitmap = Bitmap.createScaledBitmap(cropBitmap , 256, 256, true);
 
 		// Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x ,
 		// (int)center_y , (int)width, (int)height);
