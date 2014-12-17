@@ -1,8 +1,4 @@
 package th.ac.kmitl.it.faceinfo.main;
-
-
-
-
 import th.ac.kmitl.it.faceinfo.database.DatabaseManager;
 import th.ac.kmitl.it.faceinfo.facebook.FacebookManager;
 import android.app.Activity;
@@ -29,7 +25,7 @@ public class SplashActivity extends Activity{
 		btn_loginfacebook.setVisibility(View.INVISIBLE);
 		Data.getData().setDatabaseManager(this);
 		Data.getData().setFacebookManager(this);
-		
+		//
 		data = Data.getData();
 		dbm = data.getDmb();
 		fm = data.getFacebookManager();
