@@ -38,6 +38,7 @@ public class ListGroup extends Fragment {
 	
 	private Data data;
 	private MainActivity ma;
+	private TextView amountgroups;
 	String[][] dataGroup = new String[][] { { "Friends", R.drawable.friend_cl + "" },
 			{ "Family", R.drawable.family_cl + "" },{"Work", R.drawable.work_cl + "" }};
 
@@ -49,6 +50,7 @@ public class ListGroup extends Fragment {
 		
 		data = Data.getData();
 		ma = data.getMainActivity();
+		amountgroups = (TextView) rootView.findViewById(R.id.amountgroup);
 		
 		creategroup.setOnClickListener(new View.OnClickListener() {
 			@Override

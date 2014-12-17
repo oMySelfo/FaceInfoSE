@@ -16,9 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" 
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:layout_marginLeft="15dp">
     </ListView>
+    
     <ImageButton
             android:id="@+id/findbtt"
             android:layout_width="wrap_content"
@@ -29,5 +30,13 @@
             android:layout_marginRight="14dp"
             android:src="@drawable/findbtt"
             android:background="@null" />
+
+    <TextView
+        android:id="@+id/amountfriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/listViewResult"
+        android:layout_below="@+id/searchView"
+        android:text="friends:" />
 
 </RelativeLayout>
