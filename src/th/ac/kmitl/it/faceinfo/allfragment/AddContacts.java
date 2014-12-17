@@ -2,6 +2,7 @@ package th.ac.kmitl.it.faceinfo.allfragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class AddContacts extends Fragment {
 	private boolean isOnClick;
 	private LayoutInflater layout;
 	private int TEXT_BIRTHDAY = 6;
-	private ImageButton calendar_button ;
+	private ImageButton calendar_button;
 	private EditText calendar_edittext;
 
 	public AddContacts(int mode) {
@@ -104,7 +105,8 @@ public class AddContacts extends Fragment {
 				.findViewById(R.id.addcontact_editbutton);
 		calendar_button = (ImageButton) rootView
 				.findViewById(R.id.addcontact_birthday_button);
-		calendar_edittext = (EditText)rootView.findViewById(R.id.addcontact_birthday);
+		calendar_edittext = (EditText) rootView
+				.findViewById(R.id.addcontact_birthday);
 
 		showBitmapList = new ArrayList<Bitmap>();
 		showBitmapList.add(BitmapFactory.decodeResource(
@@ -120,7 +122,6 @@ public class AddContacts extends Fragment {
 		setFancyCoverFlow();
 
 		eventfancyCoverFlowClick();
-		
 
 		data = Data.getData();
 		dbm = data.getDmb();
@@ -141,7 +142,7 @@ public class AddContacts extends Fragment {
 				edittext = (EditText) rootView.findViewById(EdittextId.get(i));
 				edittext.setEnabled(isEditEnable);
 				edittext.setText(contact.getContactProfile(i));
-				if(i == TEXT_BIRTHDAY){
+				if (i == TEXT_BIRTHDAY) {
 					edittext.setEnabled(false);
 					calendar_button.setEnabled(isEditEnable);
 				}
@@ -189,7 +190,6 @@ public class AddContacts extends Fragment {
 							edittext.setEnabled(false);
 							calendar_button.setEnabled(isEditEnable);
 						}
-
 
 						if (isEditEnable == false) {
 							contact.serContactProfile(i, edittext.getText()
@@ -325,8 +325,8 @@ public class AddContacts extends Fragment {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-						calendar_edittext.setText(date.getYear() + "-" + date.getMonth()
-								+ "-" + date.getDayOfMonth());
+						calendar_edittext.setText(date.getYear() + "-"
+								+ date.getMonth() + "-" + date.getDayOfMonth());
 					}
 				});
 
@@ -415,16 +415,16 @@ public class AddContacts extends Fragment {
 			System.out.println(fpp.RESULT);
 			fpp.faceDetect(bitmap);
 			System.out.println(fpp.RESULT);
-			if(fpp.RESULT.getJSONArray("face").length() == 0){
+			if (fpp.RESULT.getJSONArray("face").length() == 0) {
 
 				alertDiaLog_ChangePicture();
 
-			}else{
+			} else {
 
 				bitmap = getCropImage(bitmap);
 				path = getCropPath(bitmap); // <----- croped image
-				String photo_id = fpp.RESULT.getJSONArray("face").getJSONObject(0)
-						.getString("face_id");
+				String photo_id = fpp.RESULT.getJSONArray("face")
+						.getJSONObject(0).getString("face_id");
 				Photo photo = new Photo();
 				photo.setPhoto_path(path);
 				photo.setPhoto_id(photo_id);
@@ -432,7 +432,6 @@ public class AddContacts extends Fragment {
 				listPhoto.add(photo);
 				addBitmapToShowList(bitmap);
 			}
-			
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -478,34 +477,62 @@ public class AddContacts extends Fragment {
 					.getJSONObject("position").getDouble("height");
 			width = result.getJSONArray("face").getJSONObject(0)
 					.getJSONObject("position").getDouble("width");
-			/*center_x = center_x / 100 * bitmap.getWidth();
+			center_x = center_x / 100 * bitmap.getWidth();
 			width = width / 100 * bitmap.getWidth() * 0.7f;
 			center_y = center_y / 100 * bitmap.getHeight();
-			height = height / 100 * bitmap.getHeight() * 0.7f;*/
-			
-			
-			
-			
+			height = height / 100 * bitmap.getHeight() * 0.7f;
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		/*int top_leftx=(int) (center_x-width);
-		int crop_width = (int) (2*width);
-		int crop_height = (int) (2*height);
-		int top_lefty= (int) (center_y-height);*/
-		//System.out.println(top_leftx)
-		System.out.println("w:"+width+" h:"+height);
+		int top_leftx = (int) (center_x - width);
+		int crop_width = (int) (2 * width);
+		int crop_height = (int) (2 * height);
+		int top_lefty = (int) (center_y - height);
+		// System.out.println(top_leftx)
+		System.out.println("w:" + width + " h:" + height);
 
-		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,(int)(center_x-width/2) , (int)(center_y-height/2) , (int)(width*2) ,(int)(height*2 ));
-		
-		//Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x , (int)center_y , (int)width, (int)height);
+		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,
+				(int) ((top_leftx - 5 * top_leftx / 100)),
+				(int) (top_lefty - 5 * top_leftx / 100),
+				(int) (crop_width + 10 * crop_width / 100), crop_height + 10
+						* crop_height / 100);
+
+		// Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x ,
+		// (int)center_y , (int)width, (int)height);
 
 		return cropBitmap;
 	}
 
 	private String getCropPath(Bitmap cropImage) {
-		String cropPath = cropImage.toString();
+		
+		String file_path = Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + "/FaceINFO";
+		
+		File dir = new File(file_path);
+		if (!dir.exists())
+			dir.mkdirs();
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+		.format(new Date());
+		
+		File file = new File(dir,  timeStamp + ".png");
+		FileOutputStream fOut;
+		try {
+			fOut = new FileOutputStream(file);
+			cropImage.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+			fOut.flush();
+			fOut.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String cropPath = file_path+"/"+timeStamp+".png";
+		System.out.println(cropPath);
+		
+		
 
 		// String imgeUrl = MediaStore.Images.Media.insertImage(
 		// ma.getContentResolver(), bitmap, "kla", "jay");
@@ -523,7 +550,7 @@ public class AddContacts extends Fragment {
 		fancyCoverFlow.setAdapter(adapter);
 
 	}
-	
+
 	private void alertDiaLog_ChangePicture() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
 		builder.setTitle("Change New Picture")
