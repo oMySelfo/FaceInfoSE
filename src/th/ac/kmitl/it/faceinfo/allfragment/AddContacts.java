@@ -478,17 +478,27 @@ public class AddContacts extends Fragment {
 					.getJSONObject("position").getDouble("height");
 			width = result.getJSONArray("face").getJSONObject(0)
 					.getJSONObject("position").getDouble("width");
-			center_x = center_x / 100 * bitmap.getWidth();
+			/*center_x = center_x / 100 * bitmap.getWidth();
 			width = width / 100 * bitmap.getWidth() * 0.7f;
 			center_y = center_y / 100 * bitmap.getHeight();
-			height = height / 100 * bitmap.getHeight() * 0.7f;
+			height = height / 100 * bitmap.getHeight() * 0.7f;*/
+			
+			
+			
+			
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+		/*int top_leftx=(int) (center_x-width);
+		int crop_width = (int) (2*width);
+		int crop_height = (int) (2*height);
+		int top_lefty= (int) (center_y-height);*/
+		//System.out.println(top_leftx)
+		System.out.println("w:"+width+" h:"+height);
 
-		Bitmap cropBitmap = bitmap;
+		Bitmap cropBitmap = Bitmap.createBitmap(bitmap,(int)(center_x-width/2) , (int)(center_y-height/2) , (int)(width*2) ,(int)(height*2 ));
+		
 		//Bitmap cropBitmap = Bitmap.createBitmap(bitmap, (int)center_x , (int)center_y , (int)width, (int)height);
 
 		return cropBitmap;

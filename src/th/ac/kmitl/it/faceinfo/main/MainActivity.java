@@ -107,7 +107,6 @@ public class MainActivity extends Activity {
 			break;
 		case 5:
 			fragment = new ShowResult();
-
 			break;
 		case 6:
 			fragment = new CreateGroup();
@@ -119,7 +118,6 @@ public class MainActivity extends Activity {
 			break;
 		case 8:
 			fragment = new AddContacts(2);
-
 			break;
 
 
