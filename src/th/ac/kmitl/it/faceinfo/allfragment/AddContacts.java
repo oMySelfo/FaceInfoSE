@@ -476,28 +476,28 @@ public class AddContacts extends Fragment {
 		System.out.println("----------------------jays------------------");
 		System.out.println(data);
 		bitmap = null;
-
-
 		try {		
 			if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK && data==null) {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 				path = uri.getPath();
-				bitmap=rotatedBitmap(path, bitmap);
+				
 				System.out.println(path);
 				
 			} else if (requestCode == REQUEST_GALLERY
 					&& resultCode == ma.RESULT_OK && data.getData() !=null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
-				System.out.println(uri.getPath());
-				String path = getRealPathFromURI(uri);
+				System.out.println("uri getpath"+uri.getPath());
+				path = getRealPathFromURI(uri);
 				System.out.println(path);
-				bitmap=rotatedBitmap(path, bitmap);
+
 
 			}
 			if (bitmap != null){
+			bitmap=resizeBitmap(bitmap);
+			bitmap=rotatedBitmap(path, bitmap);
 			fpp.faceDetect(bitmap);
 			System.out.println(fpp.RESULT);
 			if (fpp.RESULT.getJSONArray("face").length() == 0) {
@@ -599,6 +599,18 @@ public class AddContacts extends Fragment {
 
 		return cropBitmap;
 	}
+	private Bitmap resizeBitmap(Bitmap bitmap) {
+		int x = bitmap.getWidth();
+		int y = bitmap.getHeight();
+		while (x > 500 && y > 500) {
+			x = x / 2;
+			y = y / 2;
+		}
+		
+		System.out.println(x+" : "+y);
+		bitmap = Bitmap.createScaledBitmap(bitmap, x, y, true);
+		return bitmap;
+	}
 
 	private String getCropPath(Bitmap cropImage) {
 
@@ -681,9 +693,10 @@ public class AddContacts extends Fragment {
 	}
 	public static Bitmap RotateImage(Bitmap source, float angle)
 	{
+		System.out.println("angle "+angle);
 	      Matrix matrix = new Matrix();
 	      matrix.postRotate(angle);
-	      return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+	      return Bitmap.createBitmap(source, 0, 0,source.getWidth(),  source.getHeight(), matrix, true);
 	}
 
 
