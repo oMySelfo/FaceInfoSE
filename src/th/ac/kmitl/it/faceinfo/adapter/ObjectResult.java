@@ -5,22 +5,10 @@ import android.graphics.Bitmap;
 public class ObjectResult {
 	private Bitmap picResult;
 	private String nameResult;
-	private String con_id;
 	
-	public String getCon_id() {
-		return con_id;
-	}
-
-
-	public void setCon_id(String con_id) {
-		//this.con_id = con_id;
-	}
-
-
-	public ObjectResult(String nameResult, Bitmap picResult,String con_id){
+	public ObjectResult(String nameResult, Bitmap picResult){
 		this.nameResult = nameResult;
 		this.picResult = picResult;
-		this.con_id = con_id;
 	}
 	
 	

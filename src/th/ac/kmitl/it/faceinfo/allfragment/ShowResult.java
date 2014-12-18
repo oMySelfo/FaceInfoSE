@@ -91,7 +91,6 @@ public class ShowResult extends Fragment {
 			public void onItemClick(AdapterView<?> view, View container,
 					int position, long id) {
 				System.out.println("Okkkkkkkkkkkkkkkk");
-				data.getMainActivity().displayView(8);
 			}
 		});
 		return rootView;
@@ -103,7 +102,6 @@ public class ShowResult extends Fragment {
 		images = new ArrayList<Bitmap>();
 		listPhoto = dbm.getPhotoList(con_id);
 		contact = dbm.getContact(con_id);
-		data.setTempContactKey(con_id);
 		for(Photo photo:listPhoto){
 			images.add(photo.getBitmap());
 		}
@@ -121,14 +119,14 @@ public class ShowResult extends Fragment {
 		confidect = (int)candidateResult.getJSONObject(1).getDouble("confidence");
 		contact = dbm.getContact(con_id);
 		bitmap = BitmapFactory.decodeFile(contact.getPhoto_path());
-		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" ,bitmap,con_id));
+		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" ,bitmap));
 		}
 		if(candidateResult.length()>=3 ){
 		con_id = candidateResult.getJSONObject(2).getString("person_id");
 		confidect = (int)candidateResult.getJSONObject(2).getDouble("confidence");
 		contact = dbm.getContact(con_id);
 		bitmap = BitmapFactory.decodeFile(contact.getPhoto_path());
-		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" , bitmap,con_id));
+		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" , bitmap));
 		}
 
 		if(candidateResult.length()!=1){
@@ -143,10 +141,7 @@ public class ShowResult extends Fragment {
 				// TODO Auto-generated method stub
 				ObjectResult ra = (ObjectResult) parent
 						.getItemAtPosition(position);
-				data.setTempContactKey(ra.getCon_id());
-				data.getMainActivity().displayView(8);
-				System.out.println(ra.getNameResult());
-				
+				System.out.println(ra.getPicResult());
 			}
 		});
 		}
