@@ -191,7 +191,7 @@ public class AllContract extends Fragment {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
 				imgpath = getRealPathFromURI(uri);
-				System.out.println(path);
+				//System.out.println(path);
 			}
 			if (bitmap != null) {
 				bitmap= resizeBitmap(bitmap);

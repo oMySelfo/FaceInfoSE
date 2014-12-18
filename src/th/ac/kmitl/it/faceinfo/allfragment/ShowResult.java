@@ -91,6 +91,7 @@ public class ShowResult extends Fragment {
 			public void onItemClick(AdapterView<?> view, View container,
 					int position, long id) {
 				System.out.println("Okkkkkkkkkkkkkkkk");
+				data.getMainActivity().displayView(8);
 			}
 		});
 		return rootView;
@@ -107,26 +108,28 @@ public class ShowResult extends Fragment {
 		}
 		adapter = new CoverFlowAdapter();
 		adapter.setImages(images);
+		data.setTempContactKey(con_id);
 		tv = (TextView) rootView.findViewById(R.id.nameResultFirst);
 		tv.setText(contact.getCon_name() + "\naccuracy : " + confidect + "%" );
 		
 	}
 
 	private void setImagesNdRd() throws JSONException {
+		System.out.println("------------------"+candidateResult.length());
 		if(candidateResult.length()>=2 ){
 		or = new ArrayList<ObjectResult>();
 		con_id = candidateResult.getJSONObject(1).getString("person_id");
 		confidect = (int)candidateResult.getJSONObject(1).getDouble("confidence");
 		contact = dbm.getContact(con_id);
 		bitmap = BitmapFactory.decodeFile(contact.getPhoto_path());
-		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" ,bitmap));
+		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" ,bitmap,con_id));
 		}
 		if(candidateResult.length()>=3 ){
 		con_id = candidateResult.getJSONObject(2).getString("person_id");
 		confidect = (int)candidateResult.getJSONObject(2).getDouble("confidence");
 		contact = dbm.getContact(con_id);
 		bitmap = BitmapFactory.decodeFile(contact.getPhoto_path());
-		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" , bitmap));
+		or.add(new ObjectResult(contact.getCon_name() + "\naccuracy : " + confidect + "%" , bitmap,con_id));
 		}
 
 		if(candidateResult.length()!=1){
@@ -141,6 +144,8 @@ public class ShowResult extends Fragment {
 				// TODO Auto-generated method stub
 				ObjectResult ra = (ObjectResult) parent
 						.getItemAtPosition(position);
+				data.setTempContactKey(ra.getCon_id());
+				data.getMainActivity().displayView(8);
 				System.out.println(ra.getPicResult());
 			}
 		});
