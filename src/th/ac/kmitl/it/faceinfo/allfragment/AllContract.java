@@ -78,6 +78,7 @@ public class AllContract extends Fragment {
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
+		
 		if(data.USER_KEY == null){
 			data.USER_KEY = "550700421212312121";
 			dbm.insertUserKey(data.USER_KEY);

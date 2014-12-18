@@ -61,11 +61,13 @@ public class PersonToGroupAdapter extends BaseAdapter {
 		ImageView img = (ImageView) convertView.findViewById(R.id.addpersontogroup_pic);
 		TextView txt = (TextView) convertView.findViewById(R.id.addpersontogroup_name);
 		CheckBox cb = (CheckBox) convertView.findViewById(R.id.addpersontogroup_cb);
+
 		if(listContact.get(position).getPhoto_path() != null){
 			Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPhoto_path());
 			img.setImageBitmap(bmImg);		
 		}
 		
+
 		cb.setChecked(inGroup.get(position));
 		//if(listContact.get(position).get)
 		//cb.
