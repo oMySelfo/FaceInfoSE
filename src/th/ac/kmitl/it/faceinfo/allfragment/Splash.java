@@ -40,8 +40,9 @@ public class Splash extends Fragment {
 				@Override
 				public void onClick(View v) {
 					fm.login();
+					System.out.println("USERKEY" +data.USER_KEY);
+					Data.getData().getMainActivity().displayView(0);
 
-					  Data.getData().getMainActivity().displayView(0);
 				}
 			});
 			
