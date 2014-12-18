@@ -40,7 +40,16 @@ public class Splash extends Fragment {
 				@Override
 				public void onClick(View v) {
 					fm.login();
-					Data.getData().getMainActivity().displayView(0);
+
+					Handler handler = new Handler();
+					Runnable delayRunnable = new Runnable() {
+
+					     @Override
+					     public void run() {
+					    	 Data.getData().getMainActivity().displayView(0);
+					    }
+					};      
+					handler.postDelayed(delayRunnable, 2000);
 				}
 			});
 		}else{

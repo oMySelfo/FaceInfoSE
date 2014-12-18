@@ -18,11 +18,13 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class PeopleOfGroup extends Fragment{
 	private Data data;
 	private DatabaseManager dbm;
 	private List<Contact> listContact;
+	private TextView amountfriends;
 	public PeopleOfGroup() {}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,8 +33,10 @@ public class PeopleOfGroup extends Fragment{
 		ImageButton findbtt = (ImageButton) rootView.findViewById(R.id.findbtt);
 		data = Data.getData();
 		dbm = data.getDmb();
+		amountfriends = (TextView) rootView.findViewById(R.id.amountfriends);
 		listContact = dbm.getContactGroup(data.getTempGroupKey());
 		findbtt.setImageResource(R.drawable.add_peoplemini);
+		amountfriends.setText("friends :"+listContact.size());
 		AllContactAdapter adapter = new AllContactAdapter(inflater, listContact);
 		ListView list = (ListView) rootView.findViewById(R.id.listViewResult);
 		list.setAdapter(adapter);
