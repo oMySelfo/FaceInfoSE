@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 public class PeopleOfGroup extends Fragment{
@@ -25,6 +26,7 @@ public class PeopleOfGroup extends Fragment{
 	private DatabaseManager dbm;
 	private List<Contact> listContact;
 	private TextView amountfriends;
+	private SearchView search;
 	public PeopleOfGroup() {}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +35,9 @@ public class PeopleOfGroup extends Fragment{
 		ImageButton findbtt = (ImageButton) rootView.findViewById(R.id.findbtt);
 		data = Data.getData();
 		dbm = data.getDmb();
+		search = (SearchView) rootView.findViewById(R.id.searchView);
+		search.setVisibility(View.INVISIBLE);
+		
 		amountfriends = (TextView) rootView.findViewById(R.id.amountfriends);
 		listContact = dbm.getContactGroup(data.getTempGroupKey());
 		findbtt.setImageResource(R.drawable.add_peoplemini);
