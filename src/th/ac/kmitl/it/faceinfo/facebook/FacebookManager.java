@@ -78,6 +78,7 @@ public class FacebookManager {
 							}
 						}
 				});
+				 Data.getData().getMainActivity().displayView(0);
 				
 			}
 

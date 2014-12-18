@@ -19,7 +19,7 @@ public class FacePlusPlus {
 	private String API_SECRET = "O42Yf4ExbRTyNrTDL4PKxWxsOMKLr3cz";
 
 	// // Wait Sync
-	private long TIME_COUNT = 20000;
+	private long TIME_COUNT = 25000;
 	private long COUNT;
 	private long SLEEP = 300;
 

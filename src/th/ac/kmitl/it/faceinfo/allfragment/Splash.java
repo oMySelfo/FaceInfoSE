@@ -33,15 +33,15 @@ public class Splash extends Fragment {
 		data = Data.getData();
 		dbm = data.getDmb();
 		fm = data.getFacebookManager();
-		System.out.println(dbm.checkUserKey()+"--------------------");
+ 
+		
 		if(!dbm.checkUserKey()){
 			btn_loginfacebook.setVisibility(View.VISIBLE);
 			btn_loginfacebook.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					fm.login();
-
-					  Data.getData().getMainActivity().displayView(0);
+					//Data.getData().getMainActivity().displayView(0);
 				}
 			});
 			
