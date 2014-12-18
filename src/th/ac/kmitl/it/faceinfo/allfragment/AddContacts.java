@@ -222,7 +222,13 @@ public class AddContacts extends Fragment {
 					if (listPhoto.size() > 0) {
 						contact.setPhoto_id(listPhoto.get(position)
 								.getPhoto_id());
-					} else {
+					}else if (position>listPhoto.size()-1 && listPhoto.size()!=0){
+						contact.setPhoto_id(listPhoto.get(position - 1)
+								.getPhoto_id());
+						
+					}else
+					
+					{
 						contact.setPhoto_id(null);
 					}
 					dbm.updateContact(contact);
@@ -265,11 +271,13 @@ public class AddContacts extends Fragment {
 				if (isEditEnable) {
 					registerForContextMenu(fancyCoverFlow);
 					isOnClick = true;
-					AddContacts.this.position = position;
-					System.out.println("position shot click" + position);
+
 
 					if (position == showBitmapList.size() - 1) {
 						container.showContextMenu();
+					}else{
+						AddContacts.this.position = position;
+						System.out.println("position shot click" + position);
 					}
 					isOnClick = false;
 				}
@@ -284,15 +292,16 @@ public class AddContacts extends Fragment {
 							View container, int position, long id) {
 						if (isEditEnable) {
 							registerForContextMenu(fancyCoverFlow);
-							AddContacts.this.position = position;
-							System.out
-									.println("position long click" + position);
+
 							if (isOnClick) {
 								return false;
 							}
 							if (position != showBitmapList.size() - 1) {
 								alertDiaLog(position);
 								return true;
+							}else{
+								AddContacts.this.position = position;
+								System.out.println("position shot click" + position);
 							}
 						}
 						return false;
