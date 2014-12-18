@@ -520,6 +520,7 @@ public class AddContacts extends Fragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("---------------"+path+"--------------------");
 	}
 
 	private String getRealPathFromURI(Uri contentURI) {
