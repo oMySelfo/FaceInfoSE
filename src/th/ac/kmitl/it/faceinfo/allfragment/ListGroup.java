@@ -56,10 +56,10 @@ public class ListGroup extends Fragment {
 		dbm = data.getDmb();
 		ma = data.getMainActivity();
 		amountgroups = (TextView) rootView.findViewById(R.id.amountgroup);
+		
 		listGroup = dbm.getAllGroup();
-		
-		
-		amountgroups.setText("friend: " + listGroup.size());
+		amountgroups.setText("Groups :"+listGroup.size());
+
 		
 		creategroup.setOnClickListener(new View.OnClickListener() {
 			@Override

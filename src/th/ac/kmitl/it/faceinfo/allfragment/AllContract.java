@@ -74,6 +74,7 @@ public class AllContract extends Fragment {
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
+		amountfriends.setText("friends :"+listContact.size());
 		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
 		sv.setOnQueryTextListener(new OnQueryTextListener() {
 
@@ -92,6 +93,7 @@ public class AllContract extends Fragment {
 				list.setAdapter(new AllContactAdapter(inflater,listContact));
 				// TODO Auto-generated method stub
 				System.out.println(newText);
+				amountfriends.setText("friends :"+listContact.size());
 
 				return false;
 			}
