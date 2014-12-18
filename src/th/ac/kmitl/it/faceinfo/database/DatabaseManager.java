@@ -25,17 +25,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		createUser(db);
 		createContact(db);
 		createPhoto(db);
 		createGroup(db);
 		createContactGroup(db);
-
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
 	}
 
 	public boolean checkUserKey() {

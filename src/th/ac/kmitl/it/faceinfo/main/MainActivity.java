@@ -176,6 +176,7 @@ public class MainActivity extends Activity {
 		mDrawerList.setAdapter(adapterSliding);
 	}
 
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {

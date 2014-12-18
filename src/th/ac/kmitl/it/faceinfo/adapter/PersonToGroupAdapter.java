@@ -7,6 +7,8 @@ import java.util.List;
 import th.ac.kmitl.it.faceinfo.database.Contact;
 import th.ac.kmitl.it.faceinfo.main.Data;
 import th.ac.kmitl.it.faceinfo.main.R;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +61,11 @@ public class PersonToGroupAdapter extends BaseAdapter {
 		ImageView img = (ImageView) convertView.findViewById(R.id.addpersontogroup_pic);
 		TextView txt = (TextView) convertView.findViewById(R.id.addpersontogroup_name);
 		CheckBox cb = (CheckBox) convertView.findViewById(R.id.addpersontogroup_cb);
-		//Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPath());
-		//img.setImageBitmap(bmImg);	
+		if(listContact.get(position).getPhoto_path() != null){
+			Bitmap bmImg = BitmapFactory.decodeFile(listContact.get(position).getPhoto_path());
+			img.setImageBitmap(bmImg);		
+		}
+		
 		cb.setChecked(inGroup.get(position));
 		//if(listContact.get(position).get)
 		//cb.

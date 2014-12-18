@@ -43,12 +43,24 @@ public class FacebookManager {
 				 properties = new Properties.Builder().add(
 						Profile.Properties.ID).build();
 				sf.getProfile(properties, new OnProfileListener() {
+					
+					@Override
+					public void onException(Throwable throwable) {
+						super.onException(throwable);
+					}
+					@Override
+					public void onFail(String reason) {
+						System.out.println("Reason" + reason);
+						super.onFail(reason);
+					}
 
 					@Override
 					public void onComplete(Profile response) {
 						super.onComplete(response);
 						dbm.insertUserKey(response.getId());
 						fpp.addUser();
+						System.out.println("---------------------------" + dbm.checkUserKey());
+						
 					}
 				});
 				

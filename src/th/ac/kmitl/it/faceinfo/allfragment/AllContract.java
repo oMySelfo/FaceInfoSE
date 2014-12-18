@@ -23,7 +23,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -61,6 +64,7 @@ public class AllContract extends Fragment {
 	private MainActivity ma;
 	private FacePlusPlus fpp;
 	private TextView amountfriends;
+	private String imgpath;
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -74,6 +78,12 @@ public class AllContract extends Fragment {
 		fpp = data.getFacePP();
 		dbm = data.getDmb();
 		listContact = dbm.getAllContact();
+		if(data.USER_KEY == null){
+			data.USER_KEY = "550700421212312121";
+			dbm.insertUserKey(data.USER_KEY);
+			fpp.addUser();
+		}
+
 		amountfriends.setText("friends :"+listContact.size());
 		SearchView sv = (SearchView) rootView.findViewById(R.id.searchView);
 		sv.setOnQueryTextListener(new OnQueryTextListener() {
@@ -173,13 +183,18 @@ public class AllContract extends Fragment {
 				ma.getContentResolver().notifyChange(uri, null);
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
+				imgpath = uri.getPath();
 
 			} else if (requestCode == REQUEST_GALLERY
 					&& resultCode == ma.RESULT_OK && data.getData() != null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
+				imgpath = getRealPathFromURI(uri);
+				System.out.println(path);
 			}
 			if (bitmap != null) {
+				bitmap= resizeBitmap(bitmap);
+				bitmap = rotatedBitmap(imgpath, bitmap);
 
 				fpp.faceIndentify(bitmap);
 				this.data.getMainActivity().displayView(5);
@@ -192,5 +207,66 @@ public class AllContract extends Fragment {
 		}
 		System.out.println(bitmap);
 	}
+	private Bitmap rotatedBitmap(String photoPath,Bitmap b){
+		ExifInterface ei;
+		try {
+			ei = new ExifInterface(photoPath);
+			int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+			switch(orientation) {
+			    case ExifInterface.ORIENTATION_ROTATE_90:
+			        b=RotateImage(b, 90);
+			        break;
+			    case ExifInterface.ORIENTATION_ROTATE_180:
+			        b=RotateImage(b, 180);
+			        break;
+			    case ExifInterface.ORIENTATION_ROTATE_270:
+			        b=RotateImage(b, 270);
+			        break;
+			    // etc.
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+		
+		
+	}
+	public static Bitmap RotateImage(Bitmap source, float angle)
+	{
+		System.out.println("angle "+angle);
+	      Matrix matrix = new Matrix();
+	      matrix.postRotate(angle);
+	      return Bitmap.createBitmap(source, 0, 0,source.getWidth(),  source.getHeight(), matrix, true);
+	}
+	private Bitmap resizeBitmap(Bitmap bitmap) {
+		int x = bitmap.getWidth();
+		int y = bitmap.getHeight();
+		while (x > 500 && y > 500) {
+			x = x / 2;
+			y = y / 2;
+		}
+		
+		System.out.println(x+" : "+y);
+		bitmap = Bitmap.createScaledBitmap(bitmap, x, y, true);
+		return bitmap;
+	}
+	private String getRealPathFromURI(Uri contentURI) {
+		String result;
+		Cursor cursor = ma.getContentResolver().query(contentURI, null, null,
+				null, null);
+		if (cursor == null) {
+			result = contentURI.getPath();
+		} else {
+			cursor.moveToFirst();
+			int idx = cursor
+					.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+			result = cursor.getString(idx);
+			cursor.close();
+		}
+		return result;
+	}
+
 
 }
