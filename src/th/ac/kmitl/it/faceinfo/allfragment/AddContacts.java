@@ -484,11 +484,17 @@ public class AddContacts extends Fragment {
 				ContentResolver cr = ma.getContentResolver();
 				bitmap = Media.getBitmap(cr, uri);
 				path = uri.getPath();
-
+				bitmap=rotatedBitmap(path, bitmap);
+				System.out.println(path);
+				
 			} else if (requestCode == REQUEST_GALLERY
 					&& resultCode == ma.RESULT_OK && data.getData() !=null) {
 				Uri uri = data.getData();
 				bitmap = Media.getBitmap(ma.getContentResolver(), uri);
+				System.out.println(uri.getPath());
+				String path = getRealPathFromURI(uri);
+				System.out.println(path);
+				bitmap=rotatedBitmap(path, bitmap);
 
 			}
 			if (bitmap != null){
@@ -520,6 +526,7 @@ public class AddContacts extends Fragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("---------------"+path+"--------------------");
 	}
 
 	private String getRealPathFromURI(Uri contentURI) {
@@ -658,6 +665,9 @@ public class AddContacts extends Fragment {
 			        break;
 			    case ExifInterface.ORIENTATION_ROTATE_180:
 			        b=RotateImage(b, 180);
+			        break;
+			    case ExifInterface.ORIENTATION_ROTATE_270:
+			        b=RotateImage(b, 270);
 			        break;
 			    // etc.
 			}

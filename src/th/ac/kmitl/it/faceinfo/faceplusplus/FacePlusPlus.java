@@ -127,16 +127,19 @@ public class FacePlusPlus {
 			System.out.println("");
 		}
 
+		
 	}
 
 	private Bitmap resizeBitmap(Bitmap bitmap) {
 		int x = bitmap.getWidth();
 		int y = bitmap.getHeight();
-		while (x > 512 && y > 328) {
+		while (x > 500 && y > 500) {
 			x = x / 2;
 			y = y / 2;
 		}
-		bitmap = Bitmap.createScaledBitmap(bitmap, x, y, false);
+		
+		System.out.println(x+" : "+y);
+		bitmap = Bitmap.createScaledBitmap(bitmap, x, y, true);
 		return bitmap;
 	}
 
